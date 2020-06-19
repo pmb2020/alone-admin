@@ -5,12 +5,11 @@
 				<Header />
 			</el-header>
 			<el-container>
-				<el-aside>
+				<el-aside width="250">
 					<Aside />
 				</el-aside>
 				<el-container>
 					<el-main>
-						<p>我是主题</p>
 						<router-view/>
 					</el-main>
 					<el-footer>

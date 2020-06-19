@@ -10,7 +10,8 @@ Vue.use(VueRouter)
     name: 'Home',
     component: Home,
 	children:[
-		{path:'/about',component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')}
+		{path:'/about',component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')},
+		{path:'/index',component: () => import(/* webpackChunkName: "about" */ '../pages/Index.vue')}
 	]
   },
   {
@@ -36,3 +37,10 @@ const router = new VueRouter({
 })
 
 export default router
+
+// 解决路由重复点击报错
+const originalPush = VueRouter.prototype.push
+   VueRouter.prototype.push = function push(location) {
+   return originalPush.call(this, location).catch(err => err)
+}
+

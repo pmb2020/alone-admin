@@ -11,7 +11,7 @@
 				<i class="el-icon-s-home"></i>
 				<span slot="title">后台首页</span>
 			</el-menu-item>
-			<el-menu-item index="2">
+			<el-menu-item index="/manage">
 				<i class="el-icon-user-solid"></i>
 				<span slot="title">账户管理</span>
 			</el-menu-item>
@@ -99,7 +99,7 @@
 	}
 	.asideBtn{position: absolute;top: -60px;left: 250px;background: transparent;border: none;color: #fff;height: 60px;font-size: 20px;outline: none;cursor: pointer;}
 	/* .asideBtn:hover{background: transparent;color: #fff;background-color: transparent;} */
-	.el-menu{height: 100%;}
+	.el-menu{height: 100%;border-right: none;}
 	.aside{height: 100%;position: relative;text-align: left;}
-	.el-aside{overflow: inherit;}
+	.el-aside{overflow: inherit;box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);}
 </style>

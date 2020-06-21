@@ -25,6 +25,7 @@
 <style scoped>
 	.header {
 		background-color: #009efb;
+		background: linear-gradient(to right, #ff9966 0%, #66bfff 100%);
 		line-height: 60px;
 		color: #fff;
 		display: flex;

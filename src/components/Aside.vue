@@ -6,7 +6,7 @@
 			<el-radio-button :label="false">展开</el-radio-button>
 			<el-radio-button :label="true">收起</el-radio-button>
 		</el-radio-group> -->
-		<el-menu default-active="/index" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :router="true" :unique-opened="false">
+		<el-menu default-active="/index" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :router='true' :unique-opened="true">
 			<el-menu-item index="/index">
 				<i class="el-icon-s-home"></i>
 				<span slot="title">后台首页</span>
@@ -30,7 +30,7 @@
 					<span slot="title">内容管理</span>
 				</template>
 				<el-menu-item-group>	
-					<el-menu-item index="4-1">文章管理</el-menu-item>
+					<el-menu-item index="/article">文章管理</el-menu-item>
 					<el-menu-item index="4-2">标签管理</el-menu-item>
 				</el-menu-item-group>
 			</el-submenu>

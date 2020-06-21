@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="footer">
 		我是footer啊
 	</div>
 </template>
@@ -11,4 +11,6 @@
 </script>
 
 <style>
+	.el-footer{background-color: #fff;}
+	.footer{background-color: #fff;}
 </style>

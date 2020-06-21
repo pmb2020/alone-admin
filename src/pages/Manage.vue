@@ -1,7 +1,7 @@
 <template>
 	<div class="manage">
-		<el-table :data="tableData" style="width: 100%">
-			<el-table-column type="index" width="50">
+		<el-table :data="tableData" style="width: 100%;margin-bottom: 15px;">
+			<el-table-column type="index" label="#" width="50">
 			</el-table-column>
 			<el-table-column prop="date" label="日期" width="180">
 			</el-table-column>
@@ -41,7 +41,17 @@
 					date: '2016-05-03',
 					name: '王小虎',
 					address: '上海市普陀区金沙江路 1516 弄'
-				}]
+				},{
+					date: '2016-05-03',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1516 弄'
+				},
+				{
+					date: '2016-05-03',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1516 弄'
+				}
+				]
 			}
 		},
 		methods: {

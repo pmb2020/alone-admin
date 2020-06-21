@@ -22,6 +22,11 @@ const routes = [{
 				path: '/manage',
 				component: () => import( /* webpackChunkName: "about" */ '../pages/Manage.vue'),
 				meta:['账户管理']
+			},
+			{
+				path: '/article',
+				component: () => import( /* webpackChunkName: "about" */ '../pages/Article.vue'),
+				meta:['文章管理']
 			}
 		]
 	},

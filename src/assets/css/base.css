@@ -478,8 +478,14 @@ ul {
 .article {
 	background-color: #fff;
 	padding: 30px;
+	border-radius: 5px;
+	box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 }
 
 .del_a {
 	color: #f96332 !important;
 }
+
+.alone-card{background-color: #fff;padding: 30px;border-radius: 5px;box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);}
+.alone-card .card-title{margin: 0 0 25px;}
+

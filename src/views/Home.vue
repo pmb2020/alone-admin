@@ -25,10 +25,14 @@
 </template>
 
 <script>
-
+	
 	export default {
 		name: 'Home',
 		components: {
+		},
+		mounted() {
+			console.log('sssssss');
+			console.log(this.$route.meta)
 		}
 	}
 	

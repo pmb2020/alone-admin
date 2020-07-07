@@ -27,6 +27,11 @@ const routes = [{
 				path: '/article',
 				component: () => import( /* webpackChunkName: "about" */ '../pages/Article.vue'),
 				meta:['文章管理']
+			},
+			{
+				path: '/create',
+				component: () => import( /* webpackChunkName: "about" */ '../pages/Create.vue'),
+				meta:['发表文章']
 			}
 		]
 	},

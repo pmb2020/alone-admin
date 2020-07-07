@@ -30,8 +30,8 @@
 					<span slot="title">内容管理</span>
 				</template>
 				<el-menu-item-group>	
+					<el-menu-item index="/create">发布文章</el-menu-item>
 					<el-menu-item index="/article">文章管理</el-menu-item>
-					<el-menu-item index="4-2">标签管理</el-menu-item>
 				</el-menu-item-group>
 			</el-submenu>
 			<el-menu-item index="5" route="/about">

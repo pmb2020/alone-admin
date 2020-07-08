@@ -85,7 +85,6 @@
 				}else{
 					this.isCollapse=true
 				}
-				console.log('saji')
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
 		<div>
-			<span>alone-admin</span>
+			<span>vue-admin</span>
 		</div>
 		<div>
 			<el-dropdown>

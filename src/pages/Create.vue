@@ -20,11 +20,15 @@
 					<el-checkbox label="地推活动" name="type"></el-checkbox>
 				</el-checkbox-group>
 			</el-form-item>
+			
 			<el-form-item label="特殊资源">
 				<el-radio-group v-model="form.resource">
 					<el-radio label="线上品牌商赞助"></el-radio>
 					<el-radio label="线下场地免费"></el-radio>
 				</el-radio-group>
+			</el-form-item>
+			<el-form-item label="内容">
+				<quill></quill>
 			</el-form-item>
 			<el-form-item>
 				<el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -34,7 +38,11 @@
 	</div>
 </template>
 <script>
+	import quill from '../components/QuillEditor.vue'
 	export default {
+		components: {
+			quill
+		},
 		data() {
 			return {
 				form: {

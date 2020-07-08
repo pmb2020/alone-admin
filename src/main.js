@@ -9,6 +9,7 @@ import '@/assets/css/base.css' //引入公共css
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import Aside from '@/components/Aside.vue'
+
 Vue.component("Aside", Aside);
 Vue.component("Footer", Footer);
 Vue.component("Header", Header);

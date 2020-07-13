@@ -44,5 +44,5 @@
 </script>
 
 <style>
-
+	.ql-container{min-height: 400px;}
 </style>

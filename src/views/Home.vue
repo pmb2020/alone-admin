@@ -4,9 +4,10 @@
 			<el-header>
 				<Header />
 			</el-header>
+			<button class="asideBtn" style="top: 0;" @click="testbtn">三</button>
 			<el-container style="overflow: hidden;">
 				<el-aside width="250">
-					<Aside />
+					<Aside :isCollapse="isCollapse" />
 				</el-aside>
 				<el-container style="flex-direction: column;">
 					<el-breadcrumb class="bread" separator="/">
@@ -30,9 +31,23 @@
 		name: 'Home',
 		components: {
 		},
+		data(){
+			return {
+				isCollapse:false
+			}
+		},
 		mounted() {
 			console.log('sssssss');
 			console.log(this.$route.meta)
+		},
+		methods:{
+			testbtn(){
+				if(this.isCollapse){
+					this.isCollapse=false
+				}else{
+					this.isCollapse=true
+				}
+			}
 		}
 	}
 	

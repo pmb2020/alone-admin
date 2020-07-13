@@ -1,6 +1,6 @@
 <template>
 	<div class="aside">
-		<button class="asideBtn" @click="testbtn">三</button>
+		<!-- <button class="asideBtn" @click="testbtn">三</button> -->
 		<!-- <el-button class="asideBtn" @click="testbtn" icon="el-icon-s-fold"></el-button> -->
 		<!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;position: absolute;top: -60px;left: 550px;">
 			<el-radio-button :label="false">展开</el-radio-button>
@@ -67,9 +67,10 @@
 
 <script>
 	export default {
+		props: ['isCollapse'],
 		data() {
 			return {
-				isCollapse: false
+				// isCollapse: false,
 			};
 		},
 		methods: {
@@ -79,13 +80,6 @@
 			handleClose(key, keyPath) {
 				console.log(key, keyPath);
 			},
-			testbtn(){
-				if(this.isCollapse){
-					this.isCollapse=false
-				}else{
-					this.isCollapse=true
-				}
-			}
 		}
 	}
 </script>

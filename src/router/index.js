@@ -57,6 +57,11 @@ const router = new VueRouter({
 	routes
 })
 
+// 注册路由导航守卫
+router.beforeEach((to,from,next)=>{
+	// console.log(to);
+	next()
+})
 export default router
 
 // 解决路由重复点击报错

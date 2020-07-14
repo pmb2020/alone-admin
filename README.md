@@ -21,12 +21,13 @@ npm run server //运行项目
 ```
 
 ### 说明
-```
-alone-admin为作者极致孤独的alone系列作品，暂时也没啥要说明的。
-极致孤独就是本人啦。
-alone系列包括，alone-admin（后台管理系统）、alone-api（各种乱七八糟的接口，比如抖音视频无水印解析）、alone-video（免vip会员观看各大影视网站的电影）、alone-music等等。
-反正我对alone系列抱有很大的期望的。
-```
+
+alone-admin为作者极致孤独的alone系列作品，暂时也没啥要说明的。  
+ 
+alone系列包括，alone-admin（后台管理系统）、alone-api（各种乱七八糟的接口，比如抖音视频无水印解析）、alone-video（免vip会员观看各大影视网站的电影）、alone-music等等。  
+
+反正我对alone系列抱有很大的期望的，哈哈。
+
 
 ### License
 MIT

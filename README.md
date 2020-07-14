@@ -1,28 +1,33 @@
 # alone-admin
 alone-admin是基于vue+element-ui开发的后台管理系统，至于其他的介绍，看下面的图自行脑补哈。
-![](README_files/1.jpg)
+
+PS：alone-admin为新手作品
+
+![](http://qdfvid0sp.bkt.clouddn.com/alone-admin.png)
 ## 项目运行
 ```
 git clone git@github.com:pmb2020/alone-admin.git //克隆项目到本地
+
 cd alone-admin  //进入项目
+
 npm install  //npm安装依赖
+
 npm run server //运行项目
+
 ```
 
-### Compiles and hot-reloads for development
+### 功能列表
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+具体还没想好怎么写
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+### 说明
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+alone-admin为作者极致孤独的alone系列作品，暂时也没啥要说明的。
+极致孤独就是本人啦。
+alone系列包括，alone-admin（后台管理系统）、alone-api（各种乱七八糟的接口，比如抖音视频无水印解析）、alone-video（免vip会员观看各大影视网站的电影）、alone-music等等。
+反正我对alone系列抱有很大的期望的。
+
+
+### License
+MIT

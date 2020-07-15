@@ -1,9 +1,10 @@
 <template>
 	<div class="header">
 		<div>
-			<span>alone-admin</span>
+			<span>郡 美 科 技</span>
 		</div>
 		<div>
+			<span style="margin-right: 15px;font-size: 14px;">前台首页</span>
 			<el-dropdown>
 				<span class="el-dropdown-link" style="">
 					管理员<i class="el-icon-arrow-down el-icon--right"></i>
@@ -14,7 +15,7 @@
 					<el-dropdown-item divided>退出</el-dropdown-item>
 				</el-dropdown-menu>
 			</el-dropdown>
-			<span style="margin-left: 15px;font-size: 14px;">前台首页</span>
+			
 		</div>
 	</div>
 </template>

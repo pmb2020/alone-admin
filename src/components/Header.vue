@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
 		<div>
-			<span>郡 美 科 技</span>
+			<span>alone-admin</span>
 		</div>
 		<div>
 			<span style="margin-right: 15px;font-size: 14px;">前台首页</span>
@@ -26,7 +26,7 @@
 <style scoped>
 	.header {
 		background-color: #009efb;
-		background: linear-gradient(to right, #ff9966 0%, #66bfff 100%);
+		background: linear-gradient(to right, #f34242 0%, #636262 100%);
 		line-height: 60px;
 		color: #fff;
 		display: flex;

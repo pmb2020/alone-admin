@@ -92,7 +92,7 @@
 	}
 	.asideBtn{position: absolute;top: -60px;left: 250px;background: transparent;border: none;color: #fff;height: 60px;font-size: 20px;outline: none;cursor: pointer;}
 	/* .asideBtn:hover{background: transparent;color: #fff;background-color: transparent;} */
-	.el-menu{height: 100%;border-right: none;}
+	.el-menu{height: 100%;border-right: none!important;}
 	.aside{height: 100%;position: relative;text-align: left;}
 	.el-aside{overflow: inherit;box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);}
 </style>

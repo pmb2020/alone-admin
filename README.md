@@ -3,7 +3,7 @@ alone-admin是基于vue+element-ui开发的后台管理系统，至于其他的�
 
 PS：alone-admin为新手作品，大佬勿喷。
 
-![](public/alone-admin.png)
+![](http://cdn.gold404.cn/alone-admin.png)
 ## 项目运行
 ```
 git clone git@github.com:pmb2020/alone-admin.git //克隆项目到本地

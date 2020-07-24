@@ -1,4 +1,4 @@
-import {fetch,get,post} from '../server/axios.js'
+import {get,post} from '../server/axios.js'
 // 登录
 export const login= params=>post('/login',params);
 export const getUserInfo = params=>get('user');

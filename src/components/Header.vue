@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
 		<div>
-			<span>alone-admin</span>
+			<span>郡 美 科 技</span>
 		</div>
 		<div>
 			<span style="margin-right: 15px;font-size: 14px;">前台首页</span>

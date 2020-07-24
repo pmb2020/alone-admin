@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Qs from 'qs'
-export const fetch = axios.create({
+const fetch = axios.create({
 	baseURL: 'http://www.larjwt.test/api',
 	timeout: 1000,
 	headers: {

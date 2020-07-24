@@ -1,6 +1,6 @@
 <template>
 	<div class="login">
-		<h1>后台登录</h1>
+		<h1>后台登录（郡美）</h1>
 		<el-form :model="form" :rules="rules" ref="form" label-width="50px" label-position="left" hide-required-asterisk>
 			<el-form-item label="账号:" prop="email">
 				<el-input v-model="form.email"></el-input>
@@ -56,12 +56,15 @@
 			},
 			toLogin(){
 				login(this.form).then(res => {
-					localStorage.setItem('token', res.data.token);
-					this.$message({
-						message: '登录成功',
-						type: 'success'
-					});
-					this.$router.push('/index');
+					if(res.data.code == 200){
+						localStorage.setItem('token', res.data.data.token);
+						this.$message({
+							message: '登录成功',
+							type: 'success'
+						});
+						this.$router.push('/index');
+					}
+					
 				}).catch(err => {
 					this.$message.error('用户名或者密码错误');
 				})

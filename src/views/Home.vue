@@ -65,7 +65,7 @@
 							type: 'warning'
 						});
 						localStorage.setItem('token','')
-						this.$router.push('/login')
+						// this.$router.push('/login')
 					}
 				}).catch(err=>{
 					console.log('获取信息失败')

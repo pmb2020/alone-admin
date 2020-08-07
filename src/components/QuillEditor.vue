@@ -3,7 +3,7 @@
 		<quill-editor v-model="content" ref="myQuillEditor" :options="editorOption" @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" 
 		@change="onEditorChange($event)">
 		</quill-editor>
-		<button v-on:click="saveHtml">保存</button>
+		<!-- <button v-on:click="saveHtml">保存</button> -->
 	</div>
 </template>
 
@@ -20,7 +20,6 @@
 			return {
 				content: '<p>hello world</p>',
 				editorOption: {
-					
 					theme:'snow'
 				}
 			}

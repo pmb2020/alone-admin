@@ -45,7 +45,7 @@
 		mounted() {
 			this.checkToken();
 			// console.log(getcity);
-			console.log(this.$route.meta)
+			// console.log(this.$route.meta)
 		},
 		methods:{
 			testbtn(){
@@ -58,18 +58,25 @@
 			// 验证localStorage存入的token,防止人为制造token，因为路由只验证是否存在
 			checkToken(){
 				getUserInfo().then(res=>{
-					console.log(res.data)
+					// console.log(res.data)
 					if(!res.data){
 						this.$message({
 							message: '身份验证失败！',
 							type: 'warning'
 						});
 						localStorage.setItem('token','')
-						// this.$router.push('/login')
+						this.$router.push('/login')
+					}else if(res.data.code==401){
+						this.$message({
+							message: '身份验证已过期，请重新登录',
+							type: 'warning'
+						});
+						localStorage.setItem('token','');
+						this.$router.push('/login');
 					}
 				}).catch(err=>{
-					console.log('获取信息失败')
-					console.log(err)
+					// console.log('获取信息失败')
+					// console.log(err)
 					localStorage.setItem('token','')
 					this.$message({
 						message: '出错了！',

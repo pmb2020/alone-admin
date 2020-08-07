@@ -5,22 +5,51 @@
 		</div>
 		<div>
 			<span style="margin-right: 15px;font-size: 14px;">前台首页</span>
-			<el-dropdown>
+			<el-dropdown @command="handleCommand">
 				<span class="el-dropdown-link" style="">
 					管理员<i class="el-icon-arrow-down el-icon--right"></i>
 				</span>
-				<el-dropdown-menu slot="dropdown">
-					<el-dropdown-item>个人信息</el-dropdown-item>
-					<el-dropdown-item>切换账号</el-dropdown-item>
-					<el-dropdown-item divided>退出</el-dropdown-item>
+				<el-dropdown-menu slot="dropdown" split-button="true">
+					<el-dropdown-item command="1">个人信息</el-dropdown-item>
+					<el-dropdown-item command="2">切换账号</el-dropdown-item>
+					<el-dropdown-item divided command="3">退出</el-dropdown-item>
 				</el-dropdown-menu>
 			</el-dropdown>
-			
+
 		</div>
 	</div>
 </template>
 
 <script>
+	import {
+		loginOut
+	} from '../apis/test.js'
+	export default {
+		data() {
+			return {
+
+			}
+		},
+		mounted() {
+
+		},
+		methods: {
+			outLogin() {
+				loginOut().then(res=>{
+					if(res.data.code==200){
+						localStorage.clear();
+						this.$message({message:'已为您退出，欢迎下次光临！',type:'success'});
+						this.$router.push('/login');
+					}
+				})
+			},
+			handleCommand(command) {
+				if(command==3){
+					this.outLogin()
+				}
+			}
+		}
+	}
 </script>
 
 <style scoped>

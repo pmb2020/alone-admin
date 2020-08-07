@@ -1,7 +1,17 @@
-import {get,post} from '../server/axios.js'
+import {get,post,del} from '../server/axios.js'
 // 登录
 export const login= params=>post('/login',params);
-export const getUserInfo = params=>get('user');
+/**
+ * 获取用户信息
+ */
+export const getUserInfo = params=>get('/user');
+/**
+ * 获取列表
+ */
+export const getAdminList = params => get('/admin/list',params);
+export const adminNumber = params => get('/admin/total');
+export const adminDel= params => del('/admin',params);
+export const loginOut = params => get('/logout',params);
 // import axios from 'axios'
 
 // const testdata=fetch.get('').then(res=>{

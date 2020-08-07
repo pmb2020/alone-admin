@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-
+import {Message} from 'element-ui'
 Vue.use(VueRouter)
-
+// Vue.use(Message)
 const routes = [{
 		path: '/',
 		name: 'Home',
@@ -58,16 +58,17 @@ const router = new VueRouter({
 // 注册路由导航守卫
 router.beforeEach((to,from,next)=>{
 	let token=localStorage.getItem('token');
-	token ? next() : to.path == '/login' ? next() : next('/login')
-	// if(token){
-	// 	next()
-	// }else{
-	// 	if(to.path !='/login'){
-	// 		next('/login')
-	// 	}else{
-	// 		next()
-	// 	}
-	// }
+	// token ? next() : to.path == '/login' ? next() : next('/login')
+	if(token){
+		next()
+	}else{
+		if(to.path !='/login'){
+			Message('您需要先登录哦！');
+			next('/login')
+		}else{
+			next()
+		}
+	}
 
 })
 export default router

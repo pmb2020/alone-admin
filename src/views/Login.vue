@@ -47,6 +47,7 @@
 			submitForm(form) {
 				this.$refs[form].validate((valid) => {
 					if (valid) {
+						console.log('dsasdas')
 						this.toLogin();
 					} else {
 						console.log('error submit!!');
@@ -56,17 +57,22 @@
 			},
 			toLogin(){
 				login(this.form).then(res => {
+					console.log(res.data)
 					if(res.data.code == 200){
 						localStorage.setItem('token', res.data.data.token);
 						this.$message({
 							message: '登录成功',
 							type: 'success'
 						});
-						this.$router.push('/index');
+						setTimeout(()=>{
+							this.$router.push('/index');
+						},1000)
+						
+					}else if(res.data.code ==401){
+						this.$message.error('用户名或者密码错误');
 					}
-					
 				}).catch(err => {
-					this.$message.error('用户名或者密码错误');
+					console.log(err)
 				})
 			},
 			// 判断是否已经登录

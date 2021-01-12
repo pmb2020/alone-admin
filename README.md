@@ -15,14 +15,14 @@ npm install  //npm安装依赖
 npm run server //运行项目
 ```
 
-### 功能列表
+### 项目介绍
 ```
 具体还没想好怎么写
 ```
 
 ### 说明
 
-alone-admin为作者k先生的alone系列作品，暂时也没啥要说明的。  
+alone-admin为作者k先生的alone系列作品，至于alone-admin后台管理系统的特点就是，只需要修改api接口地址就能得到一个适合自己的后台管理系统。  
  
 alone系列包括，alone-admin（后台管理系统）、alone-api（各种乱七八糟的接口，比如抖音视频无水印解析）、alone-video（免vip会员观看各大影视网站的电影）、alone-music等等。  
 

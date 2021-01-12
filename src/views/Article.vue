@@ -38,8 +38,8 @@
 			};
 		},
 		mounted() {
-			article().then(res=>{
-				console.log(res.data)
+			article({id:'455'}).then(res=>{
+				// console.log(res.data)
 				this.articleList=res.data
 			})
 		},

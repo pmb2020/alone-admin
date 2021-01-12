@@ -10,6 +10,7 @@ import '@/assets/css/base.css';
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false
+Vue.config.devtools = true;
 
 new Vue({
   router,

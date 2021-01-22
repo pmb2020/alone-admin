@@ -18,7 +18,7 @@
 					</div>
 					<div class="list_info_right">
 						<a class="d-none" href="#">编辑</a>
-						<a class="del_a" href="http://www.gold404.cn/admin/article/delete/59" onclick="if(confirm('确定要删除吗？')==false) return false">删除</a>
+						<a class="del_a" href="#" onclick="if(confirm('确定要删除吗？')==false) return false">删除</a>
 					</div>
 				</div>
 			</li>

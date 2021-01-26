@@ -1,4 +1,5 @@
 import axios from 'axios'
+import ElementUI from 'element-ui';
 import Qs from 'qs'
 import {
 	Message
@@ -36,7 +37,12 @@ const fetch = axios.create({
 
 // 响应拦截器
 fetch.interceptors.response.use(function(response) {
-	return response;
+	if(response.data.code===200){
+		return response.data.data;
+	}else{
+		Message("错误："+response.data.msg);
+		return 'error';
+	}
 }, function(error) {
 	return Promise.reject(error);
 });
@@ -48,12 +54,11 @@ export function get(url, params = {}) {
 				params: params
 			})
 			.then(res => {
-				// console.log('sadasdasfas')
-				// this.$message('这是一条消息提示');
-				resolve(res);
-			})
-			.catch(err => {
-				reject(err)
+				if(res!='error'){
+					resolve(res);
+				}
+			}).catch(err=>{
+				Message("请求错误！");
 			})
 	})
 }
@@ -65,13 +70,10 @@ export function post(url, params = {}) {
 	return new Promise((resolve, reject) => {
 		fetch.post(url, Qs.stringify(params))
 			.then(res => {
-				// console.log('post success');
 				resolve(res)
 			})
 			.catch(err => {
 				reject(err)
-				// console.log('error post');
-				// console.log(err)
 			})
 	})
 }

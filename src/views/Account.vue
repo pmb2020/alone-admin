@@ -32,8 +32,8 @@
 		},
 		mounted() {
 			admin().then(res=>{
-				console.log(res)
-				this.adminList=res.data
+				// console.log(res)
+				this.adminList=res
 				this.total=this.adminList.length
 			})
 		},

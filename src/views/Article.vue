@@ -40,7 +40,7 @@
 		mounted() {
 			article({id:'455'}).then(res=>{
 				// console.log(res.data)
-				this.articleList=res.data
+				this.articleList=res
 			})
 		},
 		methods: {

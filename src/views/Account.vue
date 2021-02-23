@@ -22,7 +22,7 @@
 </template>
 
 <script>
-	import {admin} from '../others/apis.js'
+	import {admin,users} from '../others/apis.js'
 	export default {
 		data() {
 			return {
@@ -31,10 +31,14 @@
 			}
 		},
 		mounted() {
-			admin().then(res=>{
-				// console.log(res)
-				this.adminList=res
-				this.total=this.adminList.length
+			// admin().then(res=>{
+			// 	this.adminList=res
+			// 	this.total=this.adminList.length
+			// })
+			users().then(res=>{
+				console.log(res)
+				this.adminList=res.data
+				this.total=res.total
 			})
 		},
 		methods: {			

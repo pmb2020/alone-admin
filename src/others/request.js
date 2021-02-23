@@ -36,16 +36,16 @@ const fetch = axios.create({
 // });
 
 // 响应拦截器
-fetch.interceptors.response.use(function(response) {
-	if(response.data.code===200){
-		return response.data.data;
-	}else{
-		Message("错误："+response.data.msg);
-		return 'error';
-	}
-}, function(error) {
-	return Promise.reject(error);
-});
+// fetch.interceptors.response.use(function(response) {
+// 	if(response.data.code===200){
+// 		return response.data.data;
+// 	}else{
+// 		Message("错误："+response.data.msg);
+// 		return 'error';
+// 	}
+// }, function(error) {
+// 	return Promise.reject(error);
+// });
 
 // 封装get方法
 export function get(url, params = {}) {
@@ -54,9 +54,15 @@ export function get(url, params = {}) {
 				params: params
 			})
 			.then(res => {
-				if(res!='error'){
-					resolve(res);
+				if(res.data.error_code==0){
+					resolve(res.data.data);
+				}else{
+					Message("查看错误信息");
 				}
+				
+				// if(res!='error'){
+				// 	resolve(res);
+				// }
 			}).catch(err=>{
 				Message("请求错误！");
 			})

@@ -17,13 +17,13 @@ npm run server //运行项目
 
 ### 项目介绍
 ```
-alone-admin的期望是：只通过修改api接口或者配置文件就能得到一个适合你的后台管理系统。
+alone-admin的期望是：只通过修改api接口（遵循restful风格）或者配置文件就能得到一个适合你的后台管理系统。
 
 接口约定：
 {
-	"error_code":0,
-	"msg":"解释信息",
-	"data":'数据体'
+  "error_code":0,
+  "msg":"解释信息",
+  "data":'数据体'
 }
 ```
 

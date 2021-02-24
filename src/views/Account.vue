@@ -36,10 +36,6 @@
 			}
 		},
 		mounted() {
-			// admin().then(res=>{
-			// 	this.adminList=res
-			// 	this.total=this.adminList.length
-			// })
 			this.getListData(this.page)
 		},
 		methods: {
@@ -51,10 +47,14 @@
 				this.getListData(this.page)
 			},
 			getListData(page){
-				users({page:page,pageSize:this.pageSize}).then(res=>{
+				users('GET',{page:page,pageSize:this.pageSize}).then(res=>{
 					this.adminList = res.data
 					this.total = res.total
 				})
+				// users({page:page,pageSize:this.pageSize}).then(res=>{
+				// 	this.adminList = res.data
+				// 	this.total = res.total
+				// })
 			},
 			handleDelete(index, row) {
 				console.log(index, row.id);
@@ -63,13 +63,20 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					userDel({id:row.id}).then(res=>{
+					users('DELETE',{id:row.id}).then(res=>{
 						this.getListData(this.page)
 						this.$message({
 							type: 'success',
 							message: '删除成功!'
 						});
 					})
+					// userDel({id:row.id}).then(res=>{
+					// 	this.getListData(this.page)
+					// 	this.$message({
+					// 		type: 'success',
+					// 		message: '删除成功!'
+					// 	});
+					// })
 				}).catch(() => {
 					this.$message({
 						type: 'info',

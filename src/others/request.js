@@ -54,16 +54,12 @@ export function get(url, params = {}) {
 				params: params
 			})
 			.then(res => {
-				if(res.data.error_code==0){
+				if (res.data.error_code == 0) {
 					resolve(res.data.data);
-				}else{
+				} else {
 					Message("查看错误信息");
 				}
-				
-				// if(res!='error'){
-				// 	resolve(res);
-				// }
-			}).catch(err=>{
+			}).catch(err => {
 				Message("请求错误！");
 			})
 	})
@@ -76,24 +72,47 @@ export function post(url, params = {}) {
 	return new Promise((resolve, reject) => {
 		fetch.post(url, Qs.stringify(params))
 			.then(res => {
-				resolve(res)
+				if (res.data.error_code == 0) {
+					resolve(res.data.data);
+				} else {
+					Message("提示：" + res.data.msg);
+				}
 			})
 			.catch(err => {
 				reject(err)
 			})
 	})
 }
-
+/**
+ * 封装put方法
+ */
+export function put(url, params = {}) {
+	return new Promise((resolve, reject) => {
+		fetch.put(url + "/" + params.id, Qs.stringify(params))
+			.then(res => {
+				if (res.data.error_code == 0) {
+					resolve(res.data.data);
+				} else {
+					console.log(res)
+					Message("提示：" + res.data.msg);
+				}
+			}).catch(err => {
+				Message("请求错误！");
+			})
+	})
+}
 /**
  * 封装delete请求
  */
 export function del(url, params = {}) {
 	return new Promise((resolve, reject) => {
-		fetch.delete(url, {
-				params: params,
-			})
+		fetch.delete(url + "/" + params.id)
 			.then(res => {
-				resolve(res);
+				if (res.data.error_code == 0) {
+					resolve(res.data.data);
+				} else {
+					Message("提示：" + res.data.msg);
+				}
 			})
 			.catch(err => {
 				reject(err)

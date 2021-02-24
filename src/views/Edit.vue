@@ -40,6 +40,7 @@
 
 <script>
 	import QuillEditor from '@/components/QuillEditor.vue'
+	import {userPost} from '../others/apis.js'
 	export default {
 		components: {
 			QuillEditor
@@ -88,6 +89,9 @@
 				}
 			};
 		},
+		mounted() {
+			
+		},
 		methods: {
 			submitForm(formName) {
 				console.log(this.$refs.quill.content)//输出quill编辑器内容
@@ -95,6 +99,9 @@
 					if (valid) {
 						console.log(this.ruleForm)
 						alert('submit!');
+						userPost(this.ruleForm).then(res=>{
+							console.log('书记新增成功')
+						})
 					} else {
 						console.log('error submit!!');
 						return false;

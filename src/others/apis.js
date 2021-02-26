@@ -11,7 +11,8 @@ import axios from 'axios'
 // export const userDel = params => del('http://www.alone.test/api/alone', params)
 export const userPost = params => post('http://www.alone.test/api/alone', params)
 export const users = (method,params) => {
-	return sendHttp('http://www.alone.test/api/alone',params,method)
+	// return sendHttp('http://www.alone.test/api/alone',params,method)
+	return sendHttp('/alone',params,method)
 }
 // export const userPost=params =>put('http://www.alone.test/api/alone',params)
 // export const article = params => get('/articles/article.json',params)

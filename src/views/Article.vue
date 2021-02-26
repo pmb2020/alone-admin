@@ -38,7 +38,7 @@
 			};
 		},
 		mounted() {
-			article({id:'455'}).then(res=>{
+			article('GET',{id:'455'}).then(res=>{
 				// console.log(res.data)
 				this.articleList=res
 			})

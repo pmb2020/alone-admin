@@ -6,13 +6,13 @@ import {
 } from 'element-ui'
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
-	axios.defaults.baseURL = 'http://api.gold404.cn/api'
+	axios.defaults.baseURL = 'http://api.gold404.cn/api/alone-admin'
 	console.log('切换为本地开发环境')
 } else if (process.env.NODE_ENV === 'test') {
-	axios.defaults.baseURL = 'http://www.alone.test/api'
+	axios.defaults.baseURL = 'http://www.alone.test/api/alone-admin'
 	console.log('切换为debug调试环境')
 } else if (process.env.NODE_ENV === 'production') {
-	axios.defaults.baseURL = 'http://api.gold404.cn/api'
+	axios.defaults.baseURL = 'http://api.gold404.cn/api/alone-admin'
 	console.log('切换为正式生产环境')
 }
 const fetch = axios.create({

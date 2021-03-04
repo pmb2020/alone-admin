@@ -12,18 +12,26 @@
 </template>
 
 <script>
+	import {login} from '../others/apis.js'
 	export default{
 		data(){
 			return{
 				form :{
-					username: '',
-					password: ''
+					username: 'admin',
+					password: '123456'
 				},
 			}
 		},
 		methods:{
 			onSubmit: function(){
-				console.log(this.form)
+				login(this.form).then(res=>{
+					console.log(res.token)
+					this.$message({
+						message:'登录成功！欢迎您回来！',
+						type:'success'
+					})
+					this.$router.push('/')
+				})
 			}
 		}
 	}

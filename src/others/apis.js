@@ -5,7 +5,7 @@ import {
 	del
 } from './request.js'
 import axios from 'axios'
-// export const login= params=>post('/login',params);
+export const login= params=>post('/login',params);
 // export const admin = params => get('/admins/admin.json', params)
 // export const users = params => get('http://www.alone.test/api/alone', params)
 // export const userDel = params => del('http://www.alone.test/api/alone', params)

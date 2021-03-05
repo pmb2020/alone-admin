@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-
+import {adminInfo} from '../others/apis.js'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -45,4 +45,19 @@ const router = new VueRouter({
 	routes
 })
 
+router.beforeEach((to,from,next) =>{
+	let token=localStorage.getItem('token');
+	if(!token && to.name !='Login'){
+		next('/login')
+	}else if(!localStorage.getItem('adInfo') && token){
+		adminInfo().then(res=>{
+			localStorage.setItem('adInfo',JSON.stringify(res.data))
+		}).catch(err=>{
+			localStorage.setItem('adInfo','')
+		})
+		next();
+	}else{
+		next();
+	}
+})
 export default router

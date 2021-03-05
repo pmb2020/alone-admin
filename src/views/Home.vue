@@ -83,6 +83,7 @@
 </template>
 
 <script>
+	import {adminInfo} from '../others/apis.js'
 	export default {
 		data() {
 			return {
@@ -128,6 +129,13 @@
 					size: 'large'
 				}]
 			}
+		},
+		mounted() {
+			let adInfo=JSON.parse(localStorage.getItem('adInfo'));
+			adminInfo().then(res=>{
+				console.log(res)
+			})
+			console.log(adInfo)
 		}
 	}
 </script>

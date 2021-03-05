@@ -48,13 +48,9 @@
 			},
 			getListData(page){
 				users('GET',{page:page,pageSize:this.pageSize}).then(res=>{
-					this.adminList = res.data
-					this.total = res.total
+					this.adminList = res.data.data
+					this.total = res.data.total
 				})
-				// users({page:page,pageSize:this.pageSize}).then(res=>{
-				// 	this.adminList = res.data
-				// 	this.total = res.total
-				// })
 			},
 			handleDelete(index, row) {
 				console.log(index, row.id);

@@ -54,8 +54,8 @@
 			},
 			getArticle(page){
 				article('GET',{page:page}).then(res=>{
-					this.articleList=res.data
-					this.total=res.total
+					this.articleList=res.data.data
+					this.total=res.data.total
 				})
 			}
 		}

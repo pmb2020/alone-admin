@@ -25,12 +25,14 @@
 		methods:{
 			onSubmit: function(){
 				login(this.form).then(res=>{
-					console.log(res.token)
-					this.$message({
-						message:'登录成功！欢迎您回来！',
-						type:'success'
-					})
-					this.$router.push('/')
+					if(res.error_code==0){
+						localStorage.setItem('token',res.data.token)
+						this.$message({
+							message:'登录成功！欢迎您回来！',
+							type:'success'
+						})
+						this.$router.push('/')
+					}
 				})
 			}
 		}

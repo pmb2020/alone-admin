@@ -1,5 +1,5 @@
 import axios from 'axios'
-import ElementUI from 'element-ui';
+// import ElementUI from 'element-ui';
 import Qs from 'qs'
 import {
 	Message
@@ -15,52 +15,58 @@ if (process.env.NODE_ENV === 'development') {
 	axios.defaults.baseURL = 'http://api.gold404.cn/api/alone-admin'
 	console.log('切换为正式生产环境')
 }
-const fetch = axios.create({
+const instance = axios.create({
 	timeout: 1000,
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 	}
 })
 // 请求拦截器
-// fetch.interceptors.request.use(function(config) {
-// 	// 在发送请求之前做些什么
-// 	// config.headers['Content-Type'] = 'application/json';
-// 	let token = localStorage.getItem('token');
-// 	if (token){
-// 		config.params['token'] = token
-// 	}
-// 	return config;
-// }, function(error) {
-// 	// 对请求错误做些什么
-// 	return Promise.reject(error);
-// });
+instance.interceptors.request.use(function(config) {
+	// 在发送请求之前做些什么
+	// config.headers['Content-Type'] = 'application/json';
+	var token = localStorage.getItem('token') || '';
+	if (token){
+		// config.headers.token  = token;
+		config.params = {
+			"token":token
+		};
+	}
+	return config;
+}, function(error) {
+	// 对请求错误做些什么
+	return Promise.reject(error);
+});
 
 // 响应拦截器
-// fetch.interceptors.response.use(function(response) {
-// 	if(response.data.code===200){
-// 		return response.data.data;
-// 	}else{
-// 		Message("错误："+response.data.msg);
-// 		return 'error';
-// 	}
-// }, function(error) {
-// 	return Promise.reject(error);
-// });
+instance.interceptors.response.use(function(response) {
+	if(response.data.error_code != 0){
+		Message.error(response.data.msg);
+	}
+	return response.data;
+}, function(error) {
+	if(window.location.href.indexOf('login') == -1){//是login
+		if(error.response.status==401){
+			Message('身份未通过验证或身份验证已过期！')
+			localStorage.setItem('adInfo','')
+			localStorage.setItem('token','')
+		}else{
+			Message('出现了未知错误！')
+		}
+	}
+	return Promise.reject(error);
+});
 
 // 封装get方法
 export function get(url, params = {}) {
 	return new Promise((resolve, reject) => {
-		fetch.get(url, {
+		instance.get(url, {
 				params: params
 			})
 			.then(res => {
-				if (res.data.error_code == 0) {
-					resolve(res.data.data);
-				} else {
-					Message("查看错误信息");
-				}
+				resolve(res);
 			}).catch(err => {
-				Message("请求错误！");
+				reject(err)
 			})
 	})
 }
@@ -70,13 +76,9 @@ export function get(url, params = {}) {
  */
 export function post(url, params = {}) {
 	return new Promise((resolve, reject) => {
-		fetch.post(url, Qs.stringify(params))
+		instance.post(url, Qs.stringify(params))
 			.then(res => {
-				if (res.data.error_code == 0) {
-					resolve(res.data.data);
-				} else {
-					Message("提示：" + res.data.msg);
-				}
+				resolve(res);
 			})
 			.catch(err => {
 				reject(err)
@@ -88,16 +90,11 @@ export function post(url, params = {}) {
  */
 export function put(url, params = {}) {
 	return new Promise((resolve, reject) => {
-		fetch.put(url + "/" + params.id, Qs.stringify(params))
+		instance.put(url + "/" + params.id, Qs.stringify(params))
 			.then(res => {
-				if (res.data.error_code == 0) {
-					resolve(res.data.data);
-				} else {
-					console.log(res)
-					Message("提示：" + res.data.msg);
-				}
+				resolve(res);
 			}).catch(err => {
-				Message("请求错误！");
+				reject(err)
 			})
 	})
 }
@@ -106,13 +103,9 @@ export function put(url, params = {}) {
  */
 export function del(url, params = {}) {
 	return new Promise((resolve, reject) => {
-		fetch.delete(url + "/" + params.id)
+		instance.delete(url + "/" + params.id)
 			.then(res => {
-				if (res.data.error_code == 0) {
-					resolve(res.data.data);
-				} else {
-					Message("提示：" + res.data.msg);
-				}
+				resolve(res)
 			})
 			.catch(err => {
 				reject(err)

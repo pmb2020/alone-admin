@@ -6,7 +6,7 @@ import {
 } from './request.js'
 import axios from 'axios'
 export const login= params=>post('/login',params);
-// export const admin = params => get('/admins/admin.json', params)
+export const adminInfo = params => get('/admin', params)
 // export const users = params => get('http://www.alone.test/api/alone', params)
 // export const userDel = params => del('http://www.alone.test/api/alone', params)
 export const userPost = params => post('http://www.alone.test/api/alone', params)

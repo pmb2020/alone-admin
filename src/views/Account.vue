@@ -1,6 +1,6 @@
 <template>
 	<div class="account" style="padding: 30px;background-color: #fff;">
-		<el-table :data="adminList" style="width: 100%;margin-bottom: 15px;">
+		<el-table :data="adminList" v-loading="loading" style="width: 100%;margin-bottom: 15px;">
 			<el-table-column type="index" label="#" width="50">
 			</el-table-column>
 			<el-table-column prop="created_at" label="日期" width="180">
@@ -31,8 +31,9 @@
 			return {
 				total: 1,
 				page:1,
-				pageSize:15,
+				pageSize:10,
 				adminList: [],
+				loading:true
 			}
 		},
 		mounted() {
@@ -50,6 +51,7 @@
 				users('GET',{page:page,pageSize:this.pageSize}).then(res=>{
 					this.adminList = res.data.data
 					this.total = res.data.total
+					this.loading=false
 				})
 			},
 			handleDelete(index, row) {

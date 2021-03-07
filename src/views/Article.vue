@@ -6,7 +6,7 @@
 			<el-tab-pane label="草稿箱(2)" name="3"></el-tab-pane>
 		</el-tabs>
 		<!-- <p>{{activeName}}</p> -->
-		<ul class="list_ul">
+		<ul class="list_ul" v-loading="loading">
 			<li v-for="item in articleList" :key="item.id">
 				<h2 class="list_title"><a target="_blank" href="#">{{item.title}}</a></h2>
 				<div class="list_info">
@@ -36,8 +36,9 @@
 				activeName: '1',
 				total:1,
 				page:1,
-				pageSize:15,
+				pageSize:10,
 				articleList:[],
+				loading:true
 			};
 		},
 		mounted() {
@@ -56,6 +57,7 @@
 				article('GET',{page:page}).then(res=>{
 					this.articleList=res.data.data
 					this.total=res.data.total
+					this.loading=false
 				})
 			}
 		}

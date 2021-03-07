@@ -5,15 +5,19 @@ import {
 	del
 } from './request.js'
 import axios from 'axios'
+
 export const login= params=>post('/login',params);
 export const adminInfo = params => get('/admin', params)
-// export const users = params => get('http://www.alone.test/api/alone', params)
-// export const userDel = params => del('http://www.alone.test/api/alone', params)
 export const userPost = params => post('http://www.alone.test/api/alone', params)
+/**
+ * 关于用户实体的四种操作（post增、get查、put改、删除delete）
+ */
 export const users = (method,params) => {
-	// return sendHttp('http://www.alone.test/api/alone',params,method)
 	return sendHttp('/user',params,method)
 }
+/**
+ * 关于文章实体的四种操作
+ */
 export const article = (method,params) => {
 	return sendHttp('/article',params,method)
 }
@@ -28,7 +32,6 @@ export const article = (method,params) => {
 // 		return err
 // 	})
 // }
-// console.log(process.env.NODE_ENV)
 /**
  * @param {Object} url
  * @param {Object} params

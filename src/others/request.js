@@ -27,10 +27,7 @@ instance.interceptors.request.use(function(config) {
 	// config.headers['Content-Type'] = 'application/json';
 	var token = localStorage.getItem('token') || '';
 	if (token){
-		// config.headers.token  = token;
-		config.params = {
-			"token":token
-		};
+		config.headers.common['Authorization'] ='Bearer '+token;
 	}
 	return config;
 }, function(error) {

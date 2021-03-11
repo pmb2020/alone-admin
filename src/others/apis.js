@@ -7,6 +7,7 @@ import {
 import axios from 'axios'
 
 export const login= params=>post('/login',params);
+export const logout= params=>get('/logout');
 export const adminInfo = params => get('/admin', params)
 export const userPost = params => post('http://www.alone.test/api/alone', params)
 /**

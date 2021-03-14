@@ -37,8 +37,13 @@ const routes = [{
 		name: 'ArticleEdit',
 		component: () => import( /* webpackChunkName: "about" */ '../views/Edit.vue'),
 		meta: ['写新文章']
+	},
+	{
+		path: '/config',
+		name: 'Config',
+		component: () => import( /* webpackChunkName: "about" */ '../views/Config.vue'),
+		meta: ['系统配置']
 	}
-	
 ]
 
 const router = new VueRouter({

@@ -9,15 +9,6 @@
 				<i class="el-icon-user-solid"></i>
 				<span slot="title">账户管理</span>
 			</el-menu-item>
-			<el-submenu index="3">
-				<template slot="title">
-					<i class="el-icon-s-promotion"></i>
-					<span slot="title">栏目管理</span>
-				</template>
-				<el-menu-item-group>
-					<el-menu-item index="3-1">栏目列表</el-menu-item>
-				</el-menu-item-group>
-			</el-submenu>
 			<el-submenu index="4">
 				<template slot="title">
 					<i class="el-icon-s-unfold"></i>
@@ -40,9 +31,9 @@
 				<i class="el-icon-link"></i>
 				<span slot="title">友链管理</span>
 			</el-menu-item>
-			<el-menu-item index="8" route="/">
+			<el-menu-item index="8" route="/config">
 				<i class="el-icon-setting"></i>
-				<span slot="title">系统设置</span>
+				<span slot="title">系统配置</span>
 			</el-menu-item>
 		</el-menu>
 	</div>

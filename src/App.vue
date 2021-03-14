@@ -30,7 +30,6 @@
 			Aside,Header
 		},
 		mounted() {
-			console.log(this.$route.path)
 		}
 	}
 </script>

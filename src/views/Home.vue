@@ -133,9 +133,9 @@
 		mounted() {
 			let adInfo=JSON.parse(localStorage.getItem('adInfo'));
 			adminInfo().then(res=>{
-				console.log(res)
+				// console.log(res)
 			})
-			console.log(adInfo)
+			// console.log(adInfo)
 		}
 	}
 </script>

@@ -2,7 +2,9 @@
 alone-admin是基于vue2.x+element-ui开发的后台管理系统，至于其他的介绍，看下面的图自行脑补哈。
 
 PS：alone-admin为新手作品，大佬勿喷。
+
 [在线预览](http://www.gold404.cn/alone-admin)
+
 ![](http://cdn.gold404.cn/alone-admin.png)
 
 ### 项目介绍

@@ -1,5 +1,6 @@
 <template>
 	<div class="aside">
+		<i @click="asideClick()" style="font-size: 28px;position: fixed;top: 0;left: 250px;width: 50px;text-align: center;line-height: 60px;color: #ffffff;cursor: pointer;" class="el-icon-s-fold"></i>
 		<el-menu default-active="/index" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :router='true' :unique-opened="true">
 			<el-menu-item index="/">
 				<i class="el-icon-s-home"></i>
@@ -47,8 +48,13 @@
 			};
 		},
 		methods: {
+			asideClick(){
+				this.isCollapse = this.isCollapse ? false : true;
+			},
 			handleOpen(key, keyPath) {
 				console.log(key, keyPath);
+				console.log('sas')
+				this.isCollapse =true
 			},
 			handleClose(key, keyPath) {
 				console.log(key, keyPath);

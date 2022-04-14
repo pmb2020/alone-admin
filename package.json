@@ -8,11 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "element-plus": "^2.1.9",
     "vue": "^3.2.25",
     "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.0",
+    "unplugin-auto-import": "^0.7.1",
+    "unplugin-vue-components": "^0.19.2",
     "vite": "^2.9.0"
   }
 }

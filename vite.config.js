@@ -1,3 +1,4 @@
+import path from 'path'
 import {
 	defineConfig
 } from 'vite'
@@ -9,9 +10,15 @@ import {
 	ElementPlusResolver
 } from 'unplugin-vue-components/resolvers'
 
+const pathSrc = path.resolve(__dirname,'src')
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	resolve:{
+		alias:{
+			'@': pathSrc
+		}
+	},
 	plugins: [
 		vue(),
 		AutoImport({
@@ -20,5 +27,12 @@ export default defineConfig({
 		Components({
 			resolvers: [ElementPlusResolver()],
 		}),
-	]
+	],
+	css: {
+		preprocessorOptions: {
+			scss:{
+				additionalData: '@use "@/styles/index.scss" as *;'
+			}
+		}
+	}
 })

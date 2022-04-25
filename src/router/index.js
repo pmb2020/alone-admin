@@ -4,12 +4,12 @@ import Test from "../components/Test.vue"
 const routes = [
 	{
 		path:'/',
-		redirect:'/dashboard'
+		redirect:'/home'
 	},
 	{
-		path:'/dashboard',
-		name:'Dashboard',
-		component: () => import('../views/Index.vue')
+		path:'/home',
+		name:'Home',
+		component: () => import('../views/Home.vue')
 	},
 	{
 		path:'/test',

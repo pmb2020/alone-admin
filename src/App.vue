@@ -27,31 +27,28 @@
 		<el-container class="is-vertical">
 			<BaseHeader></BaseHeader>
 			<el-main>
-				<el-scrollbar>
+				<p>哈喽，欢迎您</p>
+				<!-- <el-scrollbar>
 					<el-table :data="tableData">
 						<el-table-column prop="date" label="Date" width="140" />
 						<el-table-column prop="name" label="Name" width="120" />
 						<el-table-column prop="address" label="Address" />
 					</el-table>
-				</el-scrollbar>
+				</el-scrollbar> -->
+				<router-view></router-view>
 			</el-main>
 		</el-container>
 	</el-container>
 </template>
 
 <style>
-	html,
-	body,
-	#app {
-		height: 100%;
-	}
-
 	#app {
 		font-family: Avenir, Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-align: center;
-		color: #2c3e50;
+		color: #252631;
+		background-color: #F5F7FD;
 	}
 
 	.layout-container-demo .toolbar {
@@ -60,5 +57,9 @@
 		justify-content: center;
 		height: 100%;
 		right: 20px;
+	}
+	.el-main{
+		background-color: #fff;
+		margin-top: 15px;
 	}
 </style>

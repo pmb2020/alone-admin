@@ -2,18 +2,15 @@
 	<el-header style="text-align: right; font-size: 12px">
 		<div class="toolbar">
 			<el-dropdown>
-				<el-icon style="margin-right: 8px; margin-top: 1px">
-					<setting />
-				</el-icon>
+				<el-icon :size="20"><UserFilled /></el-icon>
 				<template #dropdown>
 					<el-dropdown-menu>
-						<el-dropdown-item>View</el-dropdown-item>
-						<el-dropdown-item>Add</el-dropdown-item>
-						<el-dropdown-item>Delete</el-dropdown-item>
+						<el-dropdown-item>消息</el-dropdown-item>
+						<el-dropdown-item>退出</el-dropdown-item>
 					</el-dropdown-menu>
 				</template>
 			</el-dropdown>
-			<span>Tom</span>
+			<span>alone-admin</span>
 		</div>
 	</el-header>
 </template>

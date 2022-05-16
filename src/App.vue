@@ -27,14 +27,7 @@
 		<el-container class="is-vertical">
 			<BaseHeader></BaseHeader>
 			<el-main>
-				<p>哈喽，欢迎您</p>
-				<!-- <el-scrollbar>
-					<el-table :data="tableData">
-						<el-table-column prop="date" label="Date" width="140" />
-						<el-table-column prop="name" label="Name" width="120" />
-						<el-table-column prop="address" label="Address" />
-					</el-table>
-				</el-scrollbar> -->
+				<p>哈喽，我是alone-admin，我们又见面了。</p>
 				<router-view></router-view>
 			</el-main>
 		</el-container>

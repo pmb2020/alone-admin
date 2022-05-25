@@ -22,7 +22,7 @@
 </script>
 
 <template>
-	<el-container class="layout-container-demo" style="height: 800px">
+	<el-container style="height: 100%">
 		<BaseSide></BaseSide>
 		<el-container class="is-vertical">
 			<BaseHeader></BaseHeader>
@@ -35,22 +35,19 @@
 </template>
 
 <style>
+	html,body{
+		height: 100%;
+	}
 	#app {
-		font-family: Avenir, Helvetica, Arial, sans-serif;
+		font-family:Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-align: center;
 		color: #252631;
 		background-color: #F5F7FD;
+		height: 100%;
 	}
 
-	.layout-container-demo .toolbar {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		height: 100%;
-		right: 20px;
-	}
 	.el-main{
 		background-color: #fff;
 		margin-top: 15px;

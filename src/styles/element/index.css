@@ -1,0 +1,10 @@
+:root {
+  --el-color-primary: green;
+  --aside-bg:#394167;
+}
+.el-menu{
+	--el-menu-bg-color:#394167;
+	--el-menu-text-color:#fff;
+	--el-menu-active-color:#5473E8;;
+	--el-menu-hover-bg-color:#5473E8;
+}

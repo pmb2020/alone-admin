@@ -27,8 +27,8 @@
 		<el-container class="is-vertical">
 			<BaseHeader></BaseHeader>
 			<el-main>
-				<p>哈喽，我是alone-admin，我们又见面了。</p>
 				<router-view></router-view>
+				<!-- <HelloWorld></HelloWorld> -->
 			</el-main>
 		</el-container>
 	</el-container>
@@ -49,7 +49,7 @@
 	}
 
 	.el-main{
-		background-color: #fff;
-		margin-top: 15px;
+		/* background-color: #fff; */
+		margin: 15px 0 0 15px;
 	}
 </style>

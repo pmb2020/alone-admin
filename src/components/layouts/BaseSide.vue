@@ -6,7 +6,7 @@
 				<Fold v-else />
 			</el-icon>
 		</div>
-		<el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" @open="handleOpen" @close="handleClose">
+		<el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" router @open="handleOpen" @close="handleClose">
 			<el-menu-item index="1">
 				<el-icon>
 					<HomeFilled />
@@ -53,7 +53,7 @@
 					<el-menu-item index="5-2">内容二</el-menu-item>
 				</el-menu-item-group>
 			</el-sub-menu>
-			<el-menu-item index="6" disabled>
+			<el-menu-item index="6" route="/setting">
 				<el-icon><Setting /></el-icon>
 				<template #title>系统设置</template>
 			</el-menu-item>

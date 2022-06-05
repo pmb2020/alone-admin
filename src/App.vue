@@ -22,16 +22,7 @@
 </script>
 
 <template>
-	<el-container style="height: 100%">
-		<BaseSide></BaseSide>
-		<el-container class="is-vertical">
-			<BaseHeader></BaseHeader>
-			<el-main>
-				<router-view></router-view>
-				<!-- <HelloWorld></HelloWorld> -->
-			</el-main>
-		</el-container>
-	</el-container>
+	<router-view></router-view>
 </template>
 
 <style>
@@ -46,10 +37,5 @@
 		color: #252631;
 		background-color: #F5F7FD;
 		height: 100%;
-	}
-
-	.el-main{
-		/* background-color: #fff; */
-		margin: 15px 0 0 15px;
 	}
 </style>

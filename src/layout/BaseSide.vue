@@ -7,7 +7,7 @@
 			</el-icon>
 		</div>
 		<el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" router @open="handleOpen" @close="handleClose">
-			<el-menu-item index="1">
+			<el-menu-item index="/home">
 				<el-icon>
 					<HomeFilled />
 				</el-icon>

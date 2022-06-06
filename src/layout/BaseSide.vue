@@ -7,11 +7,11 @@
 			</el-icon>
 		</div>
 		<el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" router @open="handleOpen" @close="handleClose">
-			<el-menu-item index="/home">
+			<el-menu-item v-for="(item,index) in menuItems"  index="/home">
 				<el-icon>
 					<HomeFilled />
 				</el-icon>
-				<span>首页</span>
+				<span v-if="item.meta">{{item.meta.title}}</span>
 			</el-menu-item>
 			<el-sub-menu index="2">
 				<template #title>
@@ -65,13 +65,19 @@
 	export default{
 		data(){
 			return{
-				isCollapse:false
+				isCollapse:false,
+				menuItems:[]
 			}
 		},
 		watch:{
 			isCollapse(n,o){
 				console.log('sss'+n)
 			}
+		},
+		mounted() {
+			// this.menuItems=this.$router.getRoutes()
+			this.menuItems = this.$router.options.routes
+			console.log(this.$router.options.routes)
 		},
 		methods:{
 			handleOpen(){

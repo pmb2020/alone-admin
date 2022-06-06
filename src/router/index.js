@@ -3,9 +3,17 @@ import Layout from '@/layout/index.vue'
 
 const routes = [
 	{
+		path:'/login',
+		hidden: true,
+		component:() => import('../views/Home.vue')
+	},
+	{
 		path:'/',
 		redirect:'/home',
 		component: Layout,
+		meta:{
+			title:'首页',
+		},
 		children:[
 			{
 				path:'home',
@@ -17,6 +25,9 @@ const routes = [
 		path:'/setting',
 		redirect: '/setting/index',
 		component: Layout,
+		meta:{
+			title:'系统设置',
+		},
 		children:[
 			{
 				path:'index',

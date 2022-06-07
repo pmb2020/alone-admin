@@ -22,7 +22,7 @@
 						<span>{{items.meta.title}}</span>
 					</template>
 					<el-menu-item-group>
-						<el-menu-item v-for="(subItem,subIndex) in items.children" :key="subIndex" :index="subItem.path">{{subItem.meta.title}}</el-menu-item>
+						<el-menu-item v-for="(subItem,subIndex) in items.children" :key="subIndex" :index="items.path+'/'+subItem.path">{{subItem.meta.title}}</el-menu-item>
 					</el-menu-item-group>
 				</el-sub-menu>
 			</template>

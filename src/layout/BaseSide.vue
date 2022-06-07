@@ -6,57 +6,26 @@
 				<Fold v-else />
 			</el-icon>
 		</div>
-		<el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" router @open="handleOpen" @close="handleClose">
-			<el-menu-item v-for="(item,index) in menuItems"  index="/home">
-				<el-icon>
-					<HomeFilled />
-				</el-icon>
-				<span v-if="item.meta">{{item.meta.title}}</span>
-			</el-menu-item>
-			<el-sub-menu index="2">
-				<template #title>
-					<el-icon><Document /></el-icon>
-					<span>内容管理</span>
-				</template>
-				<el-menu-item-group>
-					<el-menu-item index="2-1">内容一</el-menu-item>
-					<el-menu-item index="2-2">内容二</el-menu-item>
-				</el-menu-item-group>
-			</el-sub-menu>
-			<el-sub-menu index="3">
-				<template #title>
-					<el-icon><GobletSquareFull /></el-icon>
-					<span>产品管理</span>
-				</template>
-				<el-menu-item-group>
-					<el-menu-item index="3-1">内容一</el-menu-item>
-					<el-menu-item index="3-2">内容二</el-menu-item>
-				</el-menu-item-group>
-			</el-sub-menu>
-			<el-sub-menu index="4">
-				<template #title>
-					<el-icon><HotWater /></el-icon>
-					<span>资讯管理</span>
-				</template>
-				<el-menu-item-group>
-					<el-menu-item index="4-1">内容一</el-menu-item>
-					<el-menu-item index="4-2">内容二</el-menu-item>
-				</el-menu-item-group>
-			</el-sub-menu>
-			<el-sub-menu index="5">
-				<template #title>
-					<el-icon><Lightning /></el-icon>
-					<span>消息管理</span>
-				</template>
-				<el-menu-item-group>
-					<el-menu-item index="5-1">内容一</el-menu-item>
-					<el-menu-item index="5-2">内容二</el-menu-item>
-				</el-menu-item-group>
-			</el-sub-menu>
-			<el-menu-item index="6" route="/setting">
-				<el-icon><Setting /></el-icon>
-				<template #title>系统设置</template>
-			</el-menu-item>
+		<el-menu default-active="/" class="el-menu-vertical-demo" :collapse="isCollapse" router @open="handleOpen" @close="handleClose">
+			<template v-for="(items,index) in menuItems" :key="index">
+				<el-menu-item v-if="items.children && items.children.length == 1" :index="items.path">
+					<el-icon>
+						<component :is="items.children[0].meta.icon"></component>
+					</el-icon>
+					<span>{{items.children[0].meta.title}}</span>
+				</el-menu-item>
+				<el-sub-menu v-else :index="items.path">
+					<template #title>
+						<el-icon>
+							<component :is="items.meta.icon" ></component>
+						</el-icon>
+						<span>{{items.meta.title}}</span>
+					</template>
+					<el-menu-item-group>
+						<el-menu-item v-for="(subItem,subIndex) in items.children" :key="subIndex" :index="subItem.path">{{subItem.meta.title}}</el-menu-item>
+					</el-menu-item-group>
+				</el-sub-menu>
+			</template>
 		</el-menu>
 	</div>
 </template>
@@ -75,9 +44,10 @@
 			}
 		},
 		mounted() {
-			// this.menuItems=this.$router.getRoutes()
-			this.menuItems = this.$router.options.routes
-			console.log(this.$router.options.routes)
+			this.menuItems = this.$router.options.routes.filter((item)=>{
+				return !item.hidden
+			})
+			console.log(this.menuItems)
 		},
 		methods:{
 			handleOpen(){

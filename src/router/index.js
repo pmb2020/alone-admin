@@ -3,6 +3,12 @@ import Layout from '@/layout/index.vue'
 
 const routes = [
 	{
+		path:'/:pathMatch(.*)*',
+		name:'NotFound',
+		hidden: true,
+		component: () =>import('@/layout/NotFound.vue')
+	},
+	{
 		path:'/login',
 		hidden: true,
 		component:() => import('../views/Home.vue')

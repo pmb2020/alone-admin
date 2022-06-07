@@ -1,7 +1,8 @@
 {
   "name": "alone-admin-vue3",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.1.1",
+  "author": "二号小先生",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -8,6 +8,14 @@
 </template>
 
 <script>
+	import {get} from '../until/request.js'
+	export default{
+		mounted() {
+			get('login').then(res=>{
+				console.log(res)
+			})
+		}
+	}
 </script>
 
 <style>

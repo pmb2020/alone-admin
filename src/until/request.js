@@ -1,4 +1,7 @@
 import axios from 'axios'
+import qs from 'qs';
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css';
 const instance = axios.create({
 	baseURL:'https://alone.usemock.com/api/',
 	timeout: 1000,
@@ -9,7 +12,10 @@ const instance = axios.create({
 
 // 响应拦截器
 instance.interceptors.response.use(function(response){
-	return response.data.data
+	if(response.data.code != 0){
+		ElMessage.error(response.data.msg)
+	}
+	return response.data
 },function(error){
 	return Promise.reject(error)
 })
@@ -29,8 +35,8 @@ export function get(url, params = {}) {
 
 export function post(url, data = {}){
 	return new Promise((resolve, reject)=>{
-		instance.post(url,{data}).then(res=>{
-			resolve(res.data.data);
+		instance.post(url,qs.stringify(data)).then(res=>{
+			resolve(res);
 		}).catch(err=>{
 			reject(err)
 		})

@@ -4,6 +4,6 @@ export const getUser = (params)=>{
 	return get('user',params)
 }
 
-export const login = (params)=>{
-	return post('login',params)
+export const login = (data)=>{
+	return post('login',data)
 }

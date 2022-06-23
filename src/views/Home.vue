@@ -13,6 +13,7 @@
 	export default{
 		mounted() {
 			login({username:'admin',password:'vaa123456'}).then(res=>{
+				console.log('home获取login')
 				console.log(res)
 			})
 			getUser({user_id:100555}).then(res=>{

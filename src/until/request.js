@@ -27,9 +27,9 @@ export function get(url, params = {}) {
 	})
 }
 
-export function post(url, params = {}){
+export function post(url, data = {}){
 	return new Promise((resolve, reject)=>{
-		instance.post(url,{params}).then(res=>{
+		instance.post(url,{data}).then(res=>{
 			resolve(res.data.data);
 		}).catch(err=>{
 			reject(err)

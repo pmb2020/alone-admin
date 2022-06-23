@@ -8,10 +8,14 @@
 </template>
 
 <script>
-	import {get} from '../until/request.js'
+	import {get} from '@/until/request.js'
+	import {getUser,login} from '@/api/user.js'
 	export default{
 		mounted() {
-			get('login').then(res=>{
+			login({username:'admin',password:'vaa123456'}).then(res=>{
+				console.log(res)
+			})
+			getUser({user_id:100555}).then(res=>{
 				console.log(res)
 			})
 		}

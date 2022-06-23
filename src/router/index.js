@@ -39,7 +39,7 @@ const routes = [
 		children:[
 			{
 				path:'table',
-				component: () => import('../views/Home.vue'),
+				component: () => import('../views/Table.vue'),
 				meta: {
 				  title: '表格列表',
 				},

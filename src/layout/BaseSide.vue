@@ -6,9 +6,9 @@
 				<Fold v-else />
 			</el-icon>
 		</div>
-		<el-menu default-active="/" class="el-menu-vertical-demo" :collapse="isCollapse" router @open="handleOpen" @close="handleClose">
+		<el-menu :default-active="menuRoute" class="el-menu-vertical-demo" :collapse="isCollapse" router @open="handleOpen" @close="handleClose">
 			<template v-for="(items,index) in menuItems" :key="index">
-				<el-menu-item v-if="items.children && items.children.length == 1" :index="items.path">
+				<el-menu-item v-if="items.children && items.children.length == 1" :index="items.path+'/'+items.children[0].path">
 					<el-icon>
 						<component :is="items.children[0].meta.icon"></component>
 					</el-icon>
@@ -35,7 +35,8 @@
 		data(){
 			return{
 				isCollapse:false,
-				menuItems:[]
+				menuItems:[],
+				menuRoute:''
 			}
 		},
 		watch:{
@@ -44,10 +45,13 @@
 			}
 		},
 		mounted() {
+			this.menuRoute=this.$route.path
 			this.menuItems = this.$router.options.routes.filter((item)=>{
+				if(item.path=='/'){
+					item.path=''
+				}
 				return !item.hidden
 			})
-			console.log(this.menuItems)
 		},
 		methods:{
 			handleOpen(){

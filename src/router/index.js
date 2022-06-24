@@ -11,7 +11,7 @@ const routes = [
 	{
 		path:'/login',
 		hidden: true,
-		component:() => import('../views/Home.vue')
+		component:() => import('../views/Login.vue')
 	},
 	{
 		path:'/',

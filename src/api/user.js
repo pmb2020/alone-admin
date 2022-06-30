@@ -7,3 +7,7 @@ export const getUser = (params)=>{
 export const login = (data)=>{
 	return post('login',data)
 }
+
+export const getTable = (params)=>{
+	return get('table')
+}

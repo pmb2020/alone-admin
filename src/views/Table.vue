@@ -1,5 +1,5 @@
 <template>
-	<div class="al-body">
+	<div class="al-box" style="display: flex;">
 		<el-form :inline="true" :model="filterForm" class="demo-form-inline">
 			<el-form-item label="名称">
 				<el-input v-model="filterForm.name" placeholder="要搜索的名称" />
@@ -15,53 +15,49 @@
 			</el-form-item>
 		</el-form>
 	</div>
-	<div class="filter" style="box-shadow: --el-box-shadow-light;">
-		<el-table :ref="tableRef" :data="tableData" style="width: 100%;" @selection-change="handleSelectionChange"
-			table-layout="fixed">
+	<div class="al-box filter">
+		<el-table :ref="tableRef" :data="tableData" style="width: 100%;" size="large"
+			@selection-change="handleSelectionChange" table-layout="fixed" highlight-current-row >
 			<el-table-column type="selection" width="55" />
 			<el-table-column type="index" label="#" width="50" />
-			<el-table-column prop="date" label="名称" width="180" />
-			<el-table-column prop="name" label="Date" />
-			<el-table-column prop="address" label="Date" />
-			<el-table-column prop="address" label="Date" />
+			<el-table-column prop="title" label="名称" align="center" width="180" />
+			<el-table-column prop="amount" label="金额" />
+			<el-table-column prop="num" label="数量" />
+			<el-table-column prop="name" label="姓名" />
+			<el-table-column prop="phone" label="手机号" />
+			<el-table-column prop="date" label="时间" />
+			<el-table-column label="操作">
+				<template #default="scope">
+					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+				</template>
+			</el-table-column>
 		</el-table>
-		<el-button @click="toggleSelection([tableData[0],tableData[1]])">选中项</el-button>
+		<!-- <el-button @click="toggleSelection([tableData[0],tableData[1]])">选中项</el-button> -->
+		<el-pagination style="margin-top: 30px;" background layout="prev, pager, next" :total="1000" />
 	</div>
 </template>
 
 <script setup>
 	import {
-		ref,reactive
+		getTable
+	} from '@/api/user.js'
+	import {
+		ref,
+		reactive
 	} from 'vue'
 	const filterForm = reactive({
-		'name':'',
-		'date':'2022-05-03'
+		'name': '',
+		'date': '2022-05-03'
 	})
 	const tableRef = ref([])
-	const tableData = [{
-			date: '2022-05-03',
-			name: '张三',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2022-05-03',
-			name: '李四',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2022-05-03',
-			name: '王二',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2022-05-03',
-			name: '麻子',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	]
-	
-	const getList = () =>{
-		
+	const tableData = ref([])
+	getTable().then(res => {
+		tableData.value = res.data
+		console.log(res.data)
+	})
+	const getList = () => {
+		console.log('获取')
 	}
 	const handleSelectionChange = (val) => {
 		console.log('fff')
@@ -74,5 +70,8 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.el-form-item {
+		margin-bottom: 0;
+	}
 </style>

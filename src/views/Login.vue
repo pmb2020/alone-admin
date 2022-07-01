@@ -8,15 +8,19 @@
 			<el-form-item label="密码" prop="password">
 				<el-input v-model="loginForm.password" />
 			</el-form-item>
-			<el-button @click="submitForm">登录</el-button>
+			<el-button @click="submitForm">登录{{store}}</el-button>
 		</el-form>
 	</div>
 </template>
 
 <script>
 	import {reactive,ref} from 'vue'
+	import {useStore} from '@/store/index'
 	export default{
 		setup() {
+			const store = useStore()
+			console.log(store.count)
+			store.count++
 			const loginForm = reactive({
 				username:'',
 				password:''
@@ -38,6 +42,7 @@
 			
 			const loginFormRef=ref({})
 			const submitForm = async()=>{
+				store.increment()
 				loginFormRef.value.validate((valid)=>{
 					if(valid){
 						console.log('验证通过')
@@ -51,7 +56,7 @@
 				loginForm,
 				submitForm,
 				loginFormRef,
-				rules
+				rules,store
 			}
 		}
 	}

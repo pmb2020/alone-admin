@@ -21,6 +21,11 @@
 			<el-table-column type="selection" width="55" />
 			<el-table-column type="index" label="#" width="50" />
 			<el-table-column prop="title" label="名称" align="center" width="180" />
+			<el-table-column label="图片" align="center">
+				<template #default="scope">
+					<el-image style="width: 120px; height: 80px" :src="scope.row.image" fit="fill" />
+				</template>
+			</el-table-column>
 			<el-table-column prop="amount" label="金额" />
 			<el-table-column prop="num" label="数量" />
 			<el-table-column prop="name" label="姓名" />
@@ -28,15 +33,16 @@
 			<el-table-column prop="date" label="时间" />
 			<el-table-column label="操作">
 				<template #default="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+					<el-button size="default" color="#626aef" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<el-button size="default" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
 		<!-- <el-button @click="toggleSelection([tableData[0],tableData[1]])">选中项</el-button> -->
-		<el-pagination v-model:currentPage="currentPage4" v-model:page-size="pageSize4"
-			:page-sizes="[100, 200, 300, 400]" background layout="total, sizes,prev, pager, next, jumper" :total="1000" @size-change="handleSizeChange"
-			@current-change="handleCurrentChange" />
+		<div style="margin-top: 30px;">
+			<el-pagination v-model:currentPage="page" background v-model:page-size="page"
+				:page-sizes="[100, 200, 300, 400]" layout="total, sizes, prev, pager, next, jumper" :total="400" />
+		</div>
 	</div>
 </template>
 
@@ -54,6 +60,7 @@
 	})
 	const tableRef = ref([])
 	const tableData = ref([])
+	const page = ref(1)
 	getTable().then(res => {
 		tableData.value = res.data
 		console.log(res.data)

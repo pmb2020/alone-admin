@@ -1,28 +1,13 @@
 <script setup>
-	// This starter template is using Vue 3 <script setup> SFCs
-	// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-	import HelloWorld from './components/HelloWorld.vue'
-	import {
-		ref
-	} from 'vue'
-	import {
-		Menu as IconMenu,
-		Message,
-		Setting
-	} from '@element-plus/icons-vue'
-
-	const item = {
-		date: '2016-05-02',
-		name: 'Tom',
-		address: 'No. 189, Grove St, Los Angeles',
-	}
-	const tableData = ref(Array.from({
-		length: 20
-	}).fill(item))
+	import { defineComponent } from 'vue'
+	import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+	const locale = zhCn
 </script>
 
 <template>
-	<router-view></router-view>
+	<el-config-provider :locale='locale'>
+		<router-view></router-view>
+	</el-config-provider>
 </template>
 
 <style>

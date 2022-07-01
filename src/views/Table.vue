@@ -17,7 +17,7 @@
 	</div>
 	<div class="al-box filter">
 		<el-table :ref="tableRef" :data="tableData" style="width: 100%;" size="large"
-			@selection-change="handleSelectionChange" table-layout="fixed" highlight-current-row >
+			@selection-change="handleSelectionChange" table-layout="fixed" highlight-current-row>
 			<el-table-column type="selection" width="55" />
 			<el-table-column type="index" label="#" width="50" />
 			<el-table-column prop="title" label="名称" align="center" width="180" />
@@ -34,7 +34,9 @@
 			</el-table-column>
 		</el-table>
 		<!-- <el-button @click="toggleSelection([tableData[0],tableData[1]])">选中项</el-button> -->
-		<el-pagination style="margin-top: 30px;" background layout="prev, pager, next" :total="1000" />
+		<el-pagination v-model:currentPage="currentPage4" v-model:page-size="pageSize4"
+			:page-sizes="[100, 200, 300, 400]" background layout="total, sizes,prev, pager, next, jumper" :total="1000" @size-change="handleSizeChange"
+			@current-change="handleCurrentChange" />
 	</div>
 </template>
 

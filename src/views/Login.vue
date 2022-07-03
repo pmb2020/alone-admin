@@ -13,52 +13,46 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+	import {login} from '@/api/auth.js'
 	import {reactive,ref} from 'vue'
 	import {useStore} from '@/store/index'
-	export default{
-		setup() {
-			const store = useStore()
-			console.log(store.count)
-			store.count++
-			const loginForm = reactive({
-				username:'',
-				password:''
-			})
-			const rules = reactive({
-				username:[
-					{
-						required:true,
-						message:'请输入账号'
-					}
-				],
-				password:[
-					{
-						required:true,
-						message:'请输入密码'
-					}
-				],
-			})
-			
-			const loginFormRef=ref({})
-			const submitForm = async()=>{
-				store.increment()
-				loginFormRef.value.validate((valid)=>{
-					if(valid){
-						console.log('验证通过')
-					}else{
-						console.log('验证不通过')
-					}
+	const store = useStore()
+	console.log(store.count)
+	store.count++
+	const loginForm = reactive({
+		username:'',
+		password:''
+	})
+	const rules = reactive({
+		username:[
+			{
+				required:true,
+				message:'请输入账号'
+			}
+		],
+		password:[
+			{
+				required:true,
+				message:'请输入密码'
+			}
+		],
+	})
+	
+	const loginFormRef=ref({})
+	const submitForm = async()=>{
+		store.increment()
+		loginFormRef.value.validate((valid)=>{
+			if(valid){
+				login(loginForm).then(res=>{
+					localStorage.setItem('token',res.token)
+					localStorage.removeItem('token')
 				})
+				console.log('验证通过')
+			}else{
+				console.log('验证不通过')
 			}
-			
-			return {
-				loginForm,
-				submitForm,
-				loginFormRef,
-				rules,store
-			}
-		}
+		})
 	}
 </script>
 

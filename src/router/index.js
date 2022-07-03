@@ -10,6 +10,7 @@ const routes = [
 	},
 	{
 		path:'/login',
+		name:'Login',
 		hidden: true,
 		component:() => import('../views/Login.vue')
 	},
@@ -73,6 +74,16 @@ const routes = [
 const router = createRouter({
 	history: createWebHashHistory(),
 	routes
+})
+
+router.beforeEach((to,form) => {
+	let token = localStorage.getItem('token')
+	console.log('路由token:'+token)
+	if(!token && to.name !== 'Login'){
+		return {name: 'Login'}
+	}
+	// return {name: 'Login'}
+	// return false
 })
 
 export default router

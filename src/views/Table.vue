@@ -18,20 +18,19 @@
 	<div class="al-box filter">
 		<el-table :ref="tableRef" :data="tableData" style="width: 100%;" size="large"
 			@selection-change="handleSelectionChange" table-layout="fixed" highlight-current-row>
-			<el-table-column type="selection" width="55" />
-			<el-table-column type="index" label="#" width="50" />
-			<el-table-column prop="title" label="名称" align="center" width="180" />
-			<el-table-column label="图片" align="center">
+			<el-table-column type="selection" width="50" />
+			<el-table-column type="index" label="#" width="45" />
+			<el-table-column prop="title" label="名称" align="center" width="150" />
+			<el-table-column label="图片" align="center" width="150">
 				<template #default="scope">
 					<el-image style="width: 120px; height: 80px" :src="scope.row.image" fit="fill" />
 				</template>
 			</el-table-column>
-			<el-table-column prop="amount" label="金额" />
-			<el-table-column prop="num" label="数量" />
-			<el-table-column prop="name" label="姓名" />
-			<el-table-column prop="phone" label="手机号" />
-			<el-table-column prop="date" label="时间" />
-			<el-table-column label="操作">
+			<el-table-column prop="amount" align="center" label="金额" />
+			<el-table-column prop="name" align="center" label="姓名" />
+			<el-table-column prop="phone" align="center" label="手机号" />
+			<el-table-column prop="date" align="center" label="时间" width="165" />
+			<el-table-column label="操作" align="center" width="170">
 				<template #default="scope">
 					<el-button size="default" color="#626aef" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button size="default" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>

@@ -16,9 +16,12 @@
 <script setup>
 	import {login} from '@/api/auth.js'
 	import {reactive,ref} from 'vue'
+	import {useRouter} from 'vue-router'
 	import {useStore} from '@/store/index'
+	const router = useRouter()
 	const store = useStore()
 	console.log(store.count)
+	console.log(import.meta.env)
 	store.count++
 	const loginForm = reactive({
 		username:'',
@@ -45,8 +48,9 @@
 		loginFormRef.value.validate((valid)=>{
 			if(valid){
 				login(loginForm).then(res=>{
-					localStorage.setItem('token',res.token)
-					localStorage.removeItem('token')
+					console.log(res)
+					// localStorage.setItem('token',res.token)
+					// router.push('/')
 				})
 				console.log('验证通过')
 			}else{

@@ -78,12 +78,10 @@ const router = createRouter({
 
 router.beforeEach((to,form) => {
 	let token = localStorage.getItem('token')
-	console.log('路由token:'+token)
+	// console.log('路由token:'+token)
 	if(!token && to.name !== 'Login'){
 		return {name: 'Login'}
 	}
-	// return {name: 'Login'}
-	// return false
 })
 
 export default router

@@ -11,14 +11,21 @@
 			<template #dropdown>
 				<el-dropdown-menu>
 					<el-dropdown-item>消息</el-dropdown-item>
-					<el-dropdown-item divided>退出</el-dropdown-item>
+					<el-dropdown-item @click="loginOut" divided>退出</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
 	</el-header>
 </template>
 
-<script>
+<script setup>
+	import {useRouter} from 'vue-router'
+	const router = useRouter()
+	const loginOut = () =>{
+		console.log('退出登录')
+		localStorage.removeItem('token')
+		router.push('/login')
+	}
 </script>
 
 <style>

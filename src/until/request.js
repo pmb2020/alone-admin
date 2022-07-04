@@ -3,13 +3,13 @@ import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css';
 
 const instance = axios.create({
-	baseURL:'https://alone.usemock.com/api/',
+	baseURL:import.meta.env.VITE_API_HOST,
 	timeout: 5000,
 })
 
 // 响应拦截器
 instance.interceptors.response.use(function(response){
-	if(response.data.code != 0){
+	if(response.data.code != 0 || response.data.err_code != 0){
 		ElMessage.error(response.data.code+'：'+response.data.msg)
 	}
 	return response.data.data

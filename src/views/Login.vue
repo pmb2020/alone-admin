@@ -48,13 +48,9 @@
 		loginFormRef.value.validate((valid)=>{
 			if(valid){
 				login(loginForm).then(res=>{
-					console.log(res)
-					// localStorage.setItem('token',res.token)
-					// router.push('/')
+					localStorage.setItem('token',res.token)
+					router.push('/')
 				})
-				console.log('验证通过')
-			}else{
-				console.log('验证不通过')
 			}
 		})
 	}

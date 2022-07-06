@@ -1,14 +1,14 @@
 <template>
-	<div class="login">
-		<p>alone-admin管理系统</p>
+	<div class="login" style="margin: 0 35%;">
+		<h1 style="margin: 0;">alone-admin管理系统</h1>
 		<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
 			<el-form-item label="账号" prop="username">
-				<el-input v-model="loginForm.username" />
+				<el-input v-model="loginForm.username" autocomplete autofocus />
 			</el-form-item>
 			<el-form-item label="密码" prop="password">
-				<el-input v-model="loginForm.password" />
+				<el-input type="password" v-model="loginForm.password" show-password />
 			</el-form-item>
-			<el-button @click="submitForm">登录{{store}}</el-button>
+			<el-button @click="submitForm">登录</el-button>
 		</el-form>
 	</div>
 </template>

@@ -18,8 +18,8 @@ instance.interceptors.request.use(function(config){
 
 // 响应拦截器
 instance.interceptors.response.use(function(response){
-	if(response.data.code != 0 && response.data.error_code != 0){
-		if(response.status == 401){
+	if(response.data.code != 0){
+		if(response.status == 401 || response.data.code == 10001){
 			localStorage.removeItem('token')
 		}
 		ElMessage.error(response.data.code+'：'+response.data.msg)

@@ -14,7 +14,7 @@
 							placeholder="账号" :prefix-icon="UserFilled" />
 					</el-form-item>
 					<el-form-item prop="password">
-						<el-input v-model="loginForm.username" show-password  class="w-50 m-2" size="large"
+						<el-input v-model="loginForm.password" show-password  class="w-50 m-2" size="large"
 							placeholder="密码" :prefix-icon="Lock" />
 					</el-form-item>
 					<el-button style="width: 100%;" size="large" type="primary" @click="submitForm">登 录</el-button>

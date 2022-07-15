@@ -76,7 +76,7 @@
 	}
 </script>
 
-<style scoped>
+<style>
 	.login {
 		margin: 0 auto;
 		max-width: 45%;

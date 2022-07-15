@@ -1,7 +1,9 @@
 <template>
-	<div class="al-icon-box al-bg2" :style="{backgroundColor:props.bgColor}">
-		<div class="icon-bg">
-			<el-icon color="#fff" :size="24"><CameraFilled /></el-icon>
+	<div class="al-icon-box" :style="{backgroundColor:props.bgColor}">
+		<div class="icon-bg al-bg1">
+			<el-icon color="#fff" :size="24">
+				<component :is="props.icon" ></component>
+			</el-icon>
 		</div>
 		<div class="icon-text">
 			<p style="margin-bottom: 10px;">{{props.name}}</p>
@@ -19,12 +21,15 @@
 		name:{
 			type:String,
 			default:'无'
+		},
+		icon:{
+			type:String,
+			default:'HomeFilled'
 		}
 	})
-	console.log(props.bgColor)
 </script>
 
-<style scoped>
+<style>
 	.al-icon-box{
 		padding: 25px 20px;
 		border-radius: 10px;
@@ -35,7 +40,8 @@
 		flex-wrap: wrap;
 	}
 	.al-bg1{
-		background-color: rgba(255, 188, 3, 0.1);
+		background: linear-gradient(to bottom, #FFBB00 0%, #FFF574 100%);
+		/* background-color: rgba(255, 188, 3, 0.1); */
 		/* box-shadow: 0 9px 9px -1px rgb(255 188 3 / 30%); */
 	}
 	.al-bg2{
@@ -49,7 +55,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: linear-gradient(to bottom, #FFBB00 0%, #FFF574 100%);
 	}
 	.icon-text{
 		margin-left: 15px;

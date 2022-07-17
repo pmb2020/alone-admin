@@ -1,0 +1,12 @@
+// 公用的一些css
+
+.al-box{
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 30px;
+	margin-bottom: 15px;
+	box-shadow: var(--el-box-shadow);
+}
+
+
+

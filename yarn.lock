@@ -1272,6 +1272,11 @@ regexpp@^3.2.0:
   resolved "https://registry.npmmirror.com/regexpp/-/regexpp-3.2.0.tgz#0425a2768d8f23bad70ca4b90461fa2f1213e1b2"
   integrity sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==
 
+resize-detector@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npmmirror.com/resize-detector/-/resize-detector-0.3.0.tgz#fe495112e184695500a8f51e0389f15774cb1cfc"
+  integrity sha512-R/tCuvuOHQ8o2boRP6vgx8hXCCy87H1eY9V5imBYeVNyNVpuL9ciReSccLj2gDcax9+2weXy3bc8Vv+NRXeEvQ==
+
 resolve-from@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmmirror.com/resolve-from/-/resolve-from-4.0.0.tgz#4abcd852ad32dd7baabfe9b40e00a36db5f392e6"
@@ -1517,6 +1522,19 @@ vue-demi@*:
   version "0.12.5"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.5.tgz#8eeed566a7d86eb090209a11723f887d28aeb2d1"
   integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
+
+vue-demi@^0.13.2:
+  version "0.13.5"
+  resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.5.tgz#d5eddbc9eaefb89ce5995269d1fa6b0486312092"
+  integrity sha512-tO3K2bML3AwiHmVHeKCq6HLef2st4zBXIV5aEkoJl6HZ+gJWxWv2O8wLH8qrA3SX3lDoTDHNghLX1xZg83MXvw==
+
+vue-echarts@^6.2.3:
+  version "6.2.3"
+  resolved "https://registry.npmmirror.com/vue-echarts/-/vue-echarts-6.2.3.tgz#77973c417a56bca76847576ab903ab92979d75bb"
+  integrity sha512-xHzUvgsgk/asJTcNa8iVVwoovZU3iEUHvmBa3bzbiP3Y6OMxM1YXsoWOKVmVVaUusGs4ob4pSwjwNy2FemAz9w==
+  dependencies:
+    resize-detector "^0.3.0"
+    vue-demi "^0.13.2"
 
 vue-eslint-parser@^9.0.1:
   version "9.0.3"

@@ -17,6 +17,10 @@ const routes = [
 	{
 		path:'/',
 		redirect:'/home',
+		hidden: true
+	},
+	{
+		path:'/',
 		component: Layout,
 		children:[
 			{

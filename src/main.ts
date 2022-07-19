@@ -4,6 +4,7 @@ import { createPinia } from 'pinia'
 import router from './router'
 
 import 'normalize.css/normalize.css'
+import 'animate.css'
 import '@/styles/element/index.css'
 import '@/styles/al-admin.css'
 

@@ -17,6 +17,10 @@ const routes = [
 	{
 		path:'/',
 		redirect:'/home',
+		hidden: true
+	},
+	{
+		path:'/',
 		component: Layout,
 		children:[
 			{
@@ -47,7 +51,7 @@ const routes = [
 			},
 			{
 				path:'text',
-				component: () => import('../views/Home.vue'),
+				component: () => import('../views/Article.vue'),
 				meta: {
 				  title: '文章列表',
 				},

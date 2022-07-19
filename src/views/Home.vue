@@ -38,7 +38,7 @@
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 	import IconBox from '@/components/alone/IconBox.vue'
 	import {
 		reactive,

@@ -16,7 +16,7 @@
 	</el-container>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 	import BaseSide from '@/layout/BaseSide.vue'
 	import BaseHeader from '@/layout/BaseHeader.vue'
 </script>

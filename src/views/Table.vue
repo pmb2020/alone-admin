@@ -96,10 +96,11 @@
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+	import { ElMessage,ElMessageBox } from 'element-plus'
 	import {
 		getTable
-	} from '@/api/user.js'
+	} from '@/api/user'
 	import {
 		ref,
 		onMounted,
@@ -107,7 +108,13 @@
 	} from 'vue'
 	const filterForm = reactive({
 		'name': '',
-		'date': ''
+		'date': '',
+		type:''
+	})
+	const tableForm = reactive({
+		name:'',
+		type:'',
+		amount:''
 	})
 	const shortcuts = [{
 			text: '最近一周',
@@ -137,7 +144,6 @@
 			},
 		},
 	]
-	const tableForm = reactive({})
 	const dialogFormVisible = ref(false)
 	const tableRef = ref([])
 	const tableData = ref([])
@@ -145,18 +151,18 @@
 	const pageSize = ref(20)
 	const getList = () => {
 		console.log('筛选参数：', filterForm)
-		getTable(filterForm).then(res => {
+		getTable(filterForm).then((res:any) => {
 			tableData.value = res.data
 			console.log(res.data)
 		})
 	}
-	const handleSelectionChange = (val) => {
+	const handleSelectionChange = (val:any) => {
 		console.log(val)
 	}
-	const handleEdit = (index, row) => {
+	const handleEdit = (index:number,row:object) => {
 		ElMessage('编辑')
 	}
-	const handleDelete = (row) => {
+	const handleDelete = (row:any) => {
 		ElMessageBox.confirm('确认要删除吗', '提示', {
 			confirmButtonText: '确定',
 			cancelButtonText: '取消',

@@ -10,27 +10,33 @@
 				<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
 					<h1 style="font-size: 26px;margin-bottom: 30px;">alone-admin管理系统</h1>
 					<el-form-item prop="username">
-						<el-input v-model="loginForm.username" autocomplete size="large"
-							placeholder="账号" :prefix-icon="UserFilled" />
+						<el-input v-model="loginForm.username" autocomplete size="large" placeholder="账号"
+							:prefix-icon="UserFilled" />
 					</el-form-item>
 					<el-form-item prop="password">
-						<el-input v-model="loginForm.password" show-password  class="w-50 m-2" size="large"
+						<el-input v-model="loginForm.password" show-password class="w-50 m-2" size="large"
 							placeholder="密码" :prefix-icon="Lock" />
 					</el-form-item>
-					<el-button style="width: 100%;" size="large" type="primary" @click="submitForm">登 录</el-button>
+					<el-button style="width: 100%;" size="large" type="primary" @click="submitForm(loginFormRef)">登 录
+					</el-button>
 				</el-form>
 			</el-col>
 		</el-row>
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+	import type {
+		FormInstance,
+		FormRules
+	} from 'element-plus'
 	import {
-		Lock,UserFilled
+		Lock,
+		UserFilled
 	} from '@element-plus/icons-vue'
 	import {
 		login
-	} from '@/api/auth.js'
+	} from '@/api/auth'
 	import {
 		reactive,
 		ref
@@ -51,7 +57,7 @@
 		username: '',
 		password: ''
 	})
-	const rules = reactive({
+	const rules = reactive < FormRules > ({
 		username: [{
 			required: true,
 			message: '请输入账号'
@@ -62,18 +68,30 @@
 		}],
 	})
 
-	const loginFormRef = ref({})
-	const submitForm = async () => {
-		store.increment()
-		loginFormRef.value.validate((valid) => {
+	const loginFormRef = ref < FormInstance > ()
+	const submitForm = async (formEl: FormInstance | undefined) => {
+		if (!formEl) return
+		await formEl.validate((valid:any, fields:any) => {
 			if (valid) {
-				login(loginForm).then(res => {
+				console.log('submit!')
+				login(loginForm).then((res:any) => {
 					localStorage.setItem('token', res.token)
 					router.push('/')
 				})
 			}
 		})
 	}
+	// const submitForm = async () => {
+	// 	store.increment()
+	// 	loginFormRef.value.validate((valid:Boolean) => {
+	// 		if (valid) {
+	// 			login(loginForm).then(res => {
+	// 				localStorage.setItem('token', res.token)
+	// 				router.push('/')
+	// 			})
+	// 		}
+	// 	})
+	// }
 </script>
 
 <style>
@@ -88,7 +106,8 @@
 		box-shadow: var(--el-box-shadow);
 		height: 500px;
 	}
-	.login-from-box{
-		padding:100px 30px;
+
+	.login-from-box {
+		padding: 100px 30px;
 	}
 </style>

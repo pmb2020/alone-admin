@@ -41,7 +41,6 @@ declare module '@vue/runtime-core' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     FilterForm: typeof import('./src/components/FilterForm.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconBox: typeof import('./src/components/alone/IconBox.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

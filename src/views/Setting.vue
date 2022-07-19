@@ -27,7 +27,7 @@
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 	import {
 		ref,
 		reactive
@@ -35,7 +35,9 @@
 	const activeName = ref('first')
 	const loginForm = reactive({
 		username: '',
-		password: ''
+		password: '',
+		note:'',
+		region:''
 	})
 	const rules = reactive({
 		username: [{
@@ -46,15 +48,15 @@
 
 	const loginFormRef = ref({})
 	const submitForm = async () => {
-		loginFormRef.value.validate((valid) => {
-			if (valid) {
-				console.log('验证通过')
-				console.log(loginForm)
-			} 
-		})
+		// loginFormRef.value.validate((valid:any) => {
+		// 	if (valid) {
+		// 		console.log('验证通过')
+		// 		console.log(loginForm)
+		// 	} 
+		// })
 	}
-	const handleClick = (tab, event) => {
-		console.log(tab, event)
+	const handleClick = (tab:String) => {
+		console.log(tab)
 	}
 </script>
 

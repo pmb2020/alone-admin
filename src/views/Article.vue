@@ -27,7 +27,7 @@
 	use([
 		CanvasRenderer,
 		PieChart,
-		// TitleComponent,
+		TitleComponent,
 		TooltipComponent,
 		LegendComponent
 	]);

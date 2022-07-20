@@ -9,9 +9,10 @@ import Components from 'unplugin-vue-components/vite'
 import {
 	ElementPlusResolver
 } from 'unplugin-vue-components/resolvers'
+import { visualizer } from "rollup-plugin-visualizer";
 
 const pathSrc = path.resolve(__dirname,'src')
-
+const lifecycle = process.env.npm_lifecycle_event;
 export default defineConfig({
 	base:'./',
 	resolve:{
@@ -27,6 +28,9 @@ export default defineConfig({
 		Components({
 			resolvers: [ElementPlusResolver()],
 		}),
+		lifecycle === "report"
+		  ? visualizer({ open: true, brotliSize: true, filename: "report.html" })
+		  : null
 	],
 	css: {
 		preprocessorOptions: {
@@ -41,5 +45,6 @@ export default defineConfig({
 	build: {
 		outDir:'dist',
 		cssCodeSplit:true,
+		chunkSizeWarningLimit: 1024,
 	}
 })

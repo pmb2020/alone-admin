@@ -11,21 +11,7 @@
 			<el-col :span="16">
 				<h2 class="card-h">服务器信息</h2>
 				<el-card class="box-card">
-					<table border="1">
-						<tr>
-							<th>Month</th>
-							<th>Savings</th>
-						</tr>
-						<tr>
-							<td>January</td>
-							<td>$100</td>
-						</tr>
-					</table>
-					<el-table :data="systemInfo" style="width: 100%">
-						<el-table-column prop="system期" width="180" />
-						<el-table-column prop="name" label="Name" width="180" />
-						<el-table-column prop="address" label="Address" />
-					</el-table>
+					<div id="main" style="height: 400px;"></div>
 				</el-card>
 			</el-col>
 			<el-col :span="8">
@@ -42,8 +28,27 @@
 	import IconBox from '@/components/alone/IconBox.vue'
 	import {
 		reactive,
-		ref
+		ref,onMounted
 	} from 'vue'
+	import echarts from '../until/echarts.js'
+	onMounted(() => {
+		let myChart = echarts.init(document.getElementById("main"));
+		myChart.setOption({
+			tooltip: {},
+			xAxis: {
+				data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"],
+			},
+			yAxis: {},
+			series: [{
+				name: "用户量",
+				type: "line",
+				data: [5, 20, 36, 10, 10, 20],
+			}, ],
+		});
+		window.onresize = function() {
+			myChart.resize();
+		};
+	})
 	const boxLists = reactive([{
 			bgColor: '#c8ddf7',
 			name: '信息',

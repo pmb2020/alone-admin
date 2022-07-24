@@ -7,13 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-	"report":"rimraf dist && vite build"
+    "report": "rimraf dist && vite build"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.6",
     "axios": "^0.27.2",
     "echarts": "^5.3.3",
-    "element-plus": "^2.2.9",
+    "element-plus": "^2.2.10",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.16",
     "vue": "^3.2.37",
@@ -25,8 +25,8 @@
     "eslint": "^8.20.0",
     "eslint-plugin-vue": "^9.2.0",
     "rollup-plugin-visualizer": "^5.7.1",
-    "sass": "^1.53.0",
-    "unplugin-auto-import": "^0.9.3",
+    "sass": "^1.54.0",
+    "unplugin-auto-import": "^0.10.0",
     "unplugin-vue-components": "^0.21.1",
     "vite": "^3.0.2"
   }

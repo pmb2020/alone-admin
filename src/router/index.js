@@ -25,7 +25,7 @@ const routes = [
 		children:[
 			{
 				path:'home',
-				component: () => import('../views/Home.vue'),
+				component: () => import('../views/home/Index.vue'),
 				meta:{
 					title:'首页',
 					icon:'HomeFilled'

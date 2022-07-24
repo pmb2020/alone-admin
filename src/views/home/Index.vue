@@ -9,9 +9,9 @@
 		</el-row>
 		<el-row :gutter="30" style="margin-top: 10px;">
 			<el-col :span="16">
-				<h2 class="card-h">服务器信息</h2>
+				<h2 class="card-h">访客统计</h2>
 				<el-card class="box-card">
-					<div id="main" style="height: 400px;"></div>
+					<Visitor></Visitor>
 				</el-card>
 			</el-col>
 			<el-col :span="8">
@@ -26,29 +26,11 @@
 
 <script setup>
 	import IconBox from '@/components/alone/IconBox.vue'
+	import Visitor from './Visitor.vue'
 	import {
 		reactive,
 		ref,onMounted
 	} from 'vue'
-	import echarts from '../until/echarts.js'
-	onMounted(() => {
-		let myChart = echarts.init(document.getElementById("main"));
-		myChart.setOption({
-			tooltip: {},
-			xAxis: {
-				data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"],
-			},
-			yAxis: {},
-			series: [{
-				name: "用户量",
-				type: "line",
-				data: [5, 20, 36, 10, 10, 20],
-			}, ],
-		});
-		window.onresize = function() {
-			myChart.resize();
-		};
-	})
 	const boxLists = reactive([{
 			bgColor: '#c8ddf7',
 			name: '信息',

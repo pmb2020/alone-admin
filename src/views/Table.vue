@@ -1,5 +1,5 @@
 <template>
-	<div class="table">
+	<div class="table" style="height: 100%;">
 		<div class="filter-box al-box" style="display: flex;">
 			<el-form :inline="true" :model="filterForm" class="demo-form-inline" size="large">
 				<el-form-item label="名称">

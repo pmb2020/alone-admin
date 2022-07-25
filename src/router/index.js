@@ -68,7 +68,7 @@ const routes = [
 				component: () => import('../views/Setting.vue'),
 				meta:{
 					title:'系统设置',
-					icon:'Setting'
+					icon:'Basketball'
 				},
 			}
 		]

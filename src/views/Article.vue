@@ -30,15 +30,13 @@
 	</div>
 </template>
 <script setup>
-	import {ref,reactive} from 'vue'
+	import {getArticle} from '@/api/article'
+	import {ref} from 'vue'
 	const activeName = ref('first')
-	const articleList = reactive([
-		{
-			id:1,
-			title:'重新',
-			
-		}
-	])
+	const articleList = ref([])
+	getArticle().then(res=>{
+		articleList.value=res.data
+	})
 	const handleClick = (tab, event) => {
 		console.log(tab, event)
 	}

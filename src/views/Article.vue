@@ -5,13 +5,15 @@
 				<el-tab-pane label="全部" name="first">
 					<ul class="list_ul">
 						<li v-for="item in articleList" :key="item.id">
-							<h2 class="list_title"><a target="_blank" href="#">{{item.title}}</a></h2>
+							<h2 class="list_title">
+								<el-tag type="success" style="margin-right: 10px;">{{item.type}}</el-tag>
+								<a target="_blank" href="#">{{item.title}}</a>
+							</h2>
 							<div class="list_info">
 								<div class="list_info_left">
 									<span>原创</span>
-									<span>{{item.keywords}}</span>
-									<span>{{item.created_at}}</span>
-									<span><i class="el-icon-view"></i>{{item.read_num}}</span>
+									<span>{{item.date}}</span>
+									<span><i class="el-icon-view"></i>{{item.num}}</span>
 								</div>
 								<div class="list_info_right">
 									<a class="d-none" href="#">编辑</a>
@@ -55,15 +57,15 @@
 	
 	.list_title {
 		font-weight: normal;
-		font-size: 18px;
+		font-size: 16px;
+		color: var(--el-text-color-regular);
 	}
 	
-	.list_title a {
-		color: #2c3e50;
+	.list_title a:hover{
+		color: var(--el-color-primary);
 	}
-	
 	.list_info {
-		margin-top: 10px;
+		margin-top: 20px;
 	}
 	
 	.list_info:after {

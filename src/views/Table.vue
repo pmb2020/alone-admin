@@ -175,6 +175,10 @@
 </script>
 
 <style scoped>
+	.filter-box .el-form{
+		display: flex;
+		justify-content: start;
+	}
 	.filter-box .el-form-item {
 		margin-bottom: 0;
 	}

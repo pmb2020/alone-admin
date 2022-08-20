@@ -10,10 +10,10 @@
     "report": "rimraf dist && vite build"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.0.6",
+    "@element-plus/icons-vue": "2.0.9",
     "axios": "^0.27.2",
     "echarts": "^5.3.3",
-    "element-plus": "^2.2.11",
+    "element-plus": "2.2.14",
     "pinia": "^2.0.17",
     "vue": "^3.2.37",
     "vue-echarts": "^6.2.3",
@@ -25,8 +25,8 @@
     "eslint-plugin-vue": "^9.3.0",
     "rollup-plugin-visualizer": "^5.7.1",
     "sass": "^1.54.0",
-    "unplugin-auto-import": "^0.10.3",
-    "unplugin-vue-components": "^0.21.2",
+    "unplugin-auto-import": "^0.11.2",
+    "unplugin-vue-components": "^0.22.4",
     "vite": "^3.0.4"
   }
 }

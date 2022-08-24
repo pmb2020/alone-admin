@@ -24,7 +24,7 @@
 						</li>
 					</ul>
 				</el-tab-pane>
-				<el-tab-pane label="等审核" name="second">Config</el-tab-pane>
+				<el-tab-pane label="待审核" name="second">Config</el-tab-pane>
 				<el-tab-pane label="草稿箱" name="third">Role</el-tab-pane>
 				<el-tab-pane label="回收站" name="fourth">Task</el-tab-pane>
 			</el-tabs>

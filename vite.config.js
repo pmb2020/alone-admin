@@ -1,6 +1,6 @@
 import path from 'path'
 import {
-	defineConfig
+	defineConfig,loadEnv
 } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -9,14 +9,16 @@ import Components from 'unplugin-vue-components/vite'
 import {
 	ElementPlusResolver
 } from 'unplugin-vue-components/resolvers'
-import { visualizer } from "rollup-plugin-visualizer";
+import {
+	visualizer
+} from "rollup-plugin-visualizer";
 
-const pathSrc = path.resolve(__dirname,'src')
+const pathSrc = path.resolve(__dirname, 'src')
 const lifecycle = process.env.npm_lifecycle_event;
 export default defineConfig({
-	base:'./',
-	resolve:{
-		alias:{
+	base: './',
+	resolve: {
+		alias: {
 			'@': pathSrc
 		}
 	},
@@ -28,23 +30,34 @@ export default defineConfig({
 		Components({
 			resolvers: [ElementPlusResolver()],
 		}),
-		lifecycle === "report"
-		  ? visualizer({ open: true, brotliSize: true, filename: "report.html" })
-		  : null
+		lifecycle === "report" ?
+		visualizer({
+			open: true,
+			brotliSize: true,
+			filename: "report.html"
+		}) :
+		null
 	],
 	css: {
 		preprocessorOptions: {
-			scss:{
+			scss: {
 				additionalData: '@use "@/styles/element/index.scss" as *;',
 			}
 		}
 	},
 	server: {
-		port:3000
+		port: 3000,
+		proxy: {
+			'/admin': {
+				target: loadEnv('development', process.cwd()).VITE_API_HOST,
+				changeOrigin: true,
+				// rewrite: (path) => path.replace(/^\/admin/, '')
+			}
+		}
 	},
 	build: {
-		outDir:'dist',
-		cssCodeSplit:true,
+		outDir: 'dist',
+		cssCodeSplit: true,
 		chunkSizeWarningLimit: 1024,
 	}
 })

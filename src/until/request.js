@@ -9,6 +9,9 @@ const instance = axios.create({
 
 //请求拦截器
 instance.interceptors.request.use(function(config){
+	if(import.meta.env.MODE==='development' && config.baseURL===import.meta.env.VITE_API_HOST){
+		config.baseURL='/'
+	}
 	let token = localStorage.getItem('token')
 	if(token){
 		config.headers['Authorization'] = 'Bearer '+ token;

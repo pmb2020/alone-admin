@@ -34,6 +34,20 @@ const routes = [
 		]
 	},
 	{
+		path:'/banner',
+		component: Layout,
+		children:[
+			{
+				path:'index',
+				component: () => import('../views/Banner.vue'),
+				meta:{
+					title:'广告管理',
+					icon:'HomeFilled'
+				},
+			}
+		]
+	},
+	{
 		path:'/list',
 		redirect:'/list/table',
 		component: Layout,

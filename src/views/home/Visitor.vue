@@ -8,7 +8,7 @@
 		ref,
 		onMounted
 	} from 'vue'
-	import echarts from '@/until/echarts.js'
+	import echarts from '@/utils/echarts.js'
 	onMounted(() => {
 		let myChart = echarts.init(document.getElementById("visitor"));
 		const option = {

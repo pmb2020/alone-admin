@@ -1,4 +1,4 @@
-import {get,post} from '@/until/request.js'
+import {get,post} from '@/utils/request.js'
 
 export const getUser = (params)=>{
 	return get('https://alone.usemock.com/api/user',params)

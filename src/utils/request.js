@@ -59,8 +59,15 @@ export function apiHttp(url,params ={},method='get'){
 	switch (method){
 		case 'get':
 			options.params=params
+			break
 		case 'post':
 			options.data=params
+			break
+		case 'put':
+			break
+		case 'delete':
+			options.url +='/'+params.id
+			break
 	}
 	return new Promise((resolve, reject)=>{
 		http.request(options).then(res=>{

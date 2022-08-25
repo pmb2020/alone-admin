@@ -51,17 +51,22 @@
 		console.log(val)
 	}
 	const getBanners=()=>{
-		banner({limit:3},'get').then(res=>{
+		banner({limit:3}).then(res=>{
 			tableData.value = res.data
 		})
 	}
-	// getBanner({
-	// 	limit:2,
-	// 	// title:'标题'
-	// },'post').then(res=>{
-	// 	tableData.value = res.data
-	// 	console.log(res.data)
-	// })
+	const handleDelete = (row) => {
+		ElMessageBox.confirm('确认要删除吗', '提示', {
+			confirmButtonText: '确定',
+			cancelButtonText: '取消',
+			type: 'warning'
+		}).then(() => {
+			console.log('删除', row)
+			banner({id:row.id},'delete').then(res=>{
+				console.log(res)
+			})
+		})
+	}
 </script>
 
 <style>

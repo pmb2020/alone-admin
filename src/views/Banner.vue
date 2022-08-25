@@ -38,22 +38,30 @@
 		reactive,
 		getCurrentInstance
 	} from 'vue'
-	import {getBanner} from '@/api/banner.js'
+	import {getBanner,banner} from '@/api/banner.js'
 	const tableForm = reactive({})
 	const tableRef = ref([])
 	const tableData = ref([])
 	onMounted(()=>{
+		getBanners()
 		const {proxy}=getCurrentInstance()
 		console.log(getCurrentInstance().proxy.shortcuts)
 	})
 	const handleSelectionChange = (val) => {
 		console.log(val)
 	}
-	
-	getBanner().then(res=>{
-		tableData.value = res.data
-		console.log(res.data)
-	})
+	const getBanners=()=>{
+		banner({limit:3},'get').then(res=>{
+			tableData.value = res.data
+		})
+	}
+	// getBanner({
+	// 	limit:2,
+	// 	// title:'标题'
+	// },'post').then(res=>{
+	// 	tableData.value = res.data
+	// 	console.log(res.data)
+	// })
 </script>
 
 <style>

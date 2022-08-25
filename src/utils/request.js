@@ -2,13 +2,13 @@ import axios from 'axios'
 // import { ElMessage } from 'element-plus'
 // import 'element-plus/theme-chalk/el-message.css';
 
-const instance = axios.create({
+const http = axios.create({
 	baseURL:import.meta.env.VITE_API_HOST,
 	timeout: 5000,
 })
 
 //请求拦截器
-instance.interceptors.request.use(function(config){
+http.interceptors.request.use(function(config){
 	if(import.meta.env.MODE==='development' && config.baseURL===import.meta.env.VITE_API_HOST){
 		config.baseURL='/'
 	}
@@ -20,7 +20,7 @@ instance.interceptors.request.use(function(config){
 })
 
 // 响应拦截器
-instance.interceptors.response.use(function(response){
+http.interceptors.response.use(function(response){
 	if(response.data.code != 0){
 		if(response.status == 401 || response.data.code == 10001){
 			localStorage.removeItem('token')
@@ -36,9 +36,7 @@ instance.interceptors.response.use(function(response){
 // 封装get方法
 export function get(url, params = {}) {
 	return new Promise((resolve, reject) => {
-		instance.get(url, {
-				params: params
-			}).then(res => {
+		http.get(url, {params}).then(res => {
 				resolve(res);
 			}).catch(err => {
 				reject(err)
@@ -48,10 +46,31 @@ export function get(url, params = {}) {
 
 export function post(url, data = {}){
 	return new Promise((resolve, reject)=>{
-		instance.post(url,data).then(res=>{
+		http.post(url,data).then(res=>{
 			resolve(res);
 		}).catch(err=>{
 			reject(err)
 		})
 	})
 }
+
+export function apiHttp(url,params ={},method='get'){
+	let options={method,url}
+	switch (method){
+		case 'get':
+			options.params=params
+		case 'post':
+			options.data=params
+	}
+	return new Promise((resolve, reject)=>{
+		http.request(options).then(res=>{
+			console.log(res)
+			resolve(res);
+		}).catch(err=>{
+			reject(err)
+		})
+	})
+}
+
+export default http 
+

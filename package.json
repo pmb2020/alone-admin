@@ -13,18 +13,18 @@
     "@element-plus/icons-vue": "2.0.9",
     "axios": "^0.27.2",
     "echarts": "^5.3.3",
-    "element-plus": "2.2.14",
-    "pinia": "^2.0.17",
-    "vue": "^3.2.37",
+    "element-plus": "2.2.16",
+    "pinia": "^2.0.21",
+    "vue": "^3.2.38",
     "vue-echarts": "^6.2.3",
-    "vue-router": "4.1.4"
+    "vue-router": "4.1.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",
-    "eslint": "^8.20.0",
+    "eslint": "^8.23.0",
     "eslint-plugin-vue": "^9.4.0",
     "rollup-plugin-visualizer": "^5.8.0",
-    "sass": "^1.54.0",
+    "sass": "^1.54.8",
     "unplugin-auto-import": "^0.11.2",
     "unplugin-vue-components": "^0.22.4",
     "vite": "^3.0.4"

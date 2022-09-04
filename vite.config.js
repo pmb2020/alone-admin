@@ -51,7 +51,7 @@ export default defineConfig({
 			'/admin': {
 				target: loadEnv('development', process.cwd()).VITE_API_HOST,
 				changeOrigin: true,
-				// rewrite: (path) => path.replace(/^\/admin/, '')
+				rewrite: (path) => path.replace(/^\/admin/, '')
 			}
 		}
 	},

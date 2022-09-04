@@ -1,14 +1,14 @@
 <template>
 	<div class="login">
 		<el-row class="login-box">
-			<el-col :span="12" style="background-color: #dad1f8;">
+			<el-col :span="12" style="background-color: #dad1f8;height: 100%;">
 				<div style="padding: 100px 50px;">
 					<img style="width: 100%;" src="@/assets/images/login.svg">
 				</div>
 			</el-col>
 			<el-col class="login-from-box" :span="12">
 				<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
-					<h1 style="font-size: 26px;margin-bottom: 30px;">alone-admin管理系统</h1>
+					<h1 style="font-size: 24px;margin-bottom: 30px;">alone-admin管理系统</h1>
 					<el-form-item prop="username">
 						<el-input v-model="loginForm.username" autocomplete size="large"
 							placeholder="账号" :prefix-icon="UserFilled" />
@@ -79,16 +79,16 @@
 <style>
 	.login {
 		margin: 0 auto;
-		max-width: 45%;
+		max-width: 55%;
 		padding-top: 8%;
 	}
 
 	.login-box {
 		background-color: #fff;
 		box-shadow: var(--el-box-shadow);
-		height: 500px;
+		height: 400px;
 	}
 	.login-from-box{
-		padding:100px 30px;
+		padding:80px 30px;
 	}
 </style>

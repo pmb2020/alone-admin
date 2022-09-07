@@ -52,7 +52,7 @@
 				</el-table-column>
 			</el-table>
 			<!-- 弹框表单 -->
-			<el-dialog v-if="dialogVisible" v-model="dialogVisible" title="编辑" width="30%" :close-on-click-modal="false"
+			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromAdd ? '新增' :'编辑'" width="30%" :close-on-click-modal="false"
 				destroy-on-close>
 				<el-form :model="form" label-width="50px">
 					<el-form-item label="标题">
@@ -66,6 +66,17 @@
 					</el-form-item>
 					<el-form-item label="状态">
 						<el-switch v-model="form.status" active-value="1" inactive-value="0" />
+					</el-form-item>
+					<el-form-item label="图片" style="font-weight: bold;">
+						<el-upload class="avatar-uploader" name="file" :auto-upload="false"
+							action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+							:show-file-list="false" :on-success="handleAvatarSuccess"
+							:before-upload="beforeAvatarUpload">
+							<el-image v-if="form.image" style="width: 400px; height: 200px" :src="form.image" />
+							<el-icon v-else class="avatar-uploader-icon">
+								<Plus />
+							</el-icon>
+						</el-upload>
 					</el-form-item>
 					<el-form-item label="排序">
 						<el-input v-model="form.sort" />
@@ -102,15 +113,6 @@
 	const tableData = ref([])
 	const dialogVisible = ref(false)
 	const loading = ref(true)
-	const form = ref({
-		title: '',
-		status: '',
-		type: '',
-		sort: '',
-		link: '',
-		image: '',
-		note: '',
-	})
 	onMounted(() => {
 		getList()
 		const {
@@ -163,6 +165,16 @@
 	/**
 	 * 弹框表单相关
 	 */
+	const form = ref({
+		title: '',
+		status: '',
+		type: '',
+		file: null,
+		sort: '',
+		link: '',
+		image: '',
+		note: '',
+	})
 	const isFromAdd = ref(false)
 	//新增
 	const handleAdd = () => {
@@ -186,7 +198,34 @@
 			})
 		}
 	}
+	// 图片上传
+	const handleAvatarSuccess = () => {
+		console.log('图片上传成功')
+	}
+	const beforeAvatarUpload = () => {
+		console.log('图片上传之前')
+	}
 </script>
 
 <style>
+	.avatar-uploader .el-upload {
+	  border: 1px dashed var(--el-border-color);
+	  border-radius: 6px;
+	  cursor: pointer;
+	  position: relative;
+	  overflow: hidden;
+	  transition: var(--el-transition-duration-fast);
+	}
+	
+	.avatar-uploader .el-upload:hover {
+	  border-color: var(--el-color-primary);
+	}
+	
+	.el-icon.avatar-uploader-icon {
+	  font-size: 28px;
+	  color: #8c939d;
+	  width: 178px;
+	  height: 178px;
+	  text-align: center;
+	}
 </style>

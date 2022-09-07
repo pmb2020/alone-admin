@@ -10,7 +10,7 @@ const http = axios.create({
 //请求拦截器
 http.interceptors.request.use(function(config){
 	if(import.meta.env.MODE==='development' && config.baseURL===import.meta.env.VITE_API_HOST){
-		config.baseURL='/'
+		config.baseURL='/admin/'
 	}
 	let token = localStorage.getItem('token')
 	if(token){

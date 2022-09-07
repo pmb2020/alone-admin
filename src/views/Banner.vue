@@ -51,7 +51,7 @@
 		console.log(val)
 	}
 	const getBanners=()=>{
-		banner({limit:3}).then(res=>{
+		banner({limit:20}).then(res=>{
 			tableData.value = res.data
 		})
 	}

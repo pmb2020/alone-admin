@@ -64,6 +64,8 @@ export function apiHttp(url,params ={},method='get'){
 			options.data=params
 			break
 		case 'put':
+			options.data=params
+			options.url +='/'+params.id
 			break
 		case 'delete':
 			options.url +='/'+params.id
@@ -71,7 +73,6 @@ export function apiHttp(url,params ={},method='get'){
 	}
 	return new Promise((resolve, reject)=>{
 		http.request(options).then(res=>{
-			console.log(res)
 			resolve(res);
 		}).catch(err=>{
 			reject(err)

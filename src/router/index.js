@@ -42,7 +42,7 @@ const routes = [
 				component: () => import('../views/Banner.vue'),
 				meta:{
 					title:'广告管理',
-					icon:'HomeFilled'
+					icon:'Picture'
 				},
 			}
 		]
@@ -70,6 +70,20 @@ const routes = [
 				  title: '文章列表',
 				},
 			},
+		]
+	},
+	{
+		path:'/user',
+		component: Layout,
+		children:[
+			{
+				path:'index',
+				component: () => import('../views/User.vue'),
+				meta:{
+					title:'用户管理',
+					icon:'UserFilled'
+				},
+			}
 		]
 	},
 	{

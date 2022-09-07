@@ -9,9 +9,29 @@ a{
 	color: inherit;
 	text-decoration: none;
 }
+
 // 公用的一些css
 @mixin al-flex {
 	// display: flex;
+}
+
+.al-flex{
+	display: flex;
+}
+
+.al-container{
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 5px;
+	box-shadow: var(--el-box-shadow);
+	margin-bottom: 15px;
+}
+
+.al-flex-between{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	// width: 100%;
 }
 
 .al-box{

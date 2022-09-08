@@ -45,15 +45,14 @@
 				<el-table-column label="操作" align="center" width="170">
 					<template #default="scope">
 						<el-button size="default" color="#626aef"
-							@click="form=scope.row;isFromAdd=false;dialogVisible = true">编辑
+							@click="handleEdit(scope.row)">编辑
 						</el-button>
 						<el-button size="default" type="danger" @click="handleDelete(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
 			<!-- 弹框表单 -->
-			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromAdd ? '新增' :'编辑'" width="30%" :close-on-click-modal="false"
-				destroy-on-close>
+			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromAdd ? '新增' :'编辑'" width="30%" @closed="form={}" :close-on-click-modal="false">
 				<el-form :model="form" label-width="50px">
 					<el-form-item label="标题">
 						<el-input v-model="form.title" autocomplete />
@@ -68,11 +67,10 @@
 						<el-switch v-model="form.status" active-value="1" inactive-value="0" />
 					</el-form-item>
 					<el-form-item label="图片" style="font-weight: bold;">
-						<el-upload class="avatar-uploader" name="file" :auto-upload="false"
-							action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-							:show-file-list="false" :on-success="handleAvatarSuccess"
+						<el-upload class="avatar-uploader" name="file" action="#"
+							:show-file-list="false" :on-change="fileChange" :auto-upload="false"
 							:before-upload="beforeAvatarUpload">
-							<el-image v-if="form.image" style="width: 400px; height: 200px" :src="form.image" />
+							<el-image v-if="form.image"  style="width: 400px; height: 200px" :src="form.image" />
 							<el-icon v-else class="avatar-uploader-icon">
 								<Plus />
 							</el-icon>
@@ -108,8 +106,9 @@
 		getCurrentInstance
 	} from 'vue'
 	import {
-		banner
+		banner,updateBanner
 	} from '@/api/banner.js'
+	const uploadUrl=ref('http://127.0.0.1:188/admin/upload')
 	const tableData = ref([])
 	const dialogVisible = ref(false)
 	const loading = ref(true)
@@ -118,7 +117,7 @@
 		const {
 			proxy
 		} = getCurrentInstance()
-		console.log(getCurrentInstance().proxy.shortcuts)
+		// console.log(getCurrentInstance().proxy.shortcuts)
 	})
 	const handleSelectionChange = (val) => {
 		console.log(val)
@@ -144,6 +143,7 @@
 			})
 		})
 	}
+	
 	/**
 	 * 筛选搜索相关
 	 */
@@ -167,12 +167,12 @@
 	 */
 	const form = ref({
 		title: '',
+		image: '',
 		status: '',
 		type: '',
 		file: null,
 		sort: '',
 		link: '',
-		image: '',
 		note: '',
 	})
 	const isFromAdd = ref(false)
@@ -181,17 +181,29 @@
 		isFromAdd.value = true
 		dialogVisible.value = true
 	}
+	// 编辑
+	const handleEdit = (data)=>{
+		form.value={...data};
+		isFromAdd.value = false;
+		dialogVisible.value = true
+	}
 	//提交表单
 	const submitForm = () => {
-		console.log(form.value)
-		if (isFromAdd) {
-			banner(form.value, 'post').then(res => {
+		let formData = new FormData()
+		for(let key in form.value){
+			if(form.value[key]){
+				formData.append(key,form.value[key])
+			}
+		}
+		if (isFromAdd.value) {
+			banner(formData, 'post').then(res => {
 				ElMessage.success('添加成功')
 				dialogVisible.value = false
 				getList()
 			})
 		} else {
-			banner(form.value, 'put').then(res => {
+			console.log(formData.getAll('title'))
+			updateBanner(formData).then(res => {
 				ElMessage.success('修改成功')
 				dialogVisible.value = false
 				getList()
@@ -199,11 +211,9 @@
 		}
 	}
 	// 图片上传
-	const handleAvatarSuccess = () => {
-		console.log('图片上传成功')
-	}
-	const beforeAvatarUpload = () => {
-		console.log('图片上传之前')
+	const fileChange = (e) => {
+		form.value.image=URL.createObjectURL(e.raw)
+		form.value.file=e.raw
 	}
 </script>
 

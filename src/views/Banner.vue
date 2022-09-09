@@ -1,5 +1,6 @@
 <template>
 	<div class="banner">
+		<!-- 筛选 -->
 		<div class="al-container">
 			<el-form class="al-flex" inline :model="filterForm" ref="filterFormRef" size="large">
 				<el-form-item label="名称" prop="title">
@@ -68,8 +69,7 @@
 					</el-form-item>
 					<el-form-item label="图片" style="font-weight: bold;">
 						<el-upload class="avatar-uploader" name="file" action="#"
-							:show-file-list="false" :on-change="fileChange" :auto-upload="false"
-							:before-upload="beforeAvatarUpload">
+							:show-file-list="false" :on-change="fileChange" :auto-upload="false" >
 							<el-image v-if="form.image"  style="width: 400px; height: 200px" :src="form.image" />
 							<el-icon v-else class="avatar-uploader-icon">
 								<Plus />

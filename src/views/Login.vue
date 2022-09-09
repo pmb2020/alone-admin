@@ -48,8 +48,8 @@
 		import.meta.env)
 	store.count++
 	const loginForm = reactive({
-		username: '',
-		password: ''
+		username: 'admin',
+		password: '123456'
 	})
 	const rules = reactive({
 		username: [{
@@ -80,6 +80,7 @@
 	.login {
 		margin: 0 auto;
 		max-width: 55%;
+		width: 750px;
 		padding-top: 8%;
 	}
 

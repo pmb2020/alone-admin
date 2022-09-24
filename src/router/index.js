@@ -48,6 +48,20 @@ const routes = [
 		]
 	},
 	{
+		path:'/order',
+		component: Layout,
+		children:[
+			{
+				path:'index',
+				component: () => import('../views/Order.vue'),
+				meta:{
+					title:'订单管理',
+					icon:'GoodsFilled'
+				},
+			}
+		]
+	},
+	{
 		path:'/list',
 		redirect:'/list/table',
 		component: Layout,

@@ -59,4 +59,19 @@ a{
   transform: translateX(30px);
 }
 
+// 体育
+.ty-box{
+	// display: flex;
+	background-color: #fff;
+	padding: 30px;
+	box-shadow: 0px 3px 15px 1px rgba(10,57,255,0.16);
+	border-radius: 15px;
+	margin-bottom: 30px;
+	.title{
+		font-family: PingFangSC-Medium, PingFang SC;
+		margin: 0;
+		margin-bottom: 25px;
+		font-size: 16px;
+	}
+}
 

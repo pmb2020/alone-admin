@@ -24,6 +24,58 @@ const routes = [
 		component: Layout,
 		children:[
 			{
+				path:'sports/home',
+				component: () => import('../views/SportsHome.vue'),
+				meta:{
+					title:'体育首页',
+					icon:'HomeFilled'
+				},
+			}
+		]
+	},
+	{
+		path:'/base',
+		component: Layout,
+		meta:{
+			title:'基础信息管理',
+			icon:'Document'
+		},
+		children:[
+			{
+				path:'student',
+				component: () => import('../views/student/Index.vue'),
+				meta: {
+				  title: '学生信息管理',
+				},
+			},
+			{
+				path:'class',
+				component: () => import('../views/class/Index.vue'),
+				meta: {
+				  title: '班级信息管理',
+				},
+			},
+			{
+				path:'grade',
+				component: () => import('../views/grade/Index.vue'),
+				meta: {
+				  title: '年级信息管理',
+				},
+			},
+			{
+				path:'teacher',
+				component: () => import('../views/teacher/Index.vue'),
+				meta: {
+				  title: '老师信息管理',
+				},
+			},
+		]
+	},
+	{
+		path:'/',
+		component: Layout,
+		children:[
+			{
 				path:'home',
 				component: () => import('../views/home/Index.vue'),
 				meta:{

@@ -18,7 +18,6 @@
 		font-family: var(--el-font-family);
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		text-align: center;
 		color: #252631;
 		background-color: #F5F7FD;
 		height: 100%;

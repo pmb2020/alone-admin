@@ -85,11 +85,14 @@
 				<el-form-item label="手机号：">
 					<el-input v-model="tableForm.amount" autocomplete="off" />
 				</el-form-item>
+				<el-form-item label="详情：">
+					<WangEditor ref="editorRef"></WangEditor>
+				</el-form-item>
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="dialogFormVisible = false">取消</el-button>
-					<el-button type="primary" @click="dialogFormVisible = false">确定</el-button>
+					<el-button type="primary" @click="submitForm">确定</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -97,6 +100,7 @@
 </template>
 
 <script setup>
+	import WangEditor from '@/components/WangEditor.vue'
 	import {
 		getTable
 	} from '@/api/user.js'
@@ -168,6 +172,12 @@
 	const handleAdd = () => {
 		console.log('添加')
 		dialogFormVisible.value = true
+	}
+	const editorRef = ref(null)
+	const test = ref(null)
+	const submitForm = () =>{
+		tableForm.value.content = editorRef.value.valueHtml
+		console.log(editorRef.value.valueHtml)
 	}
 	onMounted(() => {
 		getList()

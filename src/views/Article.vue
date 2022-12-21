@@ -33,7 +33,6 @@
 </template>
 <script setup>
 	import {getArticle} from '@/api/article'
-	import {ref} from 'vue'
 	const activeName = ref('first')
 	const articleList = ref([])
 	getArticle().then(res=>{

@@ -57,7 +57,6 @@
 </template>
 
 <script setup>
-	import {ref,reactive,onMounted} from 'vue'
 	import {
 		order
 	} from '@/api/order.js'

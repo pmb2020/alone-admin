@@ -28,10 +28,6 @@
 </template>
 
 <script setup>
-	import {
-		ref,
-		reactive
-	} from 'vue'
 	const activeName = ref('first')
 	const loginForm = reactive({
 		username: '',

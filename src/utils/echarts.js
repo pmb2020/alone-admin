@@ -2,12 +2,14 @@ import * as echarts from 'echarts/core';
 import {
 	BarChart,
 	LineChart,
+	PieChart
 } from 'echarts/charts';
 import {
 	TooltipComponent,
 	GridComponent,
 	DatasetComponent,
 	TransformComponent,
+	LegendComponent,
 } from 'echarts/components';
 import {
 	LabelLayout,
@@ -18,6 +20,7 @@ import {
 } from 'echarts/renderers';
 echarts.use([
 	TooltipComponent,
+	LegendComponent,
 	GridComponent,
 	DatasetComponent,
 	TransformComponent,
@@ -26,6 +29,7 @@ echarts.use([
 	SVGRenderer,
 	LineChart,
 	BarChart,
+	PieChart,
 ]);
 
 export default echarts

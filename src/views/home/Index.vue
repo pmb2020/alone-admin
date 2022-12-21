@@ -21,12 +21,24 @@
 				</div>
 			</el-col>
 		</el-row>
+		<div style="margin-bottom:20px">
+			<el-card class="box-card">
+				<PieChatTest></PieChatTest>
+			</el-card>
+		</div>
+		<div>
+			<el-card class="box-card">
+				<BarChartTest></BarChartTest>
+			</el-card>
+		</div>
 	</div>
 </template>
 
 <script setup>
 	import IconBox from '@/components/alone/IconBox.vue'
 	import Visitor from './Visitor.vue'
+	import PieChatTest from './PieChatTest.vue'
+	import BarChartTest from './BarChartTest.vue'
 	import {
 		reactive,
 		ref,onMounted

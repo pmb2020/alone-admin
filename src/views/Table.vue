@@ -86,7 +86,7 @@
 					<el-input v-model="tableForm.amount" autocomplete="off" />
 				</el-form-item>
 				<el-form-item label="详情：">
-					<WangEditor ref="editorRef"></WangEditor>
+					<WangEditor ref="editorRef" :initValue="tableForm.content"></WangEditor>
 				</el-form-item>
 			</el-form>
 			<template #footer>

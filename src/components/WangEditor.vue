@@ -12,16 +12,17 @@
 	import {onBeforeUnmount,ref,shallowRef,onMounted} from 'vue'
 	import {Editor,Toolbar} from '@wangeditor/editor-for-vue'
 	const mode = ref('default') // 或 'simple'
+	const {initValue} = defineProps(['initValue'])
 	// 编辑器实例，必须用 shallowRef
 	const editorRef = shallowRef()
 	// 内容 HTML
-	const valueHtml = ref('<p>hello</p>')
+	const valueHtml = ref(initValue)
 	// 模拟 ajax 异步获取内容
 	onMounted(() => {
-		setTimeout(() => {
-			valueHtml.value = '<p>模拟 Ajax 异步设置内容</p>'
-			console.log(valueHtml.value)
-		}, 1500)
+		// setTimeout(() => {
+		// 	valueHtml.value = initValue
+		// 	console.log(valueHtml.value)
+		// }, 1500)
 	})
 	const toolbarConfig = {}
 	const editorConfig = {

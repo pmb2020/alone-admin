@@ -4,10 +4,6 @@
 </template>
 
 <script setup>
-	import {
-		ref,
-		onMounted
-	} from 'vue'
 	import echarts from '@/utils/echarts.js'
 	onMounted(() => {
 		let myChart = echarts.init(document.getElementById("visitor"));

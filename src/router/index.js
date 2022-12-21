@@ -25,7 +25,7 @@ const routes = [
 		children:[
 			{
 				path:'sports/home',
-				component: () => import('../views/SportsHome.vue'),
+				component: () => import('../views/home/SportsHome.vue'),
 				meta:{
 					title:'体育首页',
 					icon:'HomeFilled'

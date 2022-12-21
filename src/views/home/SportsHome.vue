@@ -55,7 +55,7 @@
 		</div>
 		<div class="ty-box">
 			<h3 class="title">全区学生体重指数占比</h3>
-			<p>图表</p>
+			<WeightChart />
 		</div>
 		<div class="ty-box">
 			<h3 class="title">全区各项体测指标分析</h3>
@@ -65,6 +65,7 @@
 </template>
 
 <script setup>
+	import WeightChart from './WeightChart.vue'
 </script>
 
 <style lang="scss">

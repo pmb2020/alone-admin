@@ -176,8 +176,10 @@
 	const editorRef = ref(null)
 	const test = ref(null)
 	const submitForm = () =>{
-		tableForm.value.content = editorRef.value.valueHtml
-		console.log(editorRef.value.valueHtml)
+		tableForm.content = editorRef.value.valueHtml
+		console.log(tableForm)
+		console.log(editorRef)
+		// console.log(editorRef.value.valueHtml)
 	}
 	onMounted(() => {
 		getList()

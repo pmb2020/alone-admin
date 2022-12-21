@@ -68,10 +68,10 @@
 						<el-switch v-model="form.status" active-value="1" inactive-value="0" />
 					</el-form-item>
 					<el-form-item label="图片" style="font-weight: bold;">
-						<el-upload class="avatar-uploader" name="file" action="#"
+						<el-upload class="al-uploader" name="file" action="#"
 							:show-file-list="false" :on-change="fileChange" :auto-upload="false" >
 							<el-image v-if="form.image"  style="width: 400px; height: 200px" :src="form.image" />
-							<el-icon v-else class="avatar-uploader-icon">
+							<el-icon v-else class="al-uploader-icon">
 								<Plus />
 							</el-icon>
 						</el-upload>
@@ -218,24 +218,4 @@
 </script>
 
 <style>
-	.avatar-uploader .el-upload {
-	  border: 1px dashed var(--el-border-color);
-	  border-radius: 6px;
-	  cursor: pointer;
-	  position: relative;
-	  overflow: hidden;
-	  transition: var(--el-transition-duration-fast);
-	}
-	
-	.avatar-uploader .el-upload:hover {
-	  border-color: var(--el-color-primary);
-	}
-	
-	.el-icon.avatar-uploader-icon {
-	  font-size: 28px;
-	  color: #8c939d;
-	  width: 178px;
-	  height: 178px;
-	  text-align: center;
-	}
 </style>

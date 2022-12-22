@@ -34,6 +34,20 @@ const routes = [
 		]
 	},
 	{
+		path:'/product',
+		component: Layout,
+		children:[
+			{
+				path:'index',
+				component: () => import('../views/Product.vue'),
+				meta:{
+					title:'产品管理',
+					icon:'Box'
+				},
+			}
+		]
+	},
+	{
 		path:'/banner',
 		component: Layout,
 		children:[

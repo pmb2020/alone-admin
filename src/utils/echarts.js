@@ -10,6 +10,7 @@ import {
 	DatasetComponent,
 	TransformComponent,
 	LegendComponent,
+	TitleComponent
 } from 'echarts/components';
 import {
 	LabelLayout,
@@ -19,6 +20,7 @@ import {
 	SVGRenderer
 } from 'echarts/renderers';
 echarts.use([
+	TitleComponent,
 	TooltipComponent,
 	LegendComponent,
 	GridComponent,

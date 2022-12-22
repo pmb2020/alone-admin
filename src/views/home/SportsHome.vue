@@ -57,26 +57,75 @@
 			<h3 class="title">全区学生体重指数占比</h3>
 			<WeightChart />
 		</div>
+		<!-- 全区各项体测指标分析 -->
 		<div class="ty-box">
-			<h3 class="title">全区各项体测指标分析</h3>
-			<p>图表</p>
+			<TiCeChart />
+		</div>
+		<div class="ty-box">
+			<div class="al-flex-between" style="margin-bottom: 20px;">
+				<h3 class="title" style="margin-bottom: 0;">全区各项体测指记录</h3>
+				<ul class="ty-tab">
+					<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">小学</li>
+					<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">初中</li>
+					<li :class="{'active':gTabIndex==2}" @click="gTabClick(2)">高中</li>
+				</ul>
+			</div>
+			<div>
+				<el-table :data="tableData" stripe style="width: 100%">
+					<el-table-column prop="date" label="体测项目" />
+					<el-table-column prop="name" label="姓名" width="180" />
+					<el-table-column prop="name" label="成绩" />
+					<el-table-column prop="name" label="得分" />
+					<el-table-column prop="address" label="记录时间" />
+					<el-table-column prop="address" label="所属学校" />
+					<el-table-column prop="address" label="所属年级" />
+				</el-table>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
 	import WeightChart from './WeightChart.vue'
+	import TiCeChart from './TiCeChart.vue'
+	const gTabIndex = ref(0)
+	const gTabClick = (index)=>{
+		gTabIndex.value = index
+	}
+	const tableData = ref([{
+			date: '2016-05-03',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-02',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-04',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-01',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+	])
 </script>
 
 <style lang="scss">
-	.tx-text-num{
+	.tx-text-num {
 		color: #666;
-		font-size:14px;
-		& p:first-child{
+		font-size: 14px;
+
+		& p:first-child {
 			margin-bottom: 10px;
 		}
-		.num{
-			font-size:18px;
+
+		.num {
+			font-size: 18px;
 			font-family: PingFangSC-Semibold, PingFang SC;
 			font-weight: 600;
 			margin-right: 2px;

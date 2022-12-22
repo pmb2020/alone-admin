@@ -96,3 +96,20 @@ a{
 	}
 }
 
+.ty-tab{
+	display: flex;
+	font-size: 14px;
+	color: #666;
+	li{
+		padding: 8px 16px;
+		background-color: #F5F5F5;
+		border-radius: 10px 10px 0px 0px;
+		margin-right: 5px;
+		cursor: pointer;
+		}
+	.active{
+		color: #fff;
+		background: linear-gradient(180deg, #0097FF 0%, #005EFF 100%);
+	}
+}
+

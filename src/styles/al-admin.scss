@@ -113,3 +113,18 @@ a{
 	}
 }
 
+.ty-btn{
+	background-color: #F5F5F5;
+	border: none;
+	outline: none;
+	padding: 8px 20px;
+	border-radius: 5px;
+	color: #666;
+	font-size: 14px;
+	margin-left: 5px;
+	cursor: pointer;
+	&:hover{
+		color: #005EFF;
+	}
+}
+

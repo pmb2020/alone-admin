@@ -46,18 +46,53 @@
 				</el-form-item>
 			</el-form>
 		</div>
-		学生列表
+		<div class="ty-box">
+			<div class="al-flex-between">
+				<h3 class="title" style="margin-bottom: 0;">学生信息列表</h3>
+				<div>
+					<button class="ty-btn">新增学生信息</button>
+					<button class="ty-btn">导入学生信息</button>
+					<button class="ty-btn">下载模版</button>
+				</div>
+			</div>
+			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
+				<el-table-column prop="date" label="Date" width="180" />
+				<el-table-column prop="name" label="Name" width="180" />
+				<el-table-column prop="address" label="Address" />
+				<el-table-column prop="address" label="Address" />
+			</el-table>
+		</div>
 	</div>
 </template>
 
 <script setup>
-	import {reactive} from 'vue'
 	const queryForm = reactive({
 		user: '',
 		region: '',
 	})
+	const tableData = reactive([{
+			date: '2016-05-03',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-02',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-04',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-01',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+	])
 	const onSubmit = () => {
-	  console.log('submit!')
+		console.log('submit!')
 	}
 </script>
 

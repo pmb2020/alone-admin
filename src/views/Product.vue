@@ -81,7 +81,7 @@
 					</el-select>
 				</el-form-item>
 				<el-form-item label="图片：" style="font-weight: bold;">
-					<el-upload class="al-uploader" name="file" action="http://127.0.0.1:85/admin/upload/file"
+					<el-upload class="al-uploader" name="file" action="http://39.105.2.43:90/admin/upload/file"
 						:show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload">
 						<el-image v-if="tableForm.main_pic"  style="width: 400px; height: 200px" :src="tableForm.main_pic" />
 						<el-icon v-else class="al-uploader-icon">

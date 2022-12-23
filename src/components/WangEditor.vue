@@ -29,7 +29,7 @@
 		placeholder: '请输入内容...',
 		MENU_CONF:{
 			uploadImage:{
-				server: '/admin/upload/file',
+				server: 'http://39.105.2.43:90/admin/upload/file',
 				fieldName: 'file',
 				maxFileSize: 5 * 1024 * 1024, // 单个文件的最大体积限制
 				customInsert(res,insertFn){

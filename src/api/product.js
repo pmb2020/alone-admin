@@ -14,5 +14,5 @@ export const getProduct = (params)=>{
 // }
 
 export const apiProduct = (params,method)=>{
-	return apiHttp('http://127.0.0.1:85/admin/product',params,method)
+	return apiHttp('http://39.105.2.43:90/admin/product',params,method)
 }

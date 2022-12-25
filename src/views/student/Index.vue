@@ -50,22 +50,43 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">学生信息列表</h3>
 				<div>
-					<button class="ty-btn">新增学生信息</button>
+					<button @click="dialogFormVisible=true" class="ty-btn">新增学生信息</button>
 					<button class="ty-btn">导入学生信息</button>
 					<button class="ty-btn">下载模版</button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
-				<el-table-column prop="date" label="Date" width="180" />
-				<el-table-column prop="name" label="Name" width="180" />
-				<el-table-column prop="address" label="Address" />
-				<el-table-column prop="address" label="Address" />
+				<el-table-column prop="date" label="Date" align="center" width="180" />
+				<el-table-column prop="name" label="Name" align="center" />
+				<el-table-column prop="address" label="Address" align="center" />
+				<el-table-column prop="address" label="Address" align="center" />
+				<el-table-column label="体测详情" align="center" width="80">
+					<template #default="scope">
+						<el-link :underline="false">查看</el-link>
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" align="center" width="80">
+					<template #default="scope">
+						<el-button size="default" @click="handleEdit(scope.$index, scope.row)" style="border: none;background-color: transparent;">
+							<el-icon><EditPen /></el-icon>
+						</el-button>
+					</template>
+				</el-table-column>
 			</el-table>
 		</div>
+		<!-- 新增弹出 -->
+		<el-dialog class="" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
+			<AddForm></AddForm>
+		</el-dialog>
+		<!-- 编辑 -->
+		<el-dialog v-model="dialogEditFormVisible" title="编辑学生信息" destroy-on-close>
+			<div>das</div>
+		</el-dialog>
 	</div>
 </template>
 
 <script setup>
+	import AddForm from './AddForm.vue'
 	const queryForm = reactive({
 		user: '',
 		region: '',
@@ -91,6 +112,11 @@
 			address: 'No. 189, Grove St, Los Angeles',
 		},
 	])
+	const dialogFormVisible = ref(false)
+	const dialogEditFormVisible = ref(false)
+	const handleEdit = ()=>{
+		dialogEditFormVisible.value = true
+	}
 	const onSubmit = () => {
 		console.log('submit!')
 	}

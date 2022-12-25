@@ -1,6 +1,10 @@
 <template>
 	<el-header>
-		<el-avatar style="margin-right: 15px;" src="https://www.gold404.cn/static/index/images/avatar.jpg" />
+		<!-- <el-avatar style="margin-right: 15px;" src="../../assets/images/login.svg" /> -->
+		<el-badge :value="12" type="warning" class="item" style="margin: 0 30px;">
+			<img class="al-avatar" style="" src="@/assets/images/message.png" alt="">
+		</el-badge>
+		<img class="al-avatar" style="" src="@/assets/images/avatar.png" alt="">
 		<el-dropdown style="cursor: pointer;">
 			<span class="el-dropdown-link">
 				admin
@@ -19,9 +23,11 @@
 </template>
 
 <script setup>
-	import {useRouter} from 'vue-router'
+	import {
+		useRouter
+	} from 'vue-router'
 	const router = useRouter()
-	const loginOut = () =>{
+	const loginOut = () => {
 		console.log('退出登录')
 		localStorage.removeItem('token')
 		router.push('/login')

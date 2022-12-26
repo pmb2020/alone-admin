@@ -25,7 +25,7 @@
 				<el-button color="#626aef" @click="handleAdd">
 					<el-icon style="margin-right: 5px;">
 						<CirclePlus />
-					</el-icon>新增产品
+					</el-icon>新增新闻
 				</el-button>
 				<el-button>批量删除</el-button>
 				<el-button>批量导出</el-button>
@@ -35,7 +35,7 @@
 				@selection-change="handleSelectionChange" table-layout="fixed" highlight-current-row>
 				<el-table-column type="selection" width="50" />
 				<el-table-column type="index" label="#" />
-				<el-table-column prop="title" label="名称" align="center" />
+				<el-table-column prop="title" label="标题" align="center" />
 				<el-table-column label="状态" align="center" width="80px">
 					<template #default="scope">
 						<el-tag v-if="scope.row.status ===0" type="success">正常</el-tag>
@@ -69,7 +69,7 @@
 			</div>
 		</div>
 		<!-- 弹框表单 -->
-		<el-dialog v-model="dialogFormVisible" :title="isEdit ? '编辑产品' : '新增产品'" destroy-on-close>
+		<el-dialog v-model="dialogFormVisible" :title="isEdit ? '编辑新闻' : '新增新闻'" destroy-on-close>
 			<el-form :model="tableForm" :label-width="80" size="large">
 				<el-form-item label="标题：">
 					<el-input v-model="tableForm.title" autocomplete="off" />
@@ -105,7 +105,7 @@
 
 <script setup>
 	import WangEditor from '@/components/WangEditor.vue'
-	import {apiProduct} from '@/api/product.js'
+	import {apiNews} from '@/api/news.js'
 	import {ref,onMounted,reactive} from 'vue'
 	const queryForm = ref({
 		'name': '',
@@ -148,7 +148,7 @@
 	const pageSize = ref(20)
 	const getList = () => {
 		console.log('筛选参数：', queryForm.value)
-		apiProduct(queryForm.value,'get').then(res=>{
+		apiNews(queryForm.value,'get').then(res=>{
 			tableData.value = res.data
 		})
 	}
@@ -168,7 +168,7 @@
 			cancelButtonText: '取消',
 			type: 'warning'
 		}).then(() => {
-			apiProduct({id},'delete').then(res=>{
+			apiNews({id},'delete').then(res=>{
 				getList()
 				ElMessage.success('删除成功!')
 			})
@@ -184,13 +184,14 @@
 		tableForm.value.content = editorRef.value.valueHtml
 		console.log(tableForm.value)
 		if(isEdit.value){
-			apiProduct(tableForm.value,'put').then(res=>{
+			console.log('编辑')
+			apiNews(tableForm.value,'put').then(res=>{
 				ElMessage.success('操作成功!')
 				getList()
 				dialogFormVisible.value = false
 			})
 		}else{
-			apiProduct(tableForm.value,'post').then(res=>{
+			apiNews(tableForm.value,'post').then(res=>{
 				ElMessage.success('操作成功!')
 				getList()
 				dialogFormVisible.value = false

@@ -48,6 +48,20 @@ const routes = [
 		]
 	},
 	{
+		path:'/news',
+		component: Layout,
+		children:[
+			{
+				path:'index',
+				component: () => import('../views/News.vue'),
+				meta:{
+					title:'新闻管理',
+					icon:'Memo'
+				},
+			}
+		]
+	},
+	{
 		path:'/banner',
 		component: Layout,
 		children:[

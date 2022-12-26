@@ -49,6 +49,11 @@ const routes = [
 				},
 			},
 			{
+				path:'student/info',
+				hidden: true,
+				component: () => import('../views/student/Info.vue'),
+			},
+			{
 				path:'class',
 				component: () => import('../views/class/Index.vue'),
 				meta: {

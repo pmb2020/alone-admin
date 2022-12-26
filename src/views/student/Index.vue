@@ -62,7 +62,7 @@
 				<el-table-column prop="address" label="Address" align="center" />
 				<el-table-column label="体测详情" align="center" width="80">
 					<template #default="scope">
-						<el-link :underline="false">查看</el-link>
+						<router-link to="/base/student/info">查看</router-link>
 					</template>
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="80">

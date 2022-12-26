@@ -54,6 +54,21 @@ const routes = [
 				component: () => import('../views/student/Info.vue'),
 			},
 			{
+				path:'class/info',
+				hidden: true,
+				component: () => import('../views/class/Info.vue'),
+			},
+			{
+				path:'grade/info',
+				hidden: true,
+				component: () => import('../views/grade/Info.vue'),
+			},
+			{
+				path:'teacher/info',
+				hidden: true,
+				component: () => import('../views/teacher/Info.vue'),
+			},
+			{
 				path:'class',
 				component: () => import('../views/class/Index.vue'),
 				meta: {

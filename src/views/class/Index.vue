@@ -1,123 +1,153 @@
 <template>
-	<div class="order">
-		<!-- 筛选 -->
+	<div>
 		<div class="ty-box">
-			<el-form inline :model="filterForm" ref="filterFormRef" size="large">
-				<el-form-item label="名称" prop="title">
-					<el-input v-model="filterForm.title" placeholder="要搜索的名称" />
-				</el-form-item>
-				<el-form-item label="类型" prop="type">
-					<el-select v-model="filterForm.type" placeholder="请选择">
-						<el-option label="已完成" value="1" />
-						<el-option label="未支付" value="2" />
-						<el-option label="已取消" value="3" />
+			<el-form :inline="true" :model="queryForm" class="demo-form-inline">
+				<el-form-item label="班级">
+					<el-select v-model="queryForm.region" placeholder="请选择">
+						<el-option label="Zone one" value="shanghai" />
+						<el-option label="Zone two" value="beijing" />
 					</el-select>
 				</el-form-item>
+				<el-form-item label="学校">
+					<el-select v-model="queryForm.region" placeholder="请选择">
+						<el-option label="Zone one" value="shanghai" />
+						<el-option label="Zone two" value="beijing" />
+					</el-select>
+				</el-form-item>
+				<el-form-item label="年级">
+					<el-select v-model="queryForm.region" placeholder="请选择">
+						<el-option label="Zone one" value="shanghai" />
+						<el-option label="Zone two" value="beijing" />
+					</el-select>
+				</el-form-item>
+				<el-form-item label="老师">
+					<el-select v-model="queryForm.region" placeholder="请选择">
+						<el-option label="Zone one" value="shanghai" />
+						<el-option label="Zone two" value="beijing" />
+					</el-select>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary" @click="onSubmit">查询</el-button>
+				</el-form-item>
 			</el-form>
-			<div class="al-flex-between">
-				<div>
-					<el-button size="default" type="primary" @click="getList">搜索</el-button>
-					<el-button size="default" plain @click="resetFilterForm(filterFormRef)">重置</el-button>
-				</div>
-				<el-button size="default" type="primary" @click="handleAdd">+ 新增</el-button>
-			</div>
 		</div>
-		<div>
-			<el-table :data="tableData" v-loading="loading" style="width: 100%;" size="large"
-				@selection-change="handleSelectionChange" table-layout="fixed" highlight-current-row>
-				<el-table-column type="selection" width="50" />
-				<el-table-column type="index" label="#" />
-				<el-table-column prop="title" label="标题" align="center" width="250" />
-				<el-table-column label="图片" align="center" width="150">
+		<div class="ty-box">
+			<div class="al-flex-between">
+				<h3 class="title" style="margin-bottom: 0;">班级信息列表</h3>
+				<div>
+					<button @click="dialogFormVisible=true" class="ty-btn">新增班级信息</button>
+				</div>
+			</div>
+			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
+				<el-table-column prop="date" label="Date" align="center" width="180" />
+				<el-table-column prop="name" label="Name" align="center" />
+				<el-table-column prop="address" label="Address" align="center" />
+				<el-table-column prop="address" label="Address" align="center" />
+				<el-table-column label="体测详情" align="center" width="80">
 					<template #default="scope">
-						<el-image style="width: 120px; height: 80px" :src="scope.row.image" fit="fill" />
+						<router-link to="/base/class/info">查看</router-link>
 					</template>
 				</el-table-column>
-				<el-table-column prop="type" align="center" label="类型" />
-				<el-table-column prop="link" align="center" label="链接" />
-				<el-table-column prop="sort" align="center" label="排序" />
-				<el-table-column label="启用" align="center">
+				<el-table-column label="操作" align="center" width="80">
 					<template #default="scope">
-						<el-switch v-model="scope.row.status" />
-					</template>
-				</el-table-column>
-				<el-table-column prop="created_at" align="center" label="时间" width="165" />
-				<el-table-column prop="note" align="center" label="备注" min-width="150" />
-				<el-table-column label="操作" align="center" width="170">
-					<template #default="scope">
-						<el-button size="default" color="#626aef"
-							@click="handleEdit(scope.row)">编辑
+						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
+							style="border: none;background-color: transparent;">
+							<el-icon>
+								<EditPen />
+							</el-icon>
 						</el-button>
-						<el-button size="default" type="danger" @click="handleDelete(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
 		</div>
+		<!-- 新增弹出 -->
+		<el-dialog class="" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
+			<AddForm></AddForm>
+		</el-dialog>
+		<!-- 编辑 -->
+		<el-dialog class="ty-dialog" width="600px" v-model="dialogEditFormVisible" title="编辑学生信息" destroy-on-close>
+			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default"
+				:scroll-to-error="true">
+				<div class="al-flex" style="">
+					<div class="" style="margin-right: 30px;position: relative;left: -20px;">
+						<el-form-item label="姓名">
+							<el-input v-model="formInline.user" placeholder="请输入" />
+						</el-form-item>
+						<el-form-item label="性别">
+							<el-select v-model="formInline.region" placeholder="请选择">
+								<el-option label="男" value="1" />
+								<el-option label="女" value="2" />
+							</el-select>
+						</el-form-item>
+						<el-form-item label="年龄">
+							<el-input v-model="formInline.user" placeholder="请输入" />
+						</el-form-item>
+					</div>
+					<div style="">
+						<el-form-item label="归属学校">
+							<el-select v-model="formInline.region" placeholder="请输入">
+								<el-option label="Zone one" value="shanghai" />
+								<el-option label="Zone two" value="beijing" />
+							</el-select>
+						</el-form-item>
+						<el-form-item label="归属片区">
+							<el-select v-model="formInline.region" placeholder="请输入">
+								<el-option label="Zone one" value="shanghai" />
+								<el-option label="Zone two" value="beijing" />
+							</el-select>
+						</el-form-item>
+						<el-form-item label="身份证号">
+							<el-input v-model="formInline.user" placeholder="请输入" />
+						</el-form-item>
+					</div>
+				</div>
+				<div style="display: flex;justify-content: center;">
+					<el-button>取消</el-button>
+					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
+				</div>
+			</el-form>
+		</el-dialog>
 	</div>
 </template>
 
 <script setup>
-	import {ref,reactive,onMounted} from 'vue'
-	import {
-		order
-	} from '@/api/order.js'
-	onMounted(()=>{
-		getList()
+	import AddForm from './AddForm.vue'
+	const queryForm = reactive({
+		user: '',
+		region: '',
 	})
-	/**
-	 * 筛选搜索相关
-	 */
-	const filterForm = ref({
-		title: '',
-		status: '',
-		type: '',
-		sort: '',
-		link: '',
-		image: '',
-		note: '',
+	const formInline = reactive({
+		user: '',
+		region: '',
 	})
-	const filterFormRef = ref({})
-	//重置搜索条件
-	const resetFilterForm = (formEl) => {
-		if (!formEl) return
-		formEl.resetFields()
+	const tableData = reactive([{
+			date: '2016-05-03',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-02',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-04',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-01',
+			name: 'Tom',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+	])
+	const dialogFormVisible = ref(false)
+	const dialogEditFormVisible = ref(false)
+	const handleEdit = () => {
+		dialogEditFormVisible.value = true
 	}
-	const tableData = ref([])
-	const loading = ref(true)
-	const getList = () => {
-		order(filterForm.value).then(res => {
-			console.log(res)
-			tableData.value = res.data
-			loading.value = false
-		})
-	}
-	//新增
-	const handleAdd = () => {
-		isFromAdd.value = true
-		dialogVisible.value = true
-	}
-	// 编辑
-	const handleEdit = (data)=>{
-		form.value={...data};
-		isFromAdd.value = false;
-		dialogVisible.value = true
-	}
-	const handleDelete = (row) => {
-		ElMessageBox.confirm('确认要删除吗', '提示', {
-			confirmButtonText: '确定',
-			cancelButtonText: '取消',
-			type: 'warning'
-		}).then(() => {
-			order({
-				id: row.id
-			}, 'delete').then(res => {
-				getList()
-				ElMessage.success('删除成功')
-			})
-		})
-	}
-	const handleSelectionChange = (val) => {
-		console.log(val)
+	const onSubmit = () => {
+		console.log('submit!')
 	}
 </script>
 

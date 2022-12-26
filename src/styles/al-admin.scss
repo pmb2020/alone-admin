@@ -133,3 +133,16 @@ a{
 	}
 }
 
+.ty-dialog{
+	box-shadow: 0px 3px 15px 1px rgba(10,57,255,0.16) !important;
+	border-radius: 15px !important;
+	overflow: hidden;
+	font-size: 14px;
+	.el-dialog__body{
+		// padding-left: 0;
+	}
+	.el-form-item{
+		width: 240px !important;
+	}
+}
+

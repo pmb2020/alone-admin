@@ -6,7 +6,7 @@
 				<Fold v-else />
 			</el-icon>
 		</div>
-		<el-scrollbar class="al-scrollbar" height="100vh">
+		<el-scrollbar class="al-scrollbar">
 			<el-menu :default-active="menuRoute" class="el-menu-vertical-demo" :collapse="isCollapse" router
 				@open="handleOpen" @close="handleClose">
 				<template v-for="(items,index) in menuItems" :key="index">
@@ -72,9 +72,12 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 	.base-side{
 		background-color: var(--el-menu-bg-color);
+	}
+	.al-scrollbar{
+		/* height: 100vh; */
 	}
 	.el-menu-vertical-demo:not(.el-menu--collapse) {
 		width: 240px;

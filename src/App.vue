@@ -11,15 +11,4 @@
 </template>
 
 <style>
-	html,body{
-		height: 100%;
-	}
-	#app {
-		font-family: var(--el-font-family);
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		color: #252631;
-		background-color: #F5F7FD;
-		height: 100%;
-	}
 </style>

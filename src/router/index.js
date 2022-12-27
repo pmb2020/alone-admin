@@ -1,6 +1,6 @@
 import { createRouter ,createWebHashHistory} from "vue-router";
-// import Layout from '@/layout/index.vue'
-import Layout from '@/layout/TopLayout.vue'
+import Layout from '@/layout/index.vue'
+// import Layout from '@/layout/TopLayout.vue'
 
 const routes = [
 	{

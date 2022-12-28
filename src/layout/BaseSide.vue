@@ -78,7 +78,7 @@
 		box-shadow: 2px 2px 8px 0px rgba(10,57,255,0.08);
 	}
 	.al-scrollbar{
-		/* height: 100vh; */
+		height: calc(100vh - var(--al-header-height) - 10px);
 	}
 	.el-menu-vertical-demo:not(.el-menu--collapse) {
 		width: 240px;

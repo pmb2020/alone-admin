@@ -24,6 +24,6 @@
 <style scoped>
 	.eee{
 		width: 100%;
-		height: calc(100vh - var(--al-header-height));
+		height: calc(100vh - var(--al-header-height) - 10px);
 	}
 </style>

@@ -1,24 +1,28 @@
 <template>
 	<el-header>
-		<!-- <el-avatar style="margin-right: 15px;" src="../../assets/images/login.svg" /> -->
-		<el-badge :value="12" type="warning" class="item" style="margin: 0 30px;">
-			<img class="al-avatar" style="" src="@/assets/images/message.png" alt="">
-		</el-badge>
-		<img class="al-avatar" style="" src="@/assets/images/avatar.png" alt="">
-		<el-dropdown style="cursor: pointer;">
-			<span class="el-dropdown-link">
-				admin
-				<el-icon class="el-icon--right">
-					<ArrowDownBold />
-				</el-icon>
-			</span>
-			<template #dropdown>
-				<el-dropdown-menu>
-					<el-dropdown-item>消息</el-dropdown-item>
-					<el-dropdown-item @click="loginOut" divided>退出</el-dropdown-item>
-				</el-dropdown-menu>
-			</template>
-		</el-dropdown>
+		<div>
+			alone-admin后台管理系统
+		</div>
+		<div class="al-flex" style="align-items: center;">
+			<el-badge :value="12" type="warning" class="item" style="margin: 0 30px;">
+				<img class="al-avatar" style="" src="@/assets/images/message.png" alt="">
+			</el-badge>
+			<img class="al-avatar" style="" src="@/assets/images/avatar.png" alt="">
+			<el-dropdown style="cursor: pointer;">
+				<span class="el-dropdown-link">
+					admin
+					<el-icon class="el-icon--right">
+						<ArrowDownBold />
+					</el-icon>
+				</span>
+				<template #dropdown>
+					<el-dropdown-menu>
+						<el-dropdown-item>消息</el-dropdown-item>
+						<el-dropdown-item @click="loginOut" divided>退出</el-dropdown-item>
+					</el-dropdown-menu>
+				</template>
+			</el-dropdown>
+		</div>
 	</el-header>
 </template>
 
@@ -38,7 +42,7 @@
 	.el-header {
 		display: flex;
 		align-items: center;
-		justify-content: flex-end;
+		justify-content: space-between;
 		position: relative;
 		background-color: #fff;
 		color: var(--el-text-color-primary);

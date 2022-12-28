@@ -2,21 +2,33 @@
 	<div>
 		<div class="ty-box">
 			<el-form :inline="true" :model="queryForm" class="demo-form-inline">
-				<el-form-item label="学校">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item label="年级">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="onSubmit">查询</el-button>
-				</el-form-item>
+				<el-row>
+					<el-col :span="20">
+						<el-row>
+							<el-col :span="6">
+								<el-form-item label="学校">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="年级">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+						</el-row>
+					</el-col>
+					<el-col :span="4">
+						<div style="display: flex;justify-content: center;">
+							<el-button style="float: right;" type="primary" @click="onSubmit">查询</el-button>
+						</div>
+					</el-col>
+				</el-row>
 			</el-form>
 		</div>
 		<div class="ty-box">

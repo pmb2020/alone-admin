@@ -2,26 +2,54 @@
 	<div>
 		<div class="ty-box">
 			<el-form :inline="true" :model="queryForm" class="demo-form-inline">
-				<el-form-item label="学校">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item label="年级">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="onSubmit">查询</el-button>
-				</el-form-item>
+				<el-row>
+					<el-col :span="20">
+						<el-row>
+							<el-col :span="6">
+								<el-form-item label="班级">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="学校">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="年级">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="老师">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+						</el-row>
+					</el-col>
+					<el-col :span="4">
+						<div style="display: flex;justify-content: center;">
+							<el-button style="float: right;" type="primary" @click="onSubmit">查询</el-button>
+						</div>
+					</el-col>
+				</el-row>
 			</el-form>
 		</div>
 		<div class="ty-box">
 			<div class="al-flex-between">
-				<h3 class="title" style="margin-bottom: 0;">年级信息列表</h3>
+				<h3 class="title" style="margin-bottom: 0;">老师信息列表</h3>
 				<!-- <div>
 					<button @click="dialogFormVisible=true" class="ty-btn">新增班级信息</button>
 				</div> -->

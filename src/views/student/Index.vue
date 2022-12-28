@@ -2,48 +2,89 @@
 	<div>
 		<div class="ty-box">
 			<el-form :inline="true" :model="queryForm" class="demo-form-inline">
-				<el-form-item label="姓名">
-					<el-input v-model="queryForm.user" placeholder="请输入内容" />
-				</el-form-item>
-				<el-form-item label="性别">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item label="年龄">
-					<el-input v-model="queryForm.user" placeholder="请输入内容" />
-				</el-form-item>
-				<el-form-item label="学号">
-					<el-input v-model="queryForm.user" placeholder="请输入内容" />
-				</el-form-item>
-				<el-form-item label="班级">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item label="学校">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item label="年级">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item label="老师">
-					<el-select v-model="queryForm.region" placeholder="请选择">
-						<el-option label="Zone one" value="shanghai" />
-						<el-option label="Zone two" value="beijing" />
-					</el-select>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="onSubmit">查询</el-button>
-				</el-form-item>
+				<el-row>
+					<el-col :span="20">
+						<el-row>
+							<el-col :span="6">
+								<el-form-item label="姓名">
+									<el-input v-model="queryForm.user" placeholder="请输入内容" />
+								</el-form-item>
+								<el-form-item label="班级">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+								<el-form-item label="学校">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="性别">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+								<el-form-item label="学级">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+								<el-form-item label="片区">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="年龄">
+									<el-input v-model="queryForm.user" placeholder="请输入内容" />
+								</el-form-item>
+								<el-form-item label="年级">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+								<el-form-item label="集团">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="学号">
+									<el-input v-model="queryForm.user" placeholder="请输入内容" />
+								</el-form-item>
+								<el-form-item label="老师">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+								<el-form-item label="教委">
+									<el-select v-model="queryForm.region" placeholder="请选择">
+										<el-option label="Zone one" value="shanghai" />
+										<el-option label="Zone two" value="beijing" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+						</el-row>
+					</el-col>
+					<el-col :span="4" style="padding: 10px 0 28px 0;">
+						<div class="query-btn">
+							<el-button @click="onSubmit">重置</el-button>
+							<el-button type="primary" style="margin-left: 0;" @click="onSubmit">查询</el-button>
+						</div>
+					</el-col>
+				</el-row>
 			</el-form>
 		</div>
 		<div class="ty-box">
@@ -168,4 +209,11 @@
 </script>
 
 <style>
+	.query-btn{
+		display: flex;
+		height: 100%;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+	}
 </style>

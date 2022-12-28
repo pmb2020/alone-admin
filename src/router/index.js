@@ -1,6 +1,6 @@
 import { createRouter ,createWebHashHistory} from "vue-router";
-import Layout from '@/layout/index.vue'
-// import Layout from '@/layout/TopLayout.vue'
+// import Layout from '@/layout/index.vue'
+import Layout from '@/layout/TopLayout.vue'
 
 const routes = [
 	{
@@ -28,7 +28,7 @@ const routes = [
 				path:'sports/home',
 				component: () => import('../views/home/SportsHome.vue'),
 				meta:{
-					title:'体育首页',
+					title:'智慧体测平台首页',
 					icon:'HomeFilled'
 				},
 			}
@@ -39,7 +39,7 @@ const routes = [
 		component: Layout,
 		meta:{
 			title:'基础信息管理',
-			icon:'Document'
+			icon:'Discount'
 		},
 		children:[
 			{
@@ -93,97 +93,128 @@ const routes = [
 		]
 	},
 	{
-		path:'/',
-		component: Layout,
-		children:[
-			{
-				path:'home',
-				component: () => import('../views/home/Index.vue'),
-				meta:{
-					title:'首页',
-					icon:'HomeFilled'
-				},
-			}
-		]
-	},
-	{
-		path:'/banner',
+		path:'/ticeChart',
 		component: Layout,
 		children:[
 			{
 				path:'index',
-				component: () => import('../views/Banner.vue'),
+				component: () => import('../views/ticeChart/index.vue'),
 				meta:{
-					title:'广告管理',
-					icon:'Picture'
+					title:'体测项目数据分析',
+					icon:'DataLine'
 				},
 			}
 		]
 	},
 	{
-		path:'/order',
-		component: Layout,
-		children:[
-			{
-				path:'index',
-				component: () => import('../views/Order.vue'),
-				meta:{
-					title:'订单管理',
-					icon:'GoodsFilled'
-				},
-			}
-		]
-	},
-	{
-		path:'/list',
-		redirect:'/list/table',
+		path:'/ticeBZ',
 		component: Layout,
 		meta:{
-			title:'列表展示',
-			icon:'Document'
+			title:'国家体测标准',
+			icon:'Tickets'
 		},
 		children:[
 			{
-				path:'table',
-				component: () => import('../views/Table.vue'),
+				path:'primary',
+				component: () => import('../views/ticeBZ/Primary.vue'),
 				meta: {
-				  title: '表格列表',
+				  title: '小学体测标准评分',
 				},
 			},
 			{
-				path:'text',
-				component: () => import('../views/Article.vue'),
+				path:'middle',
+				component: () => import('../views/ticeBZ/Middle.vue'),
 				meta: {
-				  title: '文章列表',
+				  title: '初中体测标准评分',
 				},
 			},
+			{
+				path:'high',
+				component: () => import('../views/ticeBZ/High.vue'),
+				meta: {
+				  title: '高中体测标准评分',
+				},
+			},
+			{
+				path:'exam',
+				component: () => import('../views/ticeBZ/Exam.vue'),
+				meta: {
+				  title: '考试项目标准',
+				},
+			},
+		]
+	},
+	{
+		path:'/plan',
+		component: Layout,
+		children:[
+			{
+				path:'index',
+				component: () => import('../views/plan/Index.vue'),
+				meta:{
+					title:'体测计划管理',
+					icon:'SetUp'
+				},
+			}
+		]
+	},
+	{
+		path:'/device',
+		component: Layout,
+		children:[
+			{
+				path:'index',
+				component: () => import('../views/device/Index.vue'),
+				meta:{
+					title:'设备信息管理',
+					icon:'Monitor'
+				},
+			}
 		]
 	},
 	{
 		path:'/user',
+		redirect:'/user/index',
 		component: Layout,
+		meta:{
+			title:'用户管理',
+			icon:'UserFilled'
+		},
 		children:[
 			{
 				path:'index',
-				component: () => import('../views/User.vue'),
-				meta:{
-					title:'用户管理',
-					icon:'UserFilled'
+				component: () => import('../views/user/Index.vue'),
+				meta: {
+				  title: '用户列表',
 				},
-			}
+			},
+			{
+				path:'school',
+				component: () => import('../views/user/School.vue'),
+				meta: {
+				  title: '学校列表',
+				},
+			},
+			{
+				path:'role',
+				component: () => import('../views/user/Role.vue'),
+				meta: {
+				  title: '角色列表',
+				},
+			},
 		]
 	},
 	{
-		path:'/setting',
-		redirect: '/setting/index',
+		path:'/person',
+		redirect:'/person/index',
 		component: Layout,
 		children:[
 			{
 				path:'index',
-				component: () => import('../views/Setting.vue'),
+				component: () => import('../views/person/Index.vue'),
 				meta:{
-					title:'系统设置',
-					icon:'Basketball'
+					title:'个人中心',
+					icon:'Avatar'
 				},
 			}
 		]

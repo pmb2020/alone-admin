@@ -75,6 +75,7 @@
 <style scoped>
 	.base-side{
 		background-color: var(--el-menu-bg-color);
+		box-shadow: 2px 2px 8px 0px rgba(10,57,255,0.08);
 	}
 	.al-scrollbar{
 		/* height: 100vh; */

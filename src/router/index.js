@@ -34,15 +34,39 @@ const routes = [
 		]
 	},
 	{
-		path:'/product',
+		path:'/banner',
 		component: Layout,
 		children:[
 			{
 				path:'index',
-				component: () => import('../views/Product.vue'),
+				component: () => import('../views/Banner.vue'),
 				meta:{
-					title:'产品管理',
-					icon:'Box'
+					title:'广告管理',
+					icon:'Picture'
+				},
+			}
+		]
+	},
+	{
+		path:'/product',
+		component: Layout,
+		meta:{
+			title:'产品管理',
+			icon:'Box'
+		},
+		children:[
+			{
+				path:'category',
+				component: () => import('../views/product/Category.vue'),
+				meta:{
+					title:'分类管理',
+				},
+			},
+			{
+				path:'index',
+				component: () => import('../views/product/Index.vue'),
+				meta:{
+					title:'产品列表',
 				},
 			}
 		]
@@ -61,34 +85,20 @@ const routes = [
 			}
 		]
 	},
-	{
-		path:'/banner',
-		component: Layout,
-		children:[
-			{
-				path:'index',
-				component: () => import('../views/Banner.vue'),
-				meta:{
-					title:'广告管理',
-					icon:'Picture'
-				},
-			}
-		]
-	},
-	{
-		path:'/order',
-		component: Layout,
-		children:[
-			{
-				path:'index',
-				component: () => import('../views/Order.vue'),
-				meta:{
-					title:'订单管理',
-					icon:'GoodsFilled'
-				},
-			}
-		]
-	},
+	// {
+	// 	path:'/order',
+	// 	component: Layout,
+	// 	children:[
+	// 		{
+	// 			path:'index',
+	// 			component: () => import('../views/Order.vue'),
+	// 			meta:{
+	// 				title:'订单管理',
+	// 				icon:'GoodsFilled'
+	// 			},
+	// 		}
+	// 	]
+	// },
 	{
 		path:'/list',
 		redirect:'/list/table',

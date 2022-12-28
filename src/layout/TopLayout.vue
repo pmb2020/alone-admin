@@ -3,7 +3,7 @@
 		<BaseHeader></BaseHeader>
 		<el-container>
 			<BaseSide></BaseSide>
-			<el-scrollbar class="" style="width: 100%;height: 92vh;">
+			<el-scrollbar class="eee">
 				<el-main>
 					<router-view v-slot="{ Component }">
 						<transition name="fade-transform"  mode="out-in">
@@ -21,5 +21,9 @@
 	import BaseHeader from '@/layout/BaseHeader.vue'
 </script>
 
-<style>
+<style scoped>
+	.eee{
+		width: 100%;
+		height: calc(100vh - var(--al-header-height));
+	}
 </style>

@@ -42,6 +42,7 @@
 		position: relative;
 		background-color: #fff;
 		color: var(--el-text-color-primary);
+		height: var(--al-header-height);
 		box-shadow: 0px 2px 8px 0px rgba(10,57,255,0.16);
 	}
 </style>

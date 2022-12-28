@@ -1,7 +1,9 @@
 <template>
 	<el-header>
-		<div>
-			alone-admin后台管理系统
+		<div class="al-flex" style="color: #222426;font-weight: 600;align-items: center;">
+			<img style="width: 60px;margin-right: 5px;" src="@/assets/logo.png" alt="">
+			<p>体育智慧服务平台</p>
+			<p style="margin-left: 80px;font-weight: 500;">北京市丰台区时光小学</p>
 		</div>
 		<div class="al-flex" style="align-items: center;">
 			<el-badge :value="12" type="warning" class="item" style="margin: 0 30px;">

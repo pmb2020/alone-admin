@@ -17,7 +17,7 @@ const routes = [
 	},
 	{
 		path:'/',
-		redirect:'/home',
+		redirect:'sports/home',
 		hidden: true
 	},
 	{

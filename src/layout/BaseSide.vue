@@ -1,11 +1,11 @@
 <template>
 	<div class="base-side">
-		<div class="menu-btn" :class="{'menu-btn-collapse':isCollapse}" @click="isCollapse=isCollapse ? false : true">
+		<!-- <div class="menu-btn" :class="{'menu-btn-collapse':isCollapse}" @click="isCollapse=isCollapse ? false : true">
 			<el-icon :size="25">
 				<Expand v-if="isCollapse" />
 				<Fold v-else />
 			</el-icon>
-		</div>
+		</div> -->
 		<el-scrollbar class="al-scrollbar">
 			<el-menu :default-active="menuRoute" class="el-menu-vertical-demo" :collapse="isCollapse" router
 				@open="handleOpen" @close="handleClose">

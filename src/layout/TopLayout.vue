@@ -1,6 +1,6 @@
 <template>
 	<el-container class="is-vertical" style="height: 100%;">
-		<BaseHeader></BaseHeader>
+		<BaseHeader style="margin-bottom: 5px;"></BaseHeader>
 		<el-container>
 			<BaseSide></BaseSide>
 			<el-scrollbar class="eee">

@@ -54,8 +54,8 @@
 			</el-table>
 			<!-- 弹框表单 -->
 			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromAdd ? '新增' :'编辑'" width="30%" @closed="form={}" :close-on-click-modal="false">
-				<el-form :model="form" label-width="50px">
-					<el-form-item label="标题">
+				<el-form ref="formRef" :model="form" :rules="rules" label-width="60px">
+					<el-form-item label="标题" prop="title">
 						<el-input v-model="form.title" autocomplete />
 					</el-form-item>
 					<el-form-item label="类型">
@@ -99,22 +99,13 @@
 </template>
 
 <script setup>
-	import {
-		getCurrentInstance
-	} from 'vue'
-	import {
-		banner,updateBanner
-	} from '@/api/banner.js'
+	import {banner,updateBanner} from '@/api/banner.js'
 	const uploadUrl=ref('http://127.0.0.1:188/admin/upload')
 	const tableData = ref([])
 	const dialogVisible = ref(false)
 	const loading = ref(true)
 	onMounted(() => {
 		getList()
-		const {
-			proxy
-		} = getCurrentInstance()
-		// console.log(getCurrentInstance().proxy.shortcuts)
 	})
 	const handleSelectionChange = (val) => {
 		console.log(val)
@@ -154,6 +145,12 @@
 		note: '',
 	})
 	const filterFormRef = ref({})
+	const formRef = ref({})
+	const rules = reactive({
+		title:[
+			{ required: true, message: '必填项' },
+		]
+	})
 	//重置搜索条件
 	const resetFilterForm = (formEl) => {
 		if (!formEl) return
@@ -192,6 +189,10 @@
 				formData.append(key,form.value[key])
 			}
 		}
+		formRef.value.validate((valid)=>{
+			console.log(valid)
+		})
+		return
 		if (isFromAdd.value) {
 			banner(formData, 'post').then(res => {
 				ElMessage.success('添加成功')

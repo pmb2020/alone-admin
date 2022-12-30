@@ -33,15 +33,15 @@
 						<el-image style="width: 120px; height: 80px" :src="scope.row.image" fit="fill" />
 					</template>
 				</el-table-column>
-				<el-table-column prop="type" align="center" label="类型" />
 				<el-table-column prop="link" align="center" label="链接" />
 				<el-table-column prop="sort" align="center" label="排序" />
-				<el-table-column label="启用" align="center">
+				<el-table-column label="状态" align="center">
 					<template #default="scope">
 						<el-switch v-model="scope.row.status" />
 					</template>
 				</el-table-column>
-				<el-table-column prop="created_at" align="center" label="时间" width="165" />
+				<el-table-column prop="created_at" align="center" label="创建时间" width="170" />
+				<el-table-column prop="created_at" align="center" label="更新时间" width="170" />
 				<el-table-column prop="note" align="center" label="备注" min-width="150" />
 				<el-table-column label="操作" align="center" width="170">
 					<template #default="scope">
@@ -57,12 +57,6 @@
 				<el-form ref="formRef" :model="form" :rules="rules" label-width="60px">
 					<el-form-item label="标题" prop="title">
 						<el-input v-model="form.title" autocomplete />
-					</el-form-item>
-					<el-form-item label="类型">
-						<el-select v-model="form.type" placeholder="请选择">
-							<el-option label="淘宝" value="1" key="1" />
-							<el-option label="天猫" value="2" key="2" />
-						</el-select>
 					</el-form-item>
 					<el-form-item label="状态">
 						<el-switch v-model="form.status" active-value="1" inactive-value="0" />
@@ -99,7 +93,7 @@
 </template>
 
 <script setup>
-	import {banner,updateBanner} from '@/api/banner.js'
+	import {updateBanner,apiBanner} from '@/api/banner.js'
 	const uploadUrl=ref('http://127.0.0.1:188/admin/upload')
 	const tableData = ref([])
 	const dialogVisible = ref(false)
@@ -111,7 +105,7 @@
 		console.log(val)
 	}
 	const getList = () => {
-		banner(filterForm.value).then(res => {
+		apiBanner(filterForm.value).then(res => {
 			tableData.value = res.data
 			loading.value = false
 		})
@@ -123,7 +117,7 @@
 			cancelButtonText: '取消',
 			type: 'warning'
 		}).then(() => {
-			banner({
+			apiBanner({
 				id: row.id
 			}, 'delete').then(res => {
 				getList()
@@ -183,30 +177,23 @@
 	}
 	//提交表单
 	const submitForm = () => {
-		let formData = new FormData()
-		for(let key in form.value){
-			if(form.value[key]){
-				formData.append(key,form.value[key])
-			}
-		}
 		formRef.value.validate((valid)=>{
-			console.log(valid)
+			if(!valid) return
+			if (isFromAdd.value) {
+				apiBanner(form.value, 'post').then(res => {
+					ElMessage.success('添加成功')
+					dialogVisible.value = false
+					getList()
+				})
+			} else {
+				apiBanner(form.value,'put').then(res => {
+					ElMessage.success('修改成功')
+					dialogVisible.value = false
+					getList()
+				})
+			}
 		})
-		return
-		if (isFromAdd.value) {
-			banner(formData, 'post').then(res => {
-				ElMessage.success('添加成功')
-				dialogVisible.value = false
-				getList()
-			})
-		} else {
-			console.log(formData.getAll('title'))
-			updateBanner(formData).then(res => {
-				ElMessage.success('修改成功')
-				dialogVisible.value = false
-				getList()
-			})
-		}
+		
 	}
 	// 图片上传
 	const fileChange = (e) => {

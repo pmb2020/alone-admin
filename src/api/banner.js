@@ -16,3 +16,6 @@ export const updateBanner = (params)=>{
 export const banner = (params,method)=>{
 	return apiHttp('banners',params,method)
 }
+export const apiBanner = (params,method)=>{
+	return apiHttp('http://127.0.0.1:85/admin/banner',params,method)
+}

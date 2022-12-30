@@ -36,7 +36,7 @@
 			</div>
 		</el-dialog>
 		<!-- 编辑 -->
-		<el-dialog v-model="dialogEditFormVisible" title="编辑角色信息" destroy-on-close>
+		<el-dialog class="ty-dialog" v-model="dialogEditFormVisible" title="编辑角色信息" destroy-on-close>
 			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
 				<el-row :gutter="30">
 					<el-col :span="12">

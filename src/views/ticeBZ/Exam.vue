@@ -1,6 +1,6 @@
 <template>
-	<div>
-		考试标准
+	<div class="ty-box">
+		<img src="@/assets/exam.png" alt="">
 	</div>
 </template>
 

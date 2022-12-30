@@ -91,7 +91,10 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">学生信息列表</h3>
 				<div>
-					<button @click="dialogFormVisible=true" class="ty-btn">新增学生信息</button>
+					<button @click="dialogFormVisible=true" class="ty-btn">
+						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18"><CirclePlusFilled /></el-icon>
+						新增学生信息
+					</button>
 					<button class="ty-btn">导入学生信息</button>
 					<button class="ty-btn">下载模版</button>
 				</div>

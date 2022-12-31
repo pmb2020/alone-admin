@@ -29,7 +29,8 @@ const routes = [
 				component: () => import('../views/home/SportsHome.vue'),
 				meta:{
 					title:'智慧体测平台首页',
-					icon:'HomeFilled'
+					icon:'HomeFilled',
+					image:'home.png'
 				},
 			}
 		]
@@ -39,7 +40,8 @@ const routes = [
 		component: Layout,
 		meta:{
 			title:'基础信息管理',
-			icon:'Discount'
+			icon:'Discount',
+			image:'base.png'
 		},
 		children:[
 			{
@@ -101,7 +103,8 @@ const routes = [
 				component: () => import('../views/ticeChart/index.vue'),
 				meta:{
 					title:'体测项目数据分析',
-					icon:'DataLine'
+					icon:'DataLine',
+					image:'chart.png'
 				},
 			}
 		]
@@ -111,7 +114,8 @@ const routes = [
 		component: Layout,
 		meta:{
 			title:'国家体测标准',
-			icon:'Tickets'
+			icon:'Tickets',
+			image:'ticeBZ.png'
 		},
 		children:[
 			{
@@ -153,7 +157,8 @@ const routes = [
 				component: () => import('../views/plan/Index.vue'),
 				meta:{
 					title:'体测计划管理',
-					icon:'SetUp'
+					icon:'SetUp',
+					image:'plan.png'
 				},
 			}
 		]
@@ -167,7 +172,8 @@ const routes = [
 				component: () => import('../views/device/Index.vue'),
 				meta:{
 					title:'设备信息管理',
-					icon:'Monitor'
+					icon:'Monitor',
+					image:'device.png'
 				},
 			}
 		]
@@ -178,7 +184,8 @@ const routes = [
 		component: Layout,
 		meta:{
 			title:'用户管理',
-			icon:'UserFilled'
+			icon:'UserFilled',
+			image:'user.png'
 		},
 		children:[
 			{
@@ -214,7 +221,8 @@ const routes = [
 				component: () => import('../views/person/Index.vue'),
 				meta:{
 					title:'个人中心',
-					icon:'Avatar'
+					icon:'Avatar',
+					image:'person.png'
 				},
 			}
 		]

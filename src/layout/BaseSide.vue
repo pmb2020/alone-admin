@@ -12,16 +12,18 @@
 				<template v-for="(items,index) in menuItems" :key="index">
 					<el-menu-item v-if="items.children && items.children.length == 1"
 						:index="items.path+'/'+items.children[0].path">
-						<el-icon>
+						<!-- <el-icon>
 							<component :is="items.children[0].meta.icon"></component>
-						</el-icon>
+						</el-icon> -->
+						<img class="menu-icon" :src="'/icons/'+items.children[0].meta.image">
 						<span>{{items.children[0].meta.title}}</span>
 					</el-menu-item>
 					<el-sub-menu v-else :index="items.path">
 						<template #title>
-							<el-icon>
+							<!-- <el-icon>
 								<component :is="items.meta.icon"></component>
-							</el-icon>
+							</el-icon> -->
+							<img class="menu-icon" :src="'/icons/'+items.meta.image">
 							<span>{{items.meta.title}}</span>
 						</template>
 						<el-menu-item-group>
@@ -101,5 +103,10 @@
 
 	.menu-btn-collapse {
 		left: 70px;
+	}
+	.menu-icon{
+		width: 22px;
+		height: 22px;
+		margin-right: 10px;
 	}
 </style>

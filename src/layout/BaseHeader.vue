@@ -5,12 +5,12 @@
 			<p>体育智慧服务平台</p>
 			<p style="margin-left: 80px;font-weight: 500;">北京市丰台区时光小学</p>
 		</div>
-		<div class="al-flex" style="align-items: center;">
+		<div class="al-flex" style="align-items: center;margin: 0 10px;">
 			<el-badge :value="12" type="warning" class="item" style="margin: 0 30px;">
 				<img class="al-avatar" style="" src="@/assets/images/message.png" alt="">
 			</el-badge>
 			<img class="al-avatar" style="" src="@/assets/images/avatar.png" alt="">
-			<el-dropdown style="cursor: pointer;">
+			<!-- <el-dropdown style="cursor: pointer;">
 				<span class="el-dropdown-link">
 					admin
 					<el-icon class="el-icon--right">
@@ -23,7 +23,7 @@
 						<el-dropdown-item @click="loginOut" divided>退出</el-dropdown-item>
 					</el-dropdown-menu>
 				</template>
-			</el-dropdown>
+			</el-dropdown> -->
 		</div>
 	</el-header>
 </template>

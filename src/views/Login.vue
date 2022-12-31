@@ -8,7 +8,7 @@
 			</el-col>
 			<el-col class="login-from-box" :span="12">
 				<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
-					<h1 style="font-size: 24px;margin-bottom: 30px;">alone-admin管理系统</h1>
+					<h1 style="font-size: 24px;margin-bottom: 30px;">智慧校园管理系统</h1>
 					<el-form-item prop="username">
 						<el-input v-model="loginForm.username" autocomplete size="large"
 							placeholder="账号" :prefix-icon="UserFilled" />

@@ -1,42 +1,33 @@
 <template>
 	<div class="login">
-		<el-row class="login-box">
-			<el-col :span="12" style="background-color: #dad1f8;height: 100%;">
-				<div style="padding: 100px 50px;">
-					<img style="width: 100%;" src="@/assets/images/login.svg">
-				</div>
-			</el-col>
-			<el-col class="login-from-box" :span="12">
-				<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
-					<h1 style="font-size: 24px;margin-bottom: 30px;">智慧校园管理系统</h1>
-					<el-form-item prop="username">
-						<el-input v-model="loginForm.username" autocomplete size="large"
-							placeholder="账号" :prefix-icon="UserFilled" />
-					</el-form-item>
-					<el-form-item prop="password">
-						<el-input v-model="loginForm.password" show-password  class="w-50 m-2" size="large"
-							placeholder="密码" :prefix-icon="Lock" />
-					</el-form-item>
-					<el-button style="width: 100%;" size="large" type="primary" @click="submitForm">登 录</el-button>
-				</el-form>
-			</el-col>
-		</el-row>
+		<div class="login-box">
+			<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
+				<h1 style="font-size: 19px;margin-bottom: 30px;color: #3085f5;">丰台区教委智慧体测管理平台</h1>
+				<el-form-item prop="username" style="margin-bottom: 30px;">
+					<el-input v-model="loginForm.username" autocomplete size="large"
+						placeholder="账号" :prefix-icon="UserFilled" />
+				</el-form-item>
+				<el-form-item prop="password" style="margin-bottom: 30px;">
+					<el-input v-model="loginForm.password" show-password size="large"
+						placeholder="密码" :prefix-icon="Lock" />
+				</el-form-item>
+				<el-form-item prop="code" style="margin-bottom: 30px;">
+					<el-input v-model="loginForm.code" placeholder="验证码" :prefix-icon="MessageBox">
+					    <template #append>1234</template>
+					</el-input>
+				</el-form-item>
+				<el-button style="width: 100%;font-size: 18px;border-radius: 10px;" size="large" type="primary" @click="submitForm">立即登录</el-button>
+				<p style="text-align: center;color: #888;font-size: 14px;margin: 15px 0 15px 0;">忘记密码</p>
+			</el-form>
+		</div>
 	</div>
 </template>
 
 <script setup>
-	import {
-		Lock,UserFilled
-	} from '@element-plus/icons-vue'
-	import {
-		login
-	} from '@/api/auth.js'
-	import {
-		useRouter
-	} from 'vue-router'
-	import {
-		useStore
-	} from '@/store/index'
+	import {Lock,UserFilled,MessageBox} from '@element-plus/icons-vue'
+	import {login} from '@/api/auth.js'
+	import {useRouter} from 'vue-router'
+	import {useStore} from '@/store/index'
 	const router = useRouter()
 	const store = useStore()
 	console.log(store.count)
@@ -74,16 +65,22 @@
 
 <style>
 	.login {
-		margin: 0 auto;
-		max-width: 55%;
-		width: 750px;
-		padding-top: 8%;
+		height: 100vh;
+		background-image: url('../assets/images/login-bg.png');
+		background-size: 100% 100%;
+		display: flex;
+		justify-content: end;
+		align-items: center;
 	}
 
 	.login-box {
 		background-color: #fff;
-		box-shadow: var(--el-box-shadow);
-		height: 400px;
+		box-shadow: 0px 3px 15px 1px rgba(10,57,255,0.16);
+		padding: 30px 50px;
+		width: 280px;
+		margin-right: 100px;
+		background-color: #ccdfff;
+		border-radius: 20px;
 	}
 	.login-from-box{
 		padding:80px 30px;

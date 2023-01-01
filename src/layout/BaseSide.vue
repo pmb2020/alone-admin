@@ -15,7 +15,7 @@
 						<!-- <el-icon>
 							<component :is="items.children[0].meta.icon"></component>
 						</el-icon> -->
-						<img class="menu-icon" :src="'/icons/'+items.children[0].meta.image">
+						<img class="menu-icon" :src="'./icons/'+items.children[0].meta.image">
 						<span>{{items.children[0].meta.title}}</span>
 					</el-menu-item>
 					<el-sub-menu v-else :index="items.path">
@@ -23,7 +23,7 @@
 							<!-- <el-icon>
 								<component :is="items.meta.icon"></component>
 							</el-icon> -->
-							<img class="menu-icon" :src="'/icons/'+items.meta.image">
+							<img class="menu-icon" :src="'./icons/'+items.meta.image">
 							<span>{{items.meta.title}}</span>
 						</template>
 						<el-menu-item-group>

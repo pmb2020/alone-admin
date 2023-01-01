@@ -74,13 +74,11 @@
 	}
 
 	.login-box {
-		background-color: #fff;
-		box-shadow: 0px 3px 15px 1px rgba(10,57,255,0.16);
-		padding: 30px 50px;
+		padding: 30px 80px;
 		width: 280px;
 		margin-right: 100px;
-		background-color: #ccdfff;
-		border-radius: 20px;
+		background-image: url('../assets/images/login-form-bg.png');
+		background-size: 100% 100%;
 	}
 	.login-from-box{
 		padding:80px 30px;

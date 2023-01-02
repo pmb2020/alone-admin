@@ -4,13 +4,14 @@ import axios from 'axios'
 
 const http = axios.create({
 	baseURL:import.meta.env.VITE_API_HOST,
+	headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 	timeout: 5000,
 })
 
 //请求拦截器
 http.interceptors.request.use(function(config){
 	if(import.meta.env.MODE==='development' && config.baseURL===import.meta.env.VITE_API_HOST){
-		config.baseURL='/admin/'
+		config.baseURL='/api/'
 	}
 	let token = localStorage.getItem('token')
 	if(token){
@@ -21,11 +22,11 @@ http.interceptors.request.use(function(config){
 
 // 响应拦截器
 http.interceptors.response.use(function(response){
-	if(response.data.code != 0){
+	if(response.data.responseCode != 0){
 		if(response.status == 401 || response.data.code == 10001){
 			localStorage.removeItem('token')
 		}
-		ElMessage.error(response.data.code+'：'+response.data.msg)
+		ElMessage.error(response.data.responseCode+'：'+response.data.responseMsg)
 		return Promise.reject(response.data)
 	}
 	return response.data.data

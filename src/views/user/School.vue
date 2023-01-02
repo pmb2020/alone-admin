@@ -39,37 +39,37 @@
 		</el-dialog>
 		<!-- 编辑 -->
 		<el-dialog v-model="dialogEditFormVisible" title="编辑学校信息" destroy-on-close>
-			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
+			<el-form :inline="false" :model="form" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
 				<el-row :gutter="30">
 					<el-col :span="12">
 						<el-form-item label="学校名称">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+							<el-input v-model="form.user" placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="学校编号">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+							<el-input v-model="form.user" placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="购入时间">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+							<el-input v-model="form.user" placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="备注">
-							<el-input v-model="formInline.user" :rows="3" type="textarea" placeholder="请输入" />
+							<el-input v-model="form.user" :rows="3" type="textarea" placeholder="请输入" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12">
 						<el-form-item label="所属学校">
-							<el-select v-model="formInline.region" placeholder="请输入">
+							<el-select v-model="form.region" placeholder="请输入">
 								<el-option label="Zone one" value="shanghai" />
 								<el-option label="Zone two" value="beijing" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="分配片区">
-							<el-select v-model="formInline.region" placeholder="请输入">
+							<el-select v-model="form.region" placeholder="请输入">
 								<el-option label="Zone one" value="shanghai" />
 								<el-option label="Zone two" value="beijing" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="分配集团">
-							<el-select v-model="formInline.region" placeholder="请输入">
+							<el-select v-model="form.region" placeholder="请输入">
 								<el-option label="Zone one" value="shanghai" />
 								<el-option label="Zone two" value="beijing" />
 							</el-select>
@@ -86,14 +86,23 @@
 </template>
 
 <script setup>
+	import {getSchool} from '@/api/user'
 	const queryForm = reactive({
 		user: '',
 		region: '',
 	})
-	const formInline = reactive({
+	const form = reactive({
 		user: '',
 		region: '',
 	})
+	onMounted(() => {
+		getList()
+	})
+	const getList = ()=>{
+		getSchool().then(res=>{
+			console.log(res)
+		})
+	}
 	const tableData = reactive([{
 			date: '2016-05-03',
 			name: 'Tom',
@@ -101,16 +110,6 @@
 		},
 		{
 			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
 			name: 'Tom',
 			address: 'No. 189, Grove St, Los Angeles',
 		},

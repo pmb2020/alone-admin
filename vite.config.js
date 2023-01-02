@@ -47,12 +47,12 @@ export default defineConfig({
 		}
 	},
 	server: {
-		port: 3000,
+		port: 3001,
 		proxy: {
-			'/admin': {
+			'/api': {
 				target: loadEnv('development', process.cwd()).VITE_API_HOST,
 				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/admin/, '')
+				rewrite: (path) => path.replace(/^\/api/, '')
 			}
 		}
 	},

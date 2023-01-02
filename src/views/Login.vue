@@ -3,12 +3,12 @@
 		<div class="login-box">
 			<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
 				<h1 style="font-size: 19px;margin-bottom: 30px;color: #3085f5;">丰台区教委智慧体测管理平台</h1>
-				<el-form-item prop="username" style="margin-bottom: 30px;">
-					<el-input v-model="loginForm.username" autocomplete size="large"
+				<el-form-item prop="LgName" style="margin-bottom: 30px;">
+					<el-input v-model="loginForm.LgName" autocomplete size="large"
 						placeholder="账号" :prefix-icon="UserFilled" />
 				</el-form-item>
-				<el-form-item prop="password" style="margin-bottom: 30px;">
-					<el-input v-model="loginForm.password" show-password size="large"
+				<el-form-item prop="LgPassWord" style="margin-bottom: 30px;">
+					<el-input v-model="loginForm.LgPassWord" show-password size="large"
 						placeholder="密码" :prefix-icon="Lock" />
 				</el-form-item>
 				<el-form-item prop="code" style="margin-bottom: 30px;">
@@ -28,6 +28,7 @@
 	import {login} from '@/api/auth.js'
 	import {useRouter} from 'vue-router'
 	import {useStore} from '@/store/index'
+import { ElMessage } from 'element-plus';
 	const router = useRouter()
 	const store = useStore()
 	console.log(store.count)
@@ -35,15 +36,15 @@
 		import.meta.env)
 	store.count++
 	const loginForm = reactive({
-		username: 'admin',
-		password: '123456'
+		LgName: '李老师',
+		LgPassWord: '123456'
 	})
 	const rules = reactive({
-		username: [{
+		LgName: [{
 			required: true,
 			message: '请输入账号'
 		}],
-		password: [{
+		LgPassWord: [{
 			required: true,
 			message: '请输入密码'
 		}],
@@ -56,6 +57,7 @@
 			if (valid) {
 				login(loginForm).then(res => {
 					localStorage.setItem('token', res.token)
+					ElMessage.success('登录成功！')
 					router.push('/')
 				})
 			}

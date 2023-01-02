@@ -171,7 +171,11 @@
 </template>
 
 <script setup>
+	import {getStudent} from '@/api/base'
 	import AddForm from './AddForm.vue'
+	onMounted(()=>{
+		getList()
+	})
 	const queryForm = reactive({
 		user: '',
 		region: '',
@@ -180,6 +184,12 @@
 		user: '',
 		region: '',
 	})
+	const listData = reactive([])
+	const getList = ()=>{
+		getStudent().then(res=>{
+			console.log(res)
+		})
+	}
 	const tableData = reactive([{
 			date: '2016-05-03',
 			name: 'Tom',

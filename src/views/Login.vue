@@ -28,20 +28,13 @@
 	import {
 		Lock,UserFilled
 	} from '@element-plus/icons-vue'
-	import {
-		login
-	} from '@/api/auth.js'
-	import {
-		useRouter
-	} from 'vue-router'
-	import {
-		useStore
-	} from '@/store/index'
+	import {login,getRouter} from '@/api/auth.js'
+	import {useRouter} from 'vue-router'
+	import {useStore} from '@/store/index'
 	const router = useRouter()
 	const store = useStore()
 	console.log(store.count)
-	console.log(
-		import.meta.env)
+	console.log(import.meta.env)
 	store.count++
 	const loginForm = reactive({
 		username: 'admin',

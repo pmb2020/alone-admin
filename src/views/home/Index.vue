@@ -35,14 +35,11 @@
 </template>
 
 <script setup>
+	import {getRouter} from '@/api/auth.js'
 	import IconBox from '@/components/alone/IconBox.vue'
 	import Visitor from './Visitor.vue'
 	import PieChatTest from './PieChatTest.vue'
 	import BarChartTest from './BarChartTest.vue'
-	import {
-		reactive,
-		ref,onMounted
-	} from 'vue'
 	const boxLists = reactive([{
 			bgColor: '#c8ddf7',
 			name: '信息',
@@ -74,11 +71,11 @@
 			icon: 'Lightning'
 		},
 	])
-	const systemInfo = ref([
-		{system:'Linux'},
-		{mysql:'5.7'},
-		{mysql:'5.7'},
-	])
+	onMounted(()=>{
+		getRouter().then(res=>{
+			console.log(res)
+		})
+	})
 </script>
 
 <style>

@@ -4,7 +4,7 @@
 			<h3 class="title">用户列表</h3>
 			<div class="al-flex-between">
 				<div class="al-flex">
-					<el-input v-model="listData.user" placeholder="请输入" />
+					<el-input v-model="queryForm.user" placeholder="请输入" />
 					<el-button class="ty-btn" type="primary" size="default" @click="onSubmit">查询</el-button>
 				</div>
 				<div>
@@ -13,7 +13,7 @@
 					<button class="ty-btn">下载模版</button>
 				</div>
 			</div>
-			<el-table :data="listData" stripe style="width: 100%;margin-top: 20px;">
+			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
 				<el-table-column type="index" label="序号" align="center" width="80" />
 				<el-table-column prop="name" label="姓名" align="center" />
 				<el-table-column prop="role_id" label="角色" align="center" />
@@ -35,6 +35,9 @@
 					</template>
 				</el-table-column> -->
 			</el-table>
+			<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+				:page-sizes="[100, 200, 300, 400]" layout="prev, pager, next,sizes, jumper" :total="400"
+				@size-change="handleSizeChange" @current-change="handleCurrentChange" />
 		</div>
 		<!-- 新增弹出 -->
 		<el-dialog class="" v-model="dialogFormVisible" title="新增用户信息" destroy-on-close>
@@ -44,7 +47,8 @@
 		</el-dialog>
 		<!-- 编辑 -->
 		<el-dialog v-model="dialogEditFormVisible" title="编辑用户信息" destroy-on-close>
-			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
+			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default"
+				:scroll-to-error="true">
 				<el-row :gutter="30">
 					<el-col :span="12">
 						<el-form-item label="用户名称">
@@ -91,7 +95,17 @@
 </template>
 
 <script setup>
-	import {getUser} from '@/api/user'
+	import {
+		getUser
+	} from '@/api/user'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const handleCurrentChange = (number) => {
+		page.value=number
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value=number
+	}
 	onMounted(() => {
 		getListData()
 	})
@@ -103,34 +117,13 @@
 		user: '',
 		region: '',
 	})
-	const listData = reactive([])
-	const getListData = ()=>{
-		getUser().then(res=>{
+	const getListData = () => {
+		getUser().then(res => {
 			console.log(res)
-			listData.push(...res)
+			tableData.push(...res.list)
 		})
 	}
-	const tableData = reactive([{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	])
+	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
 	const handleEdit = () => {
@@ -142,7 +135,7 @@
 </script>
 
 <style>
-	.query-btn{
+	.query-btn {
 		display: flex;
 		height: 100%;
 		flex-direction: column;

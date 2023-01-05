@@ -2,6 +2,7 @@ import {
 	createRouter,
 	createWebHashHistory
 } from "vue-router";
+import {useRouterStore} from '@/store/router'
 import Layout from '@/layout/index.vue'
 // import Layout from '@/layout/TopLayout.vue'
 
@@ -114,7 +115,16 @@ const router = createRouter({
 	routes
 })
 
-router.beforeEach((to, form, next) => {
+router.beforeEach((to, form) => {
+	const routerStore = useRouterStore()
+	console.log(routerStore.list,'路由列表')
+	if(routerStore.isRefresh){
+		console.log('需要刷新添加路由')
+		routerStore.updateRefresh(false)
+		routerStore.list.filter((routerItem)=>{
+			console.log(routerItem)
+		})
+	}
 	// let url = 'Setting.vue'
 	// router.addRoute({
 	// 	path: '/wangbo',

@@ -31,8 +31,10 @@
 	import {login,getRouter} from '@/api/auth.js'
 	import {useRouter} from 'vue-router'
 	import {useStore} from '@/store/index'
+	import {useRouterStore} from '@/store/router'
 	const router = useRouter()
 	const store = useStore()
+	const routerStore = useRouterStore()
 	console.log(store.count)
 	console.log(import.meta.env)
 	store.count++
@@ -50,7 +52,13 @@
 			message: '请输入密码'
 		}],
 	})
-
+	onMounted(()=>{
+		getRouter().then(res=>{
+			console.log(res)
+			routerStore.savaList(res)
+			console.log(routerStore.list)
+		})
+	})
 	const loginFormRef = ref({})
 	const submitForm = async () => {
 		store.increment()

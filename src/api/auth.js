@@ -9,5 +9,5 @@ export const loginOut = (data) =>{
 }
 
 export const getRouter = (data) =>{
-	return get('http://127.0.0.1:3000/json/router.json',data)
+	return get('https://mock.apifox.cn/m1/2160073-0-default/api/router',data)
 }

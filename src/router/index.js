@@ -114,7 +114,8 @@ const router = createRouter({
 	history: createWebHashHistory(),
 	routes
 })
-
+const modules = import.meta.glob('../views/*/*.vue');
+console.log(modules)
 router.beforeEach((to, form) => {
 	const routerStore = useRouterStore()
 	console.log(routerStore.list,'路由列表')
@@ -123,6 +124,21 @@ router.beforeEach((to, form) => {
 		routerStore.updateRefresh(false)
 		routerStore.list.filter((routerItem)=>{
 			console.log(routerItem)
+			let url = 'Test/Index'
+			router.addRoute({
+				path: routerItem.path,
+				name:routerItem.name,
+				component: Layout,
+				children: [{
+					path: 'index',
+					// component: () => import(`../views/Setting.vue`),
+					component: modules[`../views/${url}.vue`],
+					meta: {
+						title: '订单管理',
+						icon: 'GoodsFilled'
+					},
+				}]
+			})
 		})
 	}
 	// let url = 'Setting.vue'

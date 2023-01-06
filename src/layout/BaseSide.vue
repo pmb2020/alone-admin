@@ -38,37 +38,35 @@
 	</div>
 </template>
 
-<script lang="ts">
-	export default {
-		data() {
-			return {
-				isCollapse: false,
-				menuItems: [],
-				menuRoute: ''
-			}
-		},
-		watch: {
-			isCollapse(n, o) {
-				console.log('sss' + n)
-			}
-		},
-		mounted() {
-			this.menuRoute = this.$route.path
-			this.menuItems = this.$router.options.routes.filter((item) => {
-				if (item.path == '/') {
-					item.path = ''
-				}
-				return !item.hidden
-			})
-		},
-		methods: {
-			handleOpen() {
-
-			},
-			handleClose() {
-
-			}
+<script setup>
+	import { useRouter } from 'vue-router';
+	import {useRouterStore} from '@/store/router'
+	const router = useRouter()
+	const routerStore = useRouterStore()
+	const isCollapse = ref(false)
+	const menuItems = reactive([])
+	const menuRoute = ref('')
+	onMounted(()=>{
+		menuRoute.value = router.currentRoute.value.path
+		menuItems.push(...handleRouter(router.options.routes))
+		if(routerStore.list.length >0){
+			menuItems.push(...handleRouter(routerStore.list))
 		}
+	})
+	const handleRouter = (routerList)=>{
+		return routerList.filter((item) => {
+			if (item.path === '/') {
+				item.path = ''
+			}
+			item.hidden=='undefined'
+			return !item.hidden
+		})
+	}
+	const handleOpen = ()=>{
+		
+	}
+	const handleClose = ()=>{
+		
 	}
 </script>
 

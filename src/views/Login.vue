@@ -55,7 +55,7 @@
 	onMounted(()=>{
 		getRouter().then(res=>{
 			console.log(res)
-			routerStore.savaList(res)
+			routerStore.addRoutes(res)
 			console.log(routerStore.list)
 		})
 	})

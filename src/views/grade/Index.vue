@@ -39,16 +39,16 @@
 				</div> -->
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
-				<el-table-column prop="date" label="Date" align="center" width="180" />
-				<el-table-column prop="name" label="Name" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column label="体测详情" align="center" width="80">
+				<el-table-column type="index" label="序号" align="center" width="80" />
+				<el-table-column prop="year" label="学级" align="center" />
+				<el-table-column prop="name" label="年级" align="center" />
+				<el-table-column prop="address" label="年级人数" align="center" />
+				<el-table-column label="体测详情" align="center">
 					<template #default="scope">
 						<router-link to="/base/grade/info">查看</router-link>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" align="center" width="120">
+				<el-table-column label="操作" align="center">
 					<template #default="scope">
 						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
 							style="border: none;background-color: transparent;">
@@ -109,7 +109,11 @@
 </template>
 
 <script setup>
+	import {getGrade,addGrade,updateGrade} from '@/api/base'
 	import AddForm from './AddForm.vue'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
 	const queryForm = reactive({
 		user: '',
 		region: '',
@@ -118,29 +122,18 @@
 		user: '',
 		region: '',
 	})
-	const tableData = reactive([{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	])
+	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
+	onMounted(()=>{
+		getListData()
+	})
+	const getListData = ()=>{
+		getGrade({page:page.value,page_size:pageSize.value}).then(res=>{
+			console.log(res)
+			tableData.push(...res)
+		})
+	}
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true
 	}

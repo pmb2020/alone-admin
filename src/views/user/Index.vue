@@ -8,7 +8,7 @@
 					<el-button class="ty-btn" type="primary" size="default" @click="onSubmit">查询</el-button>
 				</div>
 				<div>
-					<button @click="dialogFormVisible=true" class="ty-btn">新增用户信息</button>
+					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">新增用户信息</button>
 					<button class="ty-btn">导入用户信息</button>
 					<button class="ty-btn">下载模版</button>
 				</div>
@@ -24,16 +24,9 @@
 				<el-table-column prop="id_card" label="身份证号" align="center" width="150" />
 				<el-table-column label="操作" align="center" width="80">
 					<template #default="scope">
-						<span @click="handleEdit(scope.$index, scope.row)">编辑</span>
+						<el-button link @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					</template>
 				</el-table-column>
-				<!-- <el-table-column label="操作" align="center" width="80">
-					<template #default="scope">
-						<el-button size="default" @click="handleEdit(scope.$index, scope.row)">
-							编辑
-						</el-button>
-					</template>
-				</el-table-column> -->
 			</el-table>
 			<div style="margin-top: 30px;display: flex;justify-content: end;">
 				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
@@ -42,7 +35,7 @@
 			</div>
 		</div>
 		<!-- 弹框表单 -->
-		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '新增体测计划' :'编辑体测计划'"
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑用户信息' :'新增用户信息'"
 			destroy-on-close>
 			<el-form ref="formRef" :model="form" :rules="rules" label-width="80" label-position="left" size="default" :scroll-to-error="true">
 				<el-row>
@@ -91,7 +84,6 @@
 								</el-form-item>
 							</el-col>
 						</el-row>
-						
 					</el-col>
 				</el-row>
 				<div style="display: flex;justify-content: center;">
@@ -130,8 +122,8 @@
 		region: '',
 	})
 	const rules = reactive({})
-	const getListData = () => {
-		getUser({page:page,page_size:pageSize}).then(res => {
+	const getListData = (page) => {
+		getUser({page:page,page_size:pageSize.value}).then(res => {
 			console.log(res)
 			total.value = res.total
 			tableData.push(...res.list)
@@ -140,6 +132,7 @@
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const handleEdit = () => {
+		isFromEdit.value=true
 		dialogFormVisible.value = true
 	}
 	const onSubmit = () => {

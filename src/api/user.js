@@ -1,11 +1,11 @@
-import http,{get,post} from '@/utils/request.js'
+import {get,post} from '@/utils/request.js'
 
 export const getSchool = (params)=>{
-	return http.get('/school/list/',params)
+	return get('/school/list/',params)
 }
 
 export const getUser = (params)=>{
-	return http.get('/user/list/',params)
+	return get('/user/list/',params)
 }
 
 export const login = (data)=>{

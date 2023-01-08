@@ -35,8 +35,8 @@
 	const router = useRouter()
 	const store = useStore()
 	const routerStore = useRouterStore()
-	console.log(store.count)
-	console.log(import.meta.env)
+	// console.log(store.count)
+	// console.log(import.meta.env)
 	store.count++
 	const loginForm = reactive({
 		username: 'admin',
@@ -53,11 +53,7 @@
 		}],
 	})
 	onMounted(()=>{
-		getRouter().then(res=>{
-			console.log(res)
-			routerStore.addRoutes(res)
-			console.log(routerStore.list)
-		})
+		
 	})
 	const loginFormRef = ref({})
 	const submitForm = async () => {
@@ -66,6 +62,10 @@
 			if (valid) {
 				login(loginForm).then(res => {
 					localStorage.setItem('token', res.token)
+					getRouter().then(res=>{
+						console.log(res)
+						routerStore.addRoutes(res)
+					})
 					router.push('/')
 				})
 			}

@@ -1,6 +1,6 @@
 <template>
 	<el-header>
-		<div>
+		<div style="margin-left:30px">
 			alone-admin后台管理系统
 		</div>
 		<div class="al-flex" style="align-items: center;">
@@ -28,7 +28,9 @@
 	const router = useRouter()
 	const loginOut = () =>{
 		console.log('退出登录')
+		localStorage.removeItem('routes')
 		localStorage.removeItem('token')
+		window.localStorage.clear()
 		router.push('/login')
 	}
 </script>

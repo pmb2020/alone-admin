@@ -49,8 +49,8 @@
 	onMounted(()=>{
 		menuRoute.value = router.currentRoute.value.path
 		menuItems.push(...handleRouter(router.options.routes))
-		if(routerStore.list.length >0){
-			menuItems.push(...handleRouter(routerStore.list))
+		if(routerStore.routes.length >0){
+			menuItems.push(...handleRouter(routerStore.routes))
 		}
 	})
 	const handleRouter = (routerList)=>{

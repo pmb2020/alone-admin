@@ -2,17 +2,13 @@ import {
 	createRouter,
 	createWebHashHistory
 } from "vue-router";
-import {useRouterStore} from '@/store/router'
+import {
+	useRouterStore
+} from '@/store/router'
 import Layout from '@/layout/index.vue'
 // import Layout from '@/layout/TopLayout.vue'
 
 const routes = [{
-		path: '/:pathMatch(.*)*',
-		name: 'NotFound',
-		hidden: true,
-		component: () => import('@/layout/NotFound.vue')
-	},
-	{
 		path: '/login',
 		name: 'Login',
 		hidden: true,
@@ -108,54 +104,40 @@ const routes = [{
 			},
 		}]
 	},
+	{
+		path: '/:pathMatch(.*)*',
+		name: 'NotFound',
+		hidden: true,
+		component: () => import('@/layout/NotFound.vue')
+	}
 ];
 
 const router = createRouter({
 	history: createWebHashHistory(),
 	routes
 })
-const modules = import.meta.glob('../views/*/*.vue');
-console.log(modules)
-router.beforeEach((to, form) => {
-	const routerStore = useRouterStore()
-	console.log(routerStore.list,'路由列表')
-	if(routerStore.isRefresh){
-		console.log('需要刷新添加路由')
-		routerStore.updateRefresh(false)
-		routerStore.list.filter((routerItem)=>{
-			console.log(routerItem)
-			let url = 'Test/Index'
-			router.addRoute({
-				path: routerItem.path,
-				name:routerItem.name,
-				component: Layout,
-				children: [{
-					path: 'index',
-					// component: () => import(`../views/Setting.vue`),
-					component: modules[`../views/${url}.vue`],
-					meta: {
-						title: '订单管理',
-						icon: 'GoodsFilled'
-					},
-				}]
-			})
-		})
+
+const isAddRoute = ref(true)
+router.beforeEach((to) => {
+	if(isAddRoute.value){
+		const routerStore = useRouterStore()
+		isAddRoute.value = false
+		routerStore.addRoutes(routerStore.routes)
+		// let url = 'Setting.vue'
+		// router.addRoute({
+		// 	path: '/wangbo',
+		// 	component: Layout,
+		// 	children: [{
+		// 		path: 'index',
+		// 		component: () => import(`../views/${url}`),
+		// 		meta: {
+		// 			title: '优惠管理',
+		// 			icon: 'GoodsFilled'
+		// 		},
+		// 	}]
+		// })
+		return to.fullPath
 	}
-	// let url = 'Setting.vue'
-	// router.addRoute({
-	// 	path: '/wangbo',
-	// 	component: Layout,
-	// 	children: [{
-	// 		path: 'index',
-	// 		component: () => import(`../views/${url}`),
-	// 		meta: {
-	// 			title: '订单管理',
-	// 			icon: 'GoodsFilled'
-	// 		},
-	// 	}]
-	// })
-	// console.log(router.getRoutes(), '查看现有路由')
-	// next()
 	let token = localStorage.getItem('token')
 	if (!token && to.name !== 'Login') {
 		return {

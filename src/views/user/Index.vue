@@ -4,16 +4,16 @@
 			<h3 class="title">用户列表</h3>
 			<div class="al-flex-between">
 				<div class="al-flex">
-					<el-input v-model="listData.user" placeholder="请输入" />
+					<el-input v-model="queryForm.user" placeholder="请输入" />
 					<el-button class="ty-btn" type="primary" size="default" @click="onSubmit">查询</el-button>
 				</div>
 				<div>
-					<button @click="dialogFormVisible=true" class="ty-btn">新增用户信息</button>
+					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">新增用户信息</button>
 					<button class="ty-btn">导入用户信息</button>
 					<button class="ty-btn">下载模版</button>
 				</div>
 			</div>
-			<el-table :data="listData" stripe style="width: 100%;margin-top: 20px;">
+			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
 				<el-table-column type="index" label="序号" align="center" width="80" />
 				<el-table-column prop="name" label="姓名" align="center" />
 				<el-table-column prop="role_id" label="角色" align="center" />
@@ -24,65 +24,70 @@
 				<el-table-column prop="id_card" label="身份证号" align="center" width="150" />
 				<el-table-column label="操作" align="center" width="80">
 					<template #default="scope">
-						<span @click="handleEdit(scope.$index, scope.row)">编辑</span>
+						<el-button link @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					</template>
 				</el-table-column>
-				<!-- <el-table-column label="操作" align="center" width="80">
-					<template #default="scope">
-						<el-button size="default" @click="handleEdit(scope.$index, scope.row)">
-							编辑
-						</el-button>
-					</template>
-				</el-table-column> -->
 			</el-table>
-		</div>
-		<!-- 新增弹出 -->
-		<el-dialog class="" v-model="dialogFormVisible" title="新增用户信息" destroy-on-close>
-			<div>
-				新增用户信息
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[100, 200, 300, 400]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
 			</div>
-		</el-dialog>
-		<!-- 编辑 -->
-		<el-dialog v-model="dialogEditFormVisible" title="编辑用户信息" destroy-on-close>
-			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
-				<el-row :gutter="30">
-					<el-col :span="12">
-						<el-form-item label="用户名称">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+		</div>
+		<!-- 弹框表单 -->
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑用户信息' :'新增用户信息'"
+			destroy-on-close>
+			<el-form ref="formRef" :model="form" :rules="rules" label-width="80" label-position="left" size="default" :scroll-to-error="true">
+				<el-row>
+					<el-col :span="8">
+						<el-form-item label="姓名" prop="title">
+							<el-input v-model="form.title" placeholder="请输入" autocomplete />
 						</el-form-item>
-						<el-form-item label="用户编号">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+						<el-form-item label="工号" prop="title">
+							<el-input v-model="form.title" placeholder="请输入" autocomplete />
 						</el-form-item>
-						<el-form-item label="购入时间">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+						<el-form-item label="手机号码" prop="title">
+							<el-input v-model="form.title" placeholder="请输入" autocomplete />
 						</el-form-item>
-						<el-form-item label="备注">
-							<el-input v-model="formInline.user" :rows="3" type="textarea" placeholder="请输入" />
+						<el-form-item label="邮箱" prop="title">
+							<el-input v-model="form.title" placeholder="请输入" autocomplete />
+						</el-form-item>
+						<el-form-item label="身份证号" prop="title">
+							<el-input v-model="form.title" placeholder="请输入" autocomplete />
+						</el-form-item>
+						<el-form-item label="体测对象">
+							<el-select v-model="form.type" placeholder="请选择">
+								<el-option label="淘宝" value="1" key="1" />
+								<el-option label="天猫" value="2" key="2" />
+							</el-select>
+						</el-form-item>
+						<el-form-item label="体测项目">
+							<el-select v-model="form.type" placeholder="请选择">
+								<el-option label="淘宝" value="1" key="1" />
+								<el-option label="天猫" value="2" key="2" />
+							</el-select>
 						</el-form-item>
 					</el-col>
-					<el-col :span="12">
-						<el-form-item label="所属用户">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
-							</el-select>
-						</el-form-item>
-						<el-form-item label="分配片区">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
-							</el-select>
-						</el-form-item>
-						<el-form-item label="分配集团">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
-							</el-select>
-						</el-form-item>
+					<el-col :span="12" :offset="4">
+						<el-row>
+							<el-col :span="24">
+								<el-form-item label="执行开始时间" label-width="100" prop="title">
+									<el-date-picker v-model="form.date" type="date" placeholder="请选择" />
+								</el-form-item>
+								<el-form-item label="执行结束时间" label-width="100" prop="title">
+									<el-date-picker v-model="form.date" type="date" placeholder="请选择" />
+								</el-form-item>
+							</el-col>
+							<el-col :span="20">
+								<el-form-item label="备注" label-width="100">
+									<el-input v-model="form.user" :rows="3" type="textarea" placeholder="请输入" />
+								</el-form-item>
+							</el-col>
+						</el-row>
 					</el-col>
 				</el-row>
 				<div style="display: flex;justify-content: center;">
-					<el-button>取消</el-button>
+					<el-button @click="dialogFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
 				</div>
 			</el-form>
@@ -91,7 +96,18 @@
 </template>
 
 <script setup>
-	import {getUser} from '@/api/user'
+	import {
+		getUser
+	} from '@/api/user'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
+	const handleCurrentChange = (number) => {
+		page.value=number
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value=number
+	}
 	onMounted(() => {
 		getListData()
 	})
@@ -99,42 +115,25 @@
 		user: '',
 		region: '',
 	})
-	const formInline = reactive({
+	const formRef = ref(null)
+	const isFromEdit = ref(false)
+	const form = reactive({
 		user: '',
 		region: '',
 	})
-	const listData = reactive([])
-	const getListData = ()=>{
-		getUser().then(res=>{
+	const rules = reactive({})
+	const getListData = (page) => {
+		getUser({page:page,page_size:pageSize.value}).then(res => {
 			console.log(res)
-			listData.push(...res)
+			total.value = res.total
+			tableData.push(...res.list)
 		})
 	}
-	const tableData = reactive([{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	])
+	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
-	const dialogEditFormVisible = ref(false)
 	const handleEdit = () => {
-		dialogEditFormVisible.value = true
+		isFromEdit.value=true
+		dialogFormVisible.value = true
 	}
 	const onSubmit = () => {
 		console.log('submit!')
@@ -142,7 +141,7 @@
 </script>
 
 <style>
-	.query-btn{
+	.query-btn {
 		display: flex;
 		height: 100%;
 		flex-direction: column;

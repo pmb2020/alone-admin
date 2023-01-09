@@ -124,6 +124,10 @@
 </template>
 
 <script setup>
+	import {getTeacher} from '@/api/base'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
 	const queryForm = reactive({
 		user: '',
 		region: '',
@@ -132,29 +136,18 @@
 		user: '',
 		region: '',
 	})
-	const tableData = reactive([{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	])
+	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
+	onMounted(()=>{
+		getListData()
+	})
+	const getListData = ()=>{
+		getTeacher({page:page.value,page_size:pageSize.value}).then(res=>{
+			console.log(res)
+			tableData.push(...res)
+		})
+	}
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true
 	}

@@ -4,16 +4,19 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">学校列表</h3>
 				<div>
-					<button @click="dialogFormVisible=true" class="ty-btn">新增学校信息</button>
+					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">新增学校信息</button>
 					<button class="ty-btn">导入学校信息</button>
-					<button class="ty-btn">下载模版</button>
+					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学校导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
-				<el-table-column prop="date" label="Date" align="center" width="180" />
-				<el-table-column prop="name" label="Name" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
+				<el-table-column type="index" label="序号" align="center" width="80" />
+				<el-table-column prop="id" label="学校编号" align="center" />
+				<el-table-column prop="name" label="学校名称" align="center" />
+				<el-table-column prop="period" label="学校学段" align="center" />
+				<el-table-column prop="area" label="片区" align="center" />
+				<el-table-column prop="edu_group" label="集团" align="center" />
+				<el-table-column prop="create_at" label="创建时间" align="center" width="180" />
 				<el-table-column label="体测详情" align="center" width="80">
 					<template #default="scope">
 						<router-link to="/base/student/info">查看</router-link>
@@ -30,15 +33,14 @@
 					</template>
 				</el-table-column>
 			</el-table>
-		</div>
-		<!-- 新增弹出 -->
-		<el-dialog class="" v-model="dialogFormVisible" title="新增学校信息" destroy-on-close>
-			<div>
-				新增学校信息
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[100, 200, 300, 400]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
 			</div>
-		</el-dialog>
-		<!-- 编辑 -->
-		<el-dialog v-model="dialogEditFormVisible" title="编辑学校信息" destroy-on-close>
+		</div>
+		<!-- 弹框表单 -->
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑学校信息' :'新增学校信息'" destroy-on-close>
 			<el-form :inline="false" :model="form" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
 				<el-row :gutter="30">
 					<el-col :span="12">
@@ -87,6 +89,10 @@
 
 <script setup>
 	import {getSchool} from '@/api/user'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
+	const isFromEdit = ref(false)
 	const queryForm = reactive({
 		user: '',
 		region: '',
@@ -96,28 +102,29 @@
 		region: '',
 	})
 	onMounted(() => {
-		getList()
+		getListData()
 	})
-	const getList = ()=>{
-		getSchool().then(res=>{
-			console.log(res)
+	const getListData = (page=1)=>{
+		getSchool({page:page,page_size:pageSize.value}).then(res=>{
+			total.value = res.total
+			tableData.length=0
+			tableData.push(...res.list)
 		})
 	}
-	const tableData = reactive([{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	])
+	const handleSizeChange = (number) => {
+		pageSize.value=number
+		getListData()
+	}
+	const handleCurrentChange = (number)=>{
+		page.value = number
+		getListData(number)
+	}
+	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
 	const handleEdit = () => {
-		dialogEditFormVisible.value = true
+		isFromEdit.value = true
+		dialogFormVisible.value = true
 	}
 	const onSubmit = () => {
 		console.log('submit!')

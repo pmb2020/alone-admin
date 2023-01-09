@@ -56,10 +56,12 @@
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
-				<el-table-column prop="date" label="Date" align="center" width="180" />
-				<el-table-column prop="name" label="Name" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
+				<el-table-column type="index" label="序号" align="center" width="80" />	
+				<el-table-column prop="year" label="学级" align="center" width="180" />
+				<el-table-column prop="name" label="年级" align="center" />
+				<el-table-column prop="name" label="班级" align="center" />
+				<el-table-column prop="address" label="所属老师" align="center" />
+				<el-table-column prop="address" label="班级人数" align="center" />
 				<el-table-column label="体测详情" align="center" width="80">
 					<template #default="scope">
 						<router-link to="/base/class/info">查看</router-link>
@@ -78,7 +80,7 @@
 			</el-table>
 		</div>
 		<!-- 新增弹出 -->
-		<el-dialog class="" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
+		<el-dialog class="ty-dialog" width="1000px" v-model="dialogFormVisible" title="新增班级信息" destroy-on-close>
 			<AddForm></AddForm>
 		</el-dialog>
 		<!-- 编辑 -->
@@ -128,7 +130,11 @@
 </template>
 
 <script setup>
+	import {getClass,addClass,updateClass} from '@/api/base'
 	import AddForm from './AddForm.vue'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
 	const queryForm = reactive({
 		user: '',
 		region: '',
@@ -137,29 +143,18 @@
 		user: '',
 		region: '',
 	})
-	const tableData = reactive([{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	])
+	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
+	onMounted(()=>{
+		getListData()
+	})
+	const getListData = ()=>{
+		getClass({page:page.value,page_size:pageSize.value}).then(res=>{
+			console.log(res)
+			tableData.push(...res)
+		})
+	}
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true
 	}

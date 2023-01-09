@@ -100,7 +100,7 @@ const routes = [
 		children:[
 			{
 				path:'index',
-				component: () => import('../views/ticeChart/index.vue'),
+				component: () => import('../views/ticeChart/Index.vue'),
 				meta:{
 					title:'体测项目数据分析',
 					icon:'DataLine',

@@ -4,6 +4,18 @@ export const getUser = (params)=>{
 	return get('/user/list/',params)
 }
 
+export const addUser = (data)=>{
+	return post('/user/add/',data)
+}
+
+export const updateUser = (data)=>{
+	return post('/user/edit/',data)
+}
+
+export const deleteUser = (params)=>{
+	return get('/user/delete/',params)
+}
+
 export const login = (data)=>{
 	return post('https://alone.usemock.com/api/login',data)
 }

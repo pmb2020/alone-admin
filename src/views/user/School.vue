@@ -10,10 +10,8 @@
 						</el-icon>
 						新增学校信息
 					</button>
-					<el-upload v-model:file-list="fileList" class="upload-demo" style="display: inline-block;" name="FileName"
-						action="https://tiyuapi.nkjwx.com/api/school/list/FileUpload/" multiple
-						:on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove"
-						:on-exceed="handleExceed">
+					<el-upload class="upload-demo" style="display: inline-block;" name="File"
+						action="https://tiyuapi.nkjwx.com/api/school/fileupload/" :on-error="uploadFileError" :on-success="uploadFileError">
 						<!-- <el-button type="primary" link>导入学校信息</el-button> -->
 						<button class="ty-btn">导入学校信息</button>
 					</el-upload>
@@ -140,7 +138,7 @@
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
 	const handleEdit = (row) => {
-		form.value = row
+		form.value = {...row}
 		isFromEdit.value = true
 		dialogFormVisible.value = true
 	}
@@ -159,19 +157,23 @@
 	const onSubmit = () => {
 		formRef.value.validate((valid) => {
 			if (!valid) return
-			if (!isFromEdit) {
+			if (!isFromEdit.value) {
 				addSchool(form.value).then(res => {
 					dialogFormVisible.value = false
 					ElMessage.success('操作成功')
 				})
 			} else {
 				updateSchool(form.value).then(res => {
+					getListData(page.value)
 					dialogFormVisible.value = false
 					ElMessage.success('操作成功')
 				})
 			}
 
 		})
+	}
+	const uploadFileError = (f)=>{
+		console.log(f)
 	}
 </script>
 

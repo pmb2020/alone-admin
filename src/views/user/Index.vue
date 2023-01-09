@@ -30,7 +30,7 @@
 			</el-table>
 			<div style="margin-top: 30px;display: flex;justify-content: end;">
 				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
-					:page-sizes="[100, 200, 300, 400]" layout="prev, pager, next,sizes, jumper" :total="total"
+					:page-sizes="[50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
 					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
 			</div>
 		</div>
@@ -100,13 +100,15 @@
 		getUser
 	} from '@/api/user'
 	const page = ref(1)
-	const pageSize = ref(20)
+	const pageSize = ref(2)
 	const total = ref(0)
 	const handleCurrentChange = (number) => {
 		page.value=number
+		getListData(page.value)
 	}
 	const handleSizeChange = (number) => {
 		pageSize.value=number
+		getListData(page.value)
 	}
 	onMounted(() => {
 		getListData()
@@ -122,10 +124,11 @@
 		region: '',
 	})
 	const rules = reactive({})
-	const getListData = (page) => {
+	const getListData = (page=1) => {
 		getUser({page:page,page_size:pageSize.value}).then(res => {
 			console.log(res)
 			total.value = res.total
+			tableData.length = 0
 			tableData.push(...res.list)
 		})
 	}

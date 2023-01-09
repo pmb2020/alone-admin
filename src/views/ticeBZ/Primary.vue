@@ -10,7 +10,7 @@
 						<ul class="single-ul">
 							<li :class="{'active':index==singleIndex}" v-for="(item,index) in singleItems" :key="index"
 								@click="singleClick(index)">
-								{{item.name}}
+								{{item.project_name}}
 							</li>
 						</ul>
 					</el-collapse-item>
@@ -28,10 +28,10 @@
 		<el-col :span="19">
 			<div class="ty-box">
 				<div style="position: relative;margin-bottom: 20px;">
-					<p style="text-align: center;line-height: 35px;">男生体重指数（BMI）单项评分表（单位：千克/米2）</p>
+					<p style="text-align: center;line-height: 35px;">{{tableTitle}}</p>
 					<ul class="ty-tab" style="position: absolute;right: 0;top: 0;">
-						<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">男生</li>
-						<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">女生</li>
+						<li :class="{'active':tabIndex==0}" @click="gTabClick(0)">男生</li>
+						<li :class="{'active':tabIndex==1}" @click="gTabClick(1)">女生</li>
 					</ul>
 				</div>
 				<el-table :data="tableData" style="width: 100%">
@@ -52,46 +52,36 @@
 
 <script setup>
 	import {
-		ref
-	} from 'vue';
+		getProject,getScore
+	} from '@/api/ticeBZ'
+	const gradeType = ref('小学')
 	const activeNames = ref(['1'])
 	const singleIndex = ref(0)
-	const singleItems = ref([{
-			id: 1,
-			name: '体重指数(BMI)'
-		},
-		{
-			id: 2,
-			name: '肺活量'
-		},
-		{
-			id: 3,
-			name: '50m跑'
-		},
-		{
-			id: 4,
-			name: '坐位体前屈'
-		},
-		{
-			id: 5,
-			name: '1分钟跳绳'
-		},
-		{
-			id: 6,
-			name: '1分钟仰卧起坐'
-		},
-		{
-			id: 7,
-			name: '50*8往返跑'
-		},
-	])
+	const tabIndex = ref(0)
+	const singleItems = ref([])
+	const tableTitle = ref('')
 	const tableData = ref([{
 		date: '2016-05-03',
 		name: 'Tom',
 		address: 'No. 189, Grove St, Los Angeles',
 	}, ])
+	onMounted(() => {
+		getProject({grade_type:gradeType.value}).then(res=>{
+			singleItems.value = res.single
+			console.log(res)
+		})
+		getScoreData(15)
+	})
+	const getScoreData = (id)=>{
+		getScore({grade_type:gradeType.value,project_id:id}).then(res=>{
+			tableTitle.value = res.project.title
+			console.log(res.data['男生'])
+		})
+	}
 	const singleClick = (index) => {
 		singleIndex.value = index
+		// console.log(singleItems.value[index].project_id)
+		getScoreData(singleItems.value[index].project_id)
 	}
 </script>
 

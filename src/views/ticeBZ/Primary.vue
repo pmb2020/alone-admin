@@ -34,9 +34,55 @@
 						<li :class="{'active':tabIndex==1}" @click="gTabClick(1)">女生</li>
 					</ul>
 				</div>
-				<el-table :data="tableData" :span-method="objectSpanMethod" style="width: 100%">
-					<el-table-column prop="name" label="等级" width="80" />
-					<el-table-column prop="name" label="单项得分" />
+				<table class="ty-table">
+					<colgroup></colgroup>
+					<thead>
+						<tr>
+							<th>等级</th>
+							<th>单项得分</th>
+							<th>一年级</th>
+							<th>二年级</th>
+							<th>三年级</th>
+							<th>四年级</th>
+							<th>五年级</th>
+							<th>六年级</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- <tr v-for="(item,index) in tableData.length">
+							<td :rowspan="tableData[index].length">正常</td>
+							<td>{{index}}</td>
+							<td>sssdd</td>
+							<td>sssdd</td>
+						</tr> -->
+						<tr v-for="(item,index) in tableData['正常']">
+							<td rowspan="2">$50</td>
+							<td>Januar1111111y</td>
+							<td>$100</td>
+						</tr>
+						<tr>
+							<td>February</td>
+							<td>$80</td>
+						</tr>
+						<tr>
+							<td>$50</td>
+							<td>February</td>
+							<td>$70</td>
+						</tr>
+						<tr>
+							<td rowspan="2">$50</td>
+							<td>February</td>
+							<td>$80</td>
+						</tr>
+						<tr>
+							<td>February</td>
+							<td>$80</td>
+						</tr>
+					</tbody>
+				</table>
+				<el-table :data="tableData1.boy" :span-method="objectSpanMethod" style="width: 100%">
+					<el-table-column prop="score_grade" label="等级" width="80" />
+					<el-table-column prop="score" label="单项得分" />
 					<el-table-column prop="name" label="一年级" />
 					<el-table-column prop="name" label="二年级" />
 					<el-table-column prop="name" label="三年级" />
@@ -60,6 +106,10 @@
 	const tabIndex = ref(0)
 	const singleItems = ref([])
 	const tableTitle = ref('')
+	const tableData1 = reactive({
+		'boy':[],
+		'girl':[]
+	})
 	const tableData = reactive([{
 		date: '2016-05-03',
 		name: 'Tom',
@@ -68,7 +118,7 @@
 		date: '2016-05-03',
 		name: 'Tom',
 		address: 'No. 189, Grove St, Los Angeles',
-	},{
+	}, {
 		date: '2016-05-03',
 		name: 'Tom',
 		address: 'No. 189, Grove St, Los Angeles',
@@ -111,6 +161,22 @@
 			// tableData.length=0
 			tableData.push(res.data['男生'])
 			console.log(res.data['男生'])
+			console.log(tableData['肥胖'])
+			let arr = res.data['男生']
+			Object.keys(arr).map(key => {
+			  // console.log(arr[key]) 
+			  Object.keys(arr[key]).map(key1 => {
+			    // console.log(arr[key][key1]) 
+				Object.keys(arr[key][key1]).map(key2 => {
+				  console.log(arr[key][key1][key2]) 
+				  tableData1.boy.push(...arr[key][key1][key2])
+				})
+			  })
+			})
+			// let arr =res.data['男生']
+			// arr.forEach((item,index)=>{
+			// 	console.log(index)
+			// })
 		})
 	}
 	const singleClick = (index) => {

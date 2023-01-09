@@ -148,3 +148,16 @@ html,body,#app{
 	// }
 }
 
+.ty-table{
+	width: 100%;
+	text-align: center;
+	thead{
+		color: #909399;
+	}
+	tbody{
+		color: #606266;
+		td{
+			padding: 15px;
+		}
+	}
+}

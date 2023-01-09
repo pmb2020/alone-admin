@@ -34,7 +34,7 @@
 						<li :class="{'active':tabIndex==1}" @click="gTabClick(1)">女生</li>
 					</ul>
 				</div>
-				<el-table :data="tableData" style="width: 100%">
+				<el-table :data="tableData" :span-method="objectSpanMethod" style="width: 100%">
 					<el-table-column prop="name" label="等级" width="80" />
 					<el-table-column prop="name" label="单项得分" />
 					<el-table-column prop="name" label="一年级" />
@@ -43,7 +43,6 @@
 					<el-table-column prop="name" label="四年级" />
 					<el-table-column prop="name" label="五年级" />
 					<el-table-column prop="name" label="六年级" />
-					<!-- <el-table-column prop="address" label="Address" /> -->
 				</el-table>
 			</div>
 		</el-col>
@@ -52,7 +51,8 @@
 
 <script setup>
 	import {
-		getProject,getScore
+		getProject,
+		getScore
 	} from '@/api/ticeBZ'
 	const gradeType = ref('小学')
 	const activeNames = ref(['1'])
@@ -60,27 +60,61 @@
 	const tabIndex = ref(0)
 	const singleItems = ref([])
 	const tableTitle = ref('')
-	const tableData = ref([{
+	const tableData = reactive([{
 		date: '2016-05-03',
 		name: 'Tom',
 		address: 'No. 189, Grove St, Los Angeles',
-	}, ])
+	}, {
+		date: '2016-05-03',
+		name: 'Tom',
+		address: 'No. 189, Grove St, Los Angeles',
+	},{
+		date: '2016-05-03',
+		name: 'Tom',
+		address: 'No. 189, Grove St, Los Angeles',
+	}])
+	const objectSpanMethod = ({
+		row,
+		column,
+		rowIndex,
+		columnIndex
+	}) => {
+		if (columnIndex === 0) {
+			if (rowIndex % 2 === 0) {
+				return {
+					rowspan: 2,
+					colspan: 1,
+				}
+			} else {
+				return {
+					rowspan: 0,
+					colspan: 0,
+				}
+			}
+		}
+	}
 	onMounted(() => {
-		getProject({grade_type:gradeType.value}).then(res=>{
+		getProject({
+			grade_type: gradeType.value
+		}).then(res => {
 			singleItems.value = res.single
 			console.log(res)
 		})
 		getScoreData(15)
 	})
-	const getScoreData = (id)=>{
-		getScore({grade_type:gradeType.value,project_id:id}).then(res=>{
+	const getScoreData = (id) => {
+		getScore({
+			grade_type: gradeType.value,
+			project_id: id
+		}).then(res => {
 			tableTitle.value = res.project.title
+			// tableData.length=0
+			tableData.push(res.data['男生'])
 			console.log(res.data['男生'])
 		})
 	}
 	const singleClick = (index) => {
 		singleIndex.value = index
-		// console.log(singleItems.value[index].project_id)
 		getScoreData(singleItems.value[index].project_id)
 	}
 </script>

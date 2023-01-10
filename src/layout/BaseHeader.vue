@@ -9,8 +9,8 @@
 			<el-badge :value="12" type="warning" class="item" style="margin: 0 30px;">
 				<img class="al-avatar" style="" src="@/assets/images/message.png" alt="">
 			</el-badge>
-			<img class="al-avatar" style="" src="@/assets/images/avatar.png" alt="">
-			<!-- <el-dropdown style="cursor: pointer;">
+			<img class="al-avatar" style="margin-right: 5px;" src="@/assets/images/avatar.png" alt="">
+			<el-dropdown style="cursor: pointer;">
 				<span class="el-dropdown-link">
 					admin
 					<el-icon class="el-icon--right">
@@ -19,11 +19,11 @@
 				</span>
 				<template #dropdown>
 					<el-dropdown-menu>
-						<el-dropdown-item>消息</el-dropdown-item>
-						<el-dropdown-item @click="loginOut" divided>退出</el-dropdown-item>
+						<!-- <el-dropdown-item>消息</el-dropdown-item> -->
+						<el-dropdown-item @click="loginOutFun" divided>退出</el-dropdown-item>
 					</el-dropdown-menu>
 				</template>
-			</el-dropdown> -->
+			</el-dropdown>
 		</div>
 	</el-header>
 </template>
@@ -32,11 +32,15 @@
 	import {
 		useRouter
 	} from 'vue-router'
+	import {loginOut} from '@/api/auth.js'
 	const router = useRouter()
-	const loginOut = () => {
+	const loginOutFun = () => {
 		console.log('退出登录')
-		localStorage.removeItem('token')
-		router.push('/login')
+		loginOut().then(res=>{
+			console.log(res)
+		})
+		// localStorage.removeItem('token')
+		// router.push('/login')
 	}
 </script>
 

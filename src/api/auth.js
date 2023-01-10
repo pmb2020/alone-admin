@@ -4,6 +4,6 @@ export const login = (data) =>{
 	return post('/user/login/',data)
 }
 
-export const loginOut = (data) =>{
-	return get('logout',data)
+export const loginOut = (params) =>{
+	return get('/user/logout/',params)
 }

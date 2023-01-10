@@ -8,7 +8,7 @@
 							<div style="padding: 0 30px;color: #222426;font-size: 15px;">单项指标评分表</div>
 						</template>
 						<ul class="single-ul">
-							<li :class="{'active':index==singleIndex}" v-for="(item,index) in singleItems" :key="index"
+							<li :class="{'active':index==singleIndex}" v-for="(item,index) in items.single" :key="index"
 								@click="singleClick(index)">
 								{{item.project_name}}
 							</li>
@@ -19,7 +19,10 @@
 							<div style="padding: 0 30px;color: #222426;font-size: 15px;">加分项指标评分表</div>
 						</template>
 						<ul class="single-ul">
-							<li>1分钟跳绳备份</li>
+							<li :class="{'active':index==singleIndex}" v-for="(item,index) in items.bonus" :key="index"
+								@click="bonusClick(index)">
+								{{item.project_name}}
+							</li>
 						</ul>
 					</el-collapse-item>
 				</el-collapse>
@@ -28,67 +31,21 @@
 		<el-col :span="19">
 			<div class="ty-box">
 				<div style="position: relative;margin-bottom: 20px;">
-					<p style="text-align: center;line-height: 35px;">{{tableTitle}}</p>
+					<p style="text-align: center;line-height: 35px;">{{tabIndex==1 ? '女生':'男生'}}{{tableTitle}}</p>
 					<ul class="ty-tab" style="position: absolute;right: 0;top: 0;">
-						<li :class="{'active':tabIndex==0}" @click="gTabClick(0)">男生</li>
-						<li :class="{'active':tabIndex==1}" @click="gTabClick(1)">女生</li>
+						<li :class="{'active':tabIndex==0}" @click="tabClick(0)">男生</li>
+						<li :class="{'active':tabIndex==1}" @click="tabClick(1)">女生</li>
 					</ul>
 				</div>
-				<table class="ty-table">
-					<colgroup></colgroup>
-					<thead>
-						<tr>
-							<th>等级</th>
-							<th>单项得分</th>
-							<th>一年级</th>
-							<th>二年级</th>
-							<th>三年级</th>
-							<th>四年级</th>
-							<th>五年级</th>
-							<th>六年级</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- <tr v-for="(item,index) in tableData.length">
-							<td :rowspan="tableData[index].length">正常</td>
-							<td>{{index}}</td>
-							<td>sssdd</td>
-							<td>sssdd</td>
-						</tr> -->
-						<tr v-for="(item,index) in tableData['正常']">
-							<td rowspan="2">$50</td>
-							<td>Januar1111111y</td>
-							<td>$100</td>
-						</tr>
-						<tr>
-							<td>February</td>
-							<td>$80</td>
-						</tr>
-						<tr>
-							<td>$50</td>
-							<td>February</td>
-							<td>$70</td>
-						</tr>
-						<tr>
-							<td rowspan="2">$50</td>
-							<td>February</td>
-							<td>$80</td>
-						</tr>
-						<tr>
-							<td>February</td>
-							<td>$80</td>
-						</tr>
-					</tbody>
-				</table>
-				<el-table :data="tableData1.boy" :span-method="objectSpanMethod" style="width: 100%">
-					<el-table-column prop="score_grade" label="等级" width="80" />
-					<el-table-column prop="score" label="单项得分" />
-					<el-table-column prop="name" label="一年级" />
-					<el-table-column prop="name" label="二年级" />
-					<el-table-column prop="name" label="三年级" />
-					<el-table-column prop="name" label="四年级" />
-					<el-table-column prop="name" label="五年级" />
-					<el-table-column prop="name" label="六年级" />
+				<el-table :data="tableData" stripe border size="large" style="width: 100%">
+					<el-table-column v-if="!isBonus" prop="score_grade" label="等级" width="80" />
+					<el-table-column prop="score" label="单项得分" align="center" />
+					<el-table-column prop="一年级" label="一年级" align="center" />
+					<el-table-column prop="二年级" label="二年级" align="center" />
+					<el-table-column prop="三年级" label="三年级" align="center" />
+					<el-table-column prop="四年级" label="四年级" align="center" />
+					<el-table-column prop="五年级" label="五年级" align="center" />
+					<el-table-column prop="六年级" label="六年级" align="center" />
 				</el-table>
 			</div>
 		</el-col>
@@ -98,31 +55,23 @@
 <script setup>
 	import {
 		getProject,
-		getScore
+		getScore,
+		getBonus
 	} from '@/api/ticeBZ'
 	const gradeType = ref('小学')
 	const activeNames = ref(['1'])
 	const singleIndex = ref(0)
+	const bonusIndex = ref(0)
 	const tabIndex = ref(0)
+	const isBonus = ref(false)
 	const singleItems = ref([])
+	const items = ref([])
 	const tableTitle = ref('')
-	const tableData1 = reactive({
-		'boy':[],
-		'girl':[]
+	const originData = reactive({
+		'boy': [],
+		'girl': []
 	})
-	const tableData = reactive([{
-		date: '2016-05-03',
-		name: 'Tom',
-		address: 'No. 189, Grove St, Los Angeles',
-	}, {
-		date: '2016-05-03',
-		name: 'Tom',
-		address: 'No. 189, Grove St, Los Angeles',
-	}, {
-		date: '2016-05-03',
-		name: 'Tom',
-		address: 'No. 189, Grove St, Los Angeles',
-	}])
+	const tableData = reactive([])
 	const objectSpanMethod = ({
 		row,
 		column,
@@ -148,40 +97,67 @@
 			grade_type: gradeType.value
 		}).then(res => {
 			singleItems.value = res.single
-			console.log(res)
+			items.value = res
 		})
 		getScoreData(15)
 	})
+	const tabClick = (index)=>{
+		tabIndex.value=index
+		tableData.length = 0
+		if(index===0){
+			tableData.push(...originData.boy)
+		}else{
+			tableData.push(...originData.girl)
+		}
+	}
+	//单项
 	const getScoreData = (id) => {
 		getScore({
 			grade_type: gradeType.value,
 			project_id: id
 		}).then(res => {
 			tableTitle.value = res.project.title
-			// tableData.length=0
-			tableData.push(res.data['男生'])
-			console.log(res.data['男生'])
-			console.log(tableData['肥胖'])
-			let arr = res.data['男生']
-			Object.keys(arr).map(key => {
-			  // console.log(arr[key]) 
-			  Object.keys(arr[key]).map(key1 => {
-			    // console.log(arr[key][key1]) 
-				Object.keys(arr[key][key1]).map(key2 => {
-				  console.log(arr[key][key1][key2]) 
-				  tableData1.boy.push(...arr[key][key1][key2])
-				})
-			  })
-			})
-			// let arr =res.data['男生']
-			// arr.forEach((item,index)=>{
-			// 	console.log(index)
-			// })
+			tableData.length = 0
+			originData.boy = handleTableData(res.data['男生'])
+			originData.girl = handleTableData(res.data['女生'])
+			tableData.push(...originData.boy)
+			// console.log(res.data['男生'])
 		})
 	}
+	// 加分项
+	const getBonusData = (id) => {
+		getBonus({
+			grade_type: gradeType.value,
+			project_id: id
+		}).then(res => {
+			tableTitle.value = res.project.title
+			tableData.length = 0
+			originData.boy = res.data['男生']
+			originData.girl = res.data['女生']
+			tableData.push(...originData.boy)
+		})
+	}
+	const bonusClick = (index) => {
+		isBonus.value = true
+		tabIndex.value = 0
+		bonusIndex.value = index
+		getBonusData(items.value.bonus[index].project_id)
+	}
 	const singleClick = (index) => {
+		isBonus.value = false
+		tabIndex.value = 0
 		singleIndex.value = index
-		getScoreData(singleItems.value[index].project_id)
+		getScoreData(items.value.single[index].project_id)
+	}
+	const handleTableData = (arr)=>{
+		var d = []
+		Object.keys(arr).map(key => {
+			Object.keys(arr[key]).map(key1 => {
+				arr[key][key1].score_grade = key
+				d.push(arr[key][key1])
+			})
+		})
+		return d
 	}
 </script>
 

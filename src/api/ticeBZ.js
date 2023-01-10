@@ -7,3 +7,7 @@ export const getProject = (params)=>{
 export const getScore = (params)=>{
 	return get('/standards/score',params)
 }
+
+export const getBonus = (params)=>{
+	return get('/standards/bonus_score',params)
+}

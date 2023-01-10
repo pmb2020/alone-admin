@@ -35,12 +35,11 @@
 	import {loginOut} from '@/api/auth.js'
 	const router = useRouter()
 	const loginOutFun = () => {
-		console.log('退出登录')
 		loginOut().then(res=>{
-			console.log(res)
+			localStorage.removeItem('token')
+			router.push('/login')
 		})
-		// localStorage.removeItem('token')
-		// router.push('/login')
+		
 	}
 </script>
 

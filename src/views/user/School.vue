@@ -26,7 +26,7 @@
 				<el-table-column prop="area" label="片区" align="center" />
 				<el-table-column prop="edu_group" label="集团" align="center" />
 				<el-table-column prop="create_at" label="创建时间" align="center" width="180" />
-				<el-table-column label="操作" align="center">
+				<el-table-column label="操作" align="center" width="160">
 					<template #default="scope">
 						<el-button link>查询</el-button>
 						<el-button link @click="handleEdit(scope.row)">编辑</el-button>

@@ -69,12 +69,6 @@
 										<el-option label="Zone two" value="beijing" />
 									</el-select>
 								</el-form-item>
-								<el-form-item label="教委">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
-								</el-form-item>
 							</el-col>
 						</el-row>
 					</el-col>

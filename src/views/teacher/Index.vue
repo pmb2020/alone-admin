@@ -47,9 +47,6 @@
 		<div class="ty-box">
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">老师信息列表</h3>
-				<!-- <div>
-					<button @click="dialogFormVisible=true" class="ty-btn">新增班级信息</button>
-				</div> -->
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
 				<el-table-column prop="date" label="Date" align="center" width="180" />

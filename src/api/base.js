@@ -24,7 +24,7 @@ export const updateClass = (data)=>{
 
 // 年级管理
 export const getGrade = (params)=>{
-	return get('/grade/select/',params)
+	return get('/grade/list/',params)
 }
 export const addGrade = (data)=>{
 	return post('/grade/add/',data)

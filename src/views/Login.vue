@@ -2,22 +2,22 @@
 	<div class="login">
 		<div class="login-box">
 			<el-form ref="loginFormRef" :model="loginForm" :rules="rules">
-				<h1 style="font-size: 19px;margin-bottom: 30px;color: #3085f5;">丰台区教委智慧体测管理平台</h1>
+				<h1 style="font-size: 19px;margin-bottom: 40px;color: #3085f5;">丰台区教委智慧体测管理平台</h1>
 				<el-form-item prop="username" style="margin-bottom: 30px;">
 					<el-input v-model="loginForm.username" autocomplete size="large"
 						placeholder="账号" :prefix-icon="UserFilled" />
 				</el-form-item>
-				<el-form-item prop="password" style="margin-bottom: 30px;">
+				<el-form-item prop="password" style="margin-bottom: 40px;">
 					<el-input v-model="loginForm.password" show-password size="large"
 						placeholder="密码" :prefix-icon="Lock" />
 				</el-form-item>
-				<el-form-item prop="code" style="margin-bottom: 30px;">
+				<!-- <el-form-item prop="code" style="margin-bottom: 30px;">
 					<el-input v-model="loginForm.code" placeholder="验证码" :prefix-icon="MessageBox">
 					    <template #append>1234</template>
 					</el-input>
-				</el-form-item>
-				<el-button style="width: 100%;font-size: 18px;border-radius: 10px;" size="large" type="primary" @click="submitForm">立即登录</el-button>
-				<p style="text-align: center;color: #888;font-size: 14px;margin: 15px 0 15px 0;">忘记密码</p>
+				</el-form-item> -->
+				<el-button style="width: 100%;font-size: 18px;border-radius: 10px;margin-bottom: 30px;" size="large" type="primary" @click="submitForm">立即登录</el-button>
+				<!-- <p style="text-align: center;color: #888;font-size: 14px;margin: 15px 0 15px 0;">忘记密码</p> -->
 			</el-form>
 		</div>
 	</div>
@@ -76,13 +76,13 @@ import { ElMessage } from 'element-plus';
 	}
 
 	.login-box {
-		padding: 30px 80px;
+		padding: 50px 80px;
 		width: 280px;
 		margin-right: 100px;
 		background-image: url('../assets/images/login-form-bg.png');
 		background-size: 100% 100%;
 	}
 	.login-from-box{
-		padding:80px 30px;
+		padding:150px 30px;
 	}
 </style>

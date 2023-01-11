@@ -7,38 +7,38 @@
 						<el-row>
 							<el-col :span="6">
 								<el-form-item label="班级">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
-								</el-form-item>
-							</el-col>
-							<el-col :span="6">
-								<el-form-item label="学校">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+									<el-select v-model="queryForm.class_name" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.classes" :label="item"
+											:value="item" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="年级">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+									<el-select v-model="queryForm.grade_id" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.grades" :label="item.name"
+											:value="item.id" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="学级">
+									<el-select v-model="queryForm.year" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.years" :label="item"
+											:value="item" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="老师">
-									<el-input v-model="queryForm.user" placeholder="请输入" />
+									<el-input v-model="queryForm.teacher_name" placeholder="请输入" />
 								</el-form-item>
 							</el-col>
 						</el-row>
 					</el-col>
 					<el-col :span="4">
 						<div style="display: flex;justify-content: center;">
-							<el-button style="float: right;" type="primary" @click="onSubmit">查询</el-button>
+							<el-button style="float: right;" type="primary" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
 				</el-row>
@@ -49,11 +49,32 @@
 				<h3 class="title" style="margin-bottom: 0;">老师信息列表</h3>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
-				<el-table-column prop="date" label="Date" align="center" width="180" />
-				<el-table-column prop="name" label="Name" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column label="体测详情" align="center" width="80">
+				<el-table-column type="index" label="序号" align="center" width="80" />
+				<el-table-column prop="name" label="老师姓名" align="center" />
+				<el-table-column prop="working_years" label="工龄" align="center" />
+				<el-table-column prop="job_title" label="职务" align="center" />
+				<el-table-column label="目前所带学级" align="center" width="80">
+					<template #default="scope">
+						<p v-for="item in scope.row.years">
+							{{item.year}}级
+						</p>
+					</template>
+				</el-table-column>
+				<el-table-column label="目前所带年级" align="center" width="80">
+					<template #default="scope">
+						<p v-for="item in scope.row.grades">
+							{{item.name}}
+						</p>
+					</template>
+				</el-table-column>
+				<el-table-column label="目前所带班级" align="center" width="80">
+					<template #default="scope">
+						<p v-for="item in scope.row.grades">
+							{{item.name}}
+						</p>
+					</template>
+				</el-table-column>
+				<el-table-column label="详细信息" align="center" width="80">
 					<template #default="scope">
 						<router-link to="/base/teacher/info">查看</router-link>
 					</template>
@@ -62,11 +83,22 @@
 					<template #default="scope">
 						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
 							style="border: none;background-color: transparent;">
-							关联老师
+							关联班级
 						</el-button>
 					</template>
 				</el-table-column>
+				<el-table-column label="状态" align="center" width="120">
+					<template #default="scope">
+						<el-button link @click="statusClick(scope.row.id,1)">启用</el-button>
+						<el-button link @click="statusClick(scope.row.id,0)">禁用</el-button>
+					</template>
+				</el-table-column>
 			</el-table>
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
+			</div>
 		</div>
 		<!-- 新增弹出 -->
 		<el-dialog class="" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
@@ -118,14 +150,15 @@
 </template>
 
 <script setup>
-	import {getTeacher} from '@/api/base'
+	import {
+		getTeacher,
+		getTeacherOptions,updateTeaStatus
+	} from '@/api/base'
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
-	const queryForm = reactive({
-		user: '',
-		region: '',
-	})
+	const queryOption = ref({})
+	const queryForm = reactive({})
 	const formInline = reactive({
 		user: '',
 		region: '',
@@ -133,17 +166,41 @@
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
-	onMounted(()=>{
+	onMounted(() => {
 		getListData()
-	})
-	const getListData = ()=>{
-		getTeacher({page:page.value,page_size:pageSize.value}).then(res=>{
+		getTeacherOptions().then(res => {
+			queryOption.value = res
 			console.log(res)
-			tableData.push(...res)
 		})
+	})
+	const getListData = () => {
+		let params = {
+			page: page.value,
+			page_size: pageSize.value
+		}
+		getTeacher({...params,...queryForm}).then(res => {
+			console.log(res)
+			tableData.length = 0
+			total.value = res.total
+			tableData.push(...res.list)
+		})
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		getListData(page.value)
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		getListData(page.value)
 	}
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true
+	}
+	//状态，禁用/启用
+	const statusClick = (id,status)=>{
+		updateTeaStatus({teacher_id:id,status:status}).then(res=>{
+			ElMessage.success('状态已'+ (status == 1 ? '启用':'禁用'))
+		})
 	}
 	const onSubmit = () => {
 		console.log('submit!')

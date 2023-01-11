@@ -122,6 +122,11 @@
 					</template>
 				</el-table-column>
 			</el-table>
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
+			</div>
 		</div>
 		<!-- 新增弹出 -->
 		<el-dialog class="ty-dialog" width="1200px" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
@@ -226,7 +231,9 @@
 	const getListData = ()=>{
 		getStudent({page:page.value,page_size:pageSize.value}).then(res=>{
 			console.log(res)
-			tableData.push(...res)
+			tableData.length = 0
+			total.value = res.total
+			tableData.push(...res.list)
 		})
 	}
 	const dialogFormVisible = ref(false)
@@ -241,6 +248,14 @@
 		updateStudent(form.value).then(res=>{
 			console.log(res)
 		})
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		getListData(page.value)
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		getListData(page.value)
 	}
 </script>
 

@@ -7,41 +7,38 @@
 						<el-row>
 							<el-col :span="6">
 								<el-form-item label="班级">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
-								</el-form-item>
-							</el-col>
-							<el-col :span="6">
-								<el-form-item label="学校">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+									<el-select v-model="queryForm.class_name" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.classes" :label="item"
+											:value="item" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="年级">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+									<el-select v-model="queryForm.grade_id" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.grades" :label="item.name"
+											:value="item.id" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="学级">
+									<el-select v-model="queryForm.year" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.years" :label="item"
+											:value="item" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="老师">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
+									<el-input v-model="queryForm.teacher_name" placeholder="请输入" />
 								</el-form-item>
 							</el-col>
 						</el-row>
 					</el-col>
 					<el-col :span="4">
 						<div style="display: flex;justify-content: center;">
-							<el-button style="float: right;" type="primary" @click="onSubmit">查询</el-button>
+							<el-button style="float: right;" type="primary" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
 				</el-row>
@@ -78,6 +75,11 @@
 					</template>
 				</el-table-column>
 			</el-table>
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
+			</div>
 		</div>
 		<!-- 新增弹出 -->
 		<el-dialog class="ty-dialog" width="1000px" v-model="dialogFormVisible" title="新增班级信息" destroy-on-close>
@@ -130,15 +132,13 @@
 </template>
 
 <script setup>
-	import {getClass,addClass,updateClass} from '@/api/base'
+	import {getClass,addClass,updateClass,getClassOptions} from '@/api/base'
 	import AddForm from './AddForm.vue'
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
-	const queryForm = reactive({
-		user: '',
-		region: '',
-	})
+	const queryForm = reactive({})
+	const queryOption = ref({})
 	const formInline = reactive({
 		user: '',
 		region: '',
@@ -148,11 +148,21 @@
 	const dialogEditFormVisible = ref(false)
 	onMounted(()=>{
 		getListData()
+		getClassOptions().then(res => {
+			queryOption.value = res
+			console.log(res)
+		})
 	})
 	const getListData = ()=>{
-		getClass({page:page.value,page_size:pageSize.value}).then(res=>{
+		let params = {
+			page: page.value,
+			page_size: pageSize.value
+		}
+		getClass({...params,...queryForm}).then(res=>{
 			console.log(res)
-			tableData.push(...res)
+			tableData.length = 0
+			total.value = res.total
+			tableData.push(...res.list)
 		})
 	}
 	const handleEdit = () => {
@@ -160,6 +170,14 @@
 	}
 	const onSubmit = () => {
 		console.log('submit!')
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		getListData(page.value)
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		getListData(page.value)
 	}
 </script>
 

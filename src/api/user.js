@@ -1,5 +1,9 @@
 import {get,post} from '@/utils/request.js'
 
+export const getSelectOption = (params)=>{
+	return get('/user/options/',params)
+}
+
 export const getUserInfo = (params)=>{
 	return get('/user/userinfo/',params)
 }

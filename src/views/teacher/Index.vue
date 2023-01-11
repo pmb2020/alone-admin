@@ -31,10 +31,7 @@
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="老师">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
+									<el-input v-model="queryForm.user" placeholder="请输入" />
 								</el-form-item>
 							</el-col>
 						</el-row>

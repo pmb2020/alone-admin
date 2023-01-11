@@ -78,21 +78,19 @@
 							<el-col :span="24">
 								<el-form-item label="角色">
 									<el-select v-model="form.role_id" placeholder="请选择">
-										<el-option label="角色1" :value="1" />
-										<el-option label="角色2" :value="2" />
+										<el-option v-for="role in selectOption.roles" :label="role.title" :value="role.id" />
 									</el-select>
 								</el-form-item>
 								<el-form-item label="角色标识">
 									<el-select v-model="form.usertype" placeholder="请选择">
-										<el-option label="教委" value="edu" />
-										<el-option label="学校" value="school" />
-										<el-option label="老师" value="teacher" />
+										<el-option :label="selectOption.usertype['edu']" value="edu" />
+										<el-option :label="selectOption.usertype['school']" value="school" />
+										<el-option :label="selectOption.usertype['teacher']" value="teacher" />
 									</el-select>
 								</el-form-item>
 								<el-form-item label="选择机构">
 									<el-select v-model="form.parent_id" placeholder="请选择">
-										<el-option label="角色1" :value="1" />
-										<el-option label="角色2" :value="2" />
+										<el-option v-for="jigou in selectOption.organizations" :label="jigou.name" :value="jigou.id" />
 									</el-select>
 								</el-form-item>
 								<!-- <el-form-item label="选择部门">
@@ -121,13 +119,18 @@
 
 <script setup>
 	import {
-		getUser,addUser,updateUser,deleteUser
+		getUser,addUser,updateUser,deleteUser,getSelectOption
 	} from '@/api/user'
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
+	const selectOption = ref({})
 	onMounted(() => {
 		getListData()
+		getSelectOption().then(res=>{
+			console.log(res)
+			selectOption.value = res
+		})
 	})
 	const handleCurrentChange = (number) => {
 		page.value = number
@@ -164,6 +167,7 @@
 			if (!valid) return
 			if (!isFromEdit.value) {
 				addUser(form.value).then(res => {
+					getListData(page.value)
 					dialogFormVisible.value = false
 					ElMessage.success('操作成功')
 				})

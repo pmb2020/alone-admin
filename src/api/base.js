@@ -8,9 +8,14 @@ export const addStudent = (data)=>{
 	return post('/student/add/',data)
 }
 export const updateStudent = (data)=>{
-	return post('/student/add/',data)
+	return post('/student/edit/',data)
 }
-
+export const getStuOptions = (params)=>{
+	return get('/student/options/',params)
+}
+export const getStuAddOptions = (params)=>{
+	return get('/student/student_options/',params)
+}
 // 班级管理
 export const getClass = (params)=>{
 	return get('/class/list/',params)

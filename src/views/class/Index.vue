@@ -8,8 +8,8 @@
 							<el-col :span="6">
 								<el-form-item label="班级">
 									<el-select v-model="queryForm.class_name" placeholder="请选择">
-										<el-option v-for="(item,index) in queryOption.classes" :label="item"
-											:value="item" />
+										<el-option v-for="(item,index) in queryOption.classes" :label="item.name"
+											:value="item.name" />
 									</el-select>
 								</el-form-item>
 							</el-col>

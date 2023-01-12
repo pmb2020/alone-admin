@@ -1,81 +1,78 @@
 <template>
 	<div>
 		<div class="ty-box">
-			<el-form :inline="true" :model="queryForm" class="demo-form-inline">
+			<el-form :inline="true" ref="queryFormRef" :model="queryForm" class="demo-form-inline">
 				<el-row>
 					<el-col :span="20">
 						<el-row>
 							<el-col :span="6">
-								<el-form-item label="姓名">
-									<el-input v-model="queryForm.user" placeholder="请输入内容" />
+								<el-form-item prop="name"  label="姓名">
+									<el-input v-model="queryForm.name" placeholder="请输入" />
 								</el-form-item>
-								<el-form-item label="班级">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+								<el-form-item prop="class_name" label="班级">
+									<el-select v-model="queryForm.class_name" placeholder="请选择">
+										<el-option v-for="(item,index) in queryStuOption.classes" :label="item"
+											:value="item" />
 									</el-select>
 								</el-form-item>
-								<el-form-item label="学校">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
-								</el-form-item>
-							</el-col>
-							<el-col :span="6">
-								<el-form-item label="性别">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
-								</el-form-item>
-								<el-form-item label="学级">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
-									</el-select>
-								</el-form-item>
-								<el-form-item label="片区">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+								<el-form-item prop="school_id" label="学校">
+									<el-select v-model="queryForm.school_id" placeholder="请选择">
+										<el-option v-for="(item,index) in queryStuOption.schools" :label="item.name"
+											:value="item.id" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="年龄">
-									<el-input v-model="queryForm.user" placeholder="请输入内容" />
-								</el-form-item>
-								<el-form-item label="年级">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+								<el-form-item prop="gender" label="性别">
+									<el-select v-model="queryForm.gender" placeholder="请选择">
+										<el-option label="男" value="男" />
+										<el-option label="女" value="女" />
 									</el-select>
 								</el-form-item>
-								<el-form-item label="集团">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+								<el-form-item prop="year" label="学级">
+									<el-select v-model="queryForm.year" placeholder="请选择">
+										<el-option v-for="(item,index) in queryStuOption.years" :label="item"
+											:value="item" />
+									</el-select>
+								</el-form-item>
+								<el-form-item prop="area" label="片区">
+									<el-select v-model="queryForm.area" placeholder="请选择">
+										<el-option v-for="(item,index) in queryStuOption.areas" :label="item.area"
+											:value="item.area" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="学号">
-									<el-input v-model="queryForm.user" placeholder="请输入内容" />
+								<el-form-item prop="age" label="年龄">
+									<el-input v-model="queryForm.age" placeholder="请输入内容" />
 								</el-form-item>
-								<el-form-item label="老师">
-									<el-select v-model="queryForm.region" placeholder="请选择">
-										<el-option label="Zone one" value="shanghai" />
-										<el-option label="Zone two" value="beijing" />
+								<el-form-item prop="base_grade_id" label="年级">
+									<el-select v-model="queryForm.base_grade_id" placeholder="请选择">
+										<el-option v-for="(item,index) in queryStuOption.grades" :label="item.name"
+											:value="item.id" />
 									</el-select>
+								</el-form-item>
+								<el-form-item prop="edu_group" label="集团">
+									<el-select v-model="queryForm.edu_group" placeholder="请选择">
+										<el-option v-for="(item,index) in queryStuOption.edu_groups" :label="item.edu_group"
+											:value="item.edu_group" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item prop="student_ID" label="学号">
+									<el-input v-model="queryForm.student_ID" placeholder="请输入内容" />
+								</el-form-item>
+								<el-form-item prop="teacher_name" label="老师">
+									<el-input v-model="queryForm.teacher_name" placeholder="请输入内容" />
 								</el-form-item>
 							</el-col>
 						</el-row>
 					</el-col>
 					<el-col :span="4" style="padding: 10px 0 28px 0;">
 						<div class="query-btn">
-							<el-button @click="onSubmit">重置</el-button>
-							<el-button type="primary" style="margin-left: 0;" @click="onSubmit">查询</el-button>
+							<el-button @click="resetForm(queryFormRef)">重置</el-button>
+							<el-button type="primary" style="margin-left: 0;" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
 				</el-row>
@@ -98,13 +95,19 @@
 				<el-table-column prop="name" label="姓名" align="center" />
 				<el-table-column prop="gender" label="性别" align="center" />
 				<el-table-column prop="age" label="年龄" align="center" />
-				<el-table-column prop="id_card" label="学号" align="center" />
-				<el-table-column prop="address" label="学年" align="center" />
-				<el-table-column prop="address" label="年级" align="center" />
-				<el-table-column prop="address" label="班级" align="center" />
-				<el-table-column prop="address" label="老师" align="center" />
-				<el-table-column prop="address" label="学校" align="center" />
-				<el-table-column prop="address" label="片区" align="center" />
+				<el-table-column prop="student_ID" label="学号" align="center" />
+				<el-table-column prop="year" label="学年" align="center" />
+				<el-table-column prop="grade_name" label="年级" align="center" />
+				<el-table-column prop="class_name" label="班级" align="center" />
+				<el-table-column label="老师" align="center" width="80">
+					<template #default="scope">
+						<p v-for="item in scope.row.teachers">
+							{{item.name}}
+						</p>
+					</template>
+				</el-table-column>
+				<el-table-column prop="school_name" label="学校" align="center" />
+				<el-table-column prop="area" label="片区" align="center" />
 				<el-table-column prop="address" label="集团" align="center" />
 				<el-table-column label="体测详情" align="center" width="80">
 					<template #default="scope">
@@ -142,8 +145,8 @@
 						</el-form-item>
 						<el-form-item label="性别">
 							<el-select v-model="form.gender" placeholder="请选择">
-								<el-option label="男" value="1" />
-								<el-option label="女" value="2" />
+								<el-option label="男" value="男" />
+								<el-option label="女" value="女" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="年龄">
@@ -153,25 +156,25 @@
 							<el-input v-model="form.student_id" placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="班级">
-							<el-select v-model="form.class_id" placeholder="请选择">
+							<el-select v-model="form.class_id" disabled placeholder="请选择">
 								<el-option label="男" value="1" />
 								<el-option label="女" value="2" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="年级">
-							<el-select v-model="form.grade_id" placeholder="请选择">
+							<el-select v-model="form.grade_id" disabled placeholder="请选择">
 								<el-option label="男" :value="1" />
 								<el-option label="女" :value="2" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="学级">
-							<el-select v-model="form.school_id" placeholder="请选择">
+							<el-select v-model="form.school_id" disabled placeholder="请选择">
 								<el-option label="男" value="1" />
 								<el-option label="女" value="2" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="老师">
-							<el-select v-model="form.region" placeholder="请选择">
+							<el-select v-model="form.region" disabled placeholder="请选择">
 								<el-option label="男" value="1" />
 								<el-option label="女" value="2" />
 							</el-select>
@@ -179,25 +182,25 @@
 					</el-col>
 				    <el-col :span="12" style="padding-right: 50px;">
 						<el-form-item label="归属学校">
-							<el-select v-model="form.region" placeholder="请输入">
+							<el-select v-model="form.region" disabled placeholder="请输入">
 								<el-option label="Zone one" value="shanghai" />
 								<el-option label="Zone two" value="beijing" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="归属片区">
-							<el-input v-model="form.user" placeholder="请输入" />
+							<el-input v-model="form.user" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="归属集团">
-							<el-input v-model="form.user" placeholder="请输入" />
+							<el-input v-model="form.user" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="归属教委">
-							<el-input v-model="form.user" placeholder="请输入" />
+							<el-input v-model="form.user" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="身份证号">
-							<el-input v-model="form.id_card" placeholder="请输入" />
+							<el-input v-model="form.id_card" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="入学时间">
-							<el-date-picker v-model="form.enter_school_date" type="date" value-format="YYYY-MM-DD" placeholder="请选择" />
+							<el-date-picker disabled v-model="form.enter_school_date" type="date" format="YYYY-MM" value-format="YYYY-MM" placeholder="请选择" />
 						</el-form-item>
 					</el-col>
 				  </el-row>
@@ -211,25 +214,41 @@
 </template>
 
 <script setup>
-	import {getStudent,updateStudent} from '@/api/base'
+	import {getStudent,updateStudent,getStuOptions} from '@/api/base'
 	import AddForm from './AddForm.vue'
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
+	const queryStuOption = ref({})
 	onMounted(()=>{
 		getListData()
+		getStuOptions().then(res=>{
+			console.log(res)
+			queryStuOption.value=res
+		})
 	})
 	const queryForm = reactive({
-		user: '',
-		region: '',
+		name:'',
+		gender:'',
+		age:'',
+		student_ID:'',
+		class_name:'',
+		year:'',
+		base_grade_id:'',
+		teacher_name:'',
+		school_id:'',
+		area:'',
+		edu_group:''
 	})
-	const form = ref({
-		user: '',
-		region: '',
-	})
+	const queryFormRef = ref(null)
+	const form = ref({})
 	const tableData = reactive([])
 	const getListData = ()=>{
-		getStudent({page:page.value,page_size:pageSize.value}).then(res=>{
+		let params = {
+			page: page.value,
+			page_size: pageSize.value
+		}
+		getStudent({...params,...queryForm}).then(res=>{
 			console.log(res)
 			tableData.length = 0
 			total.value = res.total
@@ -244,10 +263,23 @@
 		form.value=row
 	}
 	const onSubmit = () => {
-		console.log(form,'submit!')
-		updateStudent(form.value).then(res=>{
-			console.log(res)
+		console.log(form.value,'submit!')
+		let params = {
+			id:form.value.id,
+			name:form.value.name,
+			gender:form.value.gender,
+			age:form.value.age,
+			student_ID:form.value.student_ID,
+		}
+		updateStudent(params).then(res=>{
+			dialogEditFormVisible.value = false
+			getListData()
+			ElMessage.success('修改成功')
 		})
+	}
+	const resetForm = (formEl)=>{
+		if (!formEl) return
+		formEl.resetFields()
 	}
 	const handleCurrentChange = (number) => {
 		page.value = number

@@ -93,14 +93,19 @@
 </template>
 
 <script setup>
-	import { addStudent } from "@/api/base"
+	import { addStudent,getStuAddOptions} from "@/api/base"
 	const tableData = ref([])
 	const columnShow = ref([{
 		name: false,
 		date: false
 	}])
 	const columnEdit = reactive([])
-
+	const selOption = ref({})
+	onMounted(()=>{
+		getStuAddOptions().then(res=>{
+			selOption.value = res
+		})
+	})
 	const columnSubmit = (index, row) => {
 		console.log(index, row)
 		columnEdit[index] = false

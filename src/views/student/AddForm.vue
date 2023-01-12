@@ -17,8 +17,8 @@
 				<template #default="scope">
 					<div v-if="columnEdit[scope.$index]">
 						<el-select v-model="scope.row.gender" placeholder="请选择">
-							<el-option label="1" value="男" />
-							<el-option label="2" value="女" />
+							<el-option label="男" value="男" />
+							<el-option label="女" value="女" />
 						</el-select>
 					</div>
 					<div v-else>
@@ -29,30 +29,28 @@
 			<el-table-column label="身份证号" align="center">
 				<template #default="scope">
 					<div v-if="columnEdit[scope.$index]">
-						<el-input v-model="scope.row.name" placeholder="请输入" />
+						<el-input v-model="scope.row.id_card" placeholder="请输入" />
 					</div>
 					<div v-else>
-						<p>{{scope.row.name}}</p>
+						<p>{{scope.row.id_card}}</p>
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="学号" align="center">
 				<template #default="scope">
 					<div v-if="columnEdit[scope.$index]">
-						<el-input v-model="scope.row.name" placeholder="请输入" />
+						<el-input v-model="scope.row.student_id" placeholder="请输入" />
 					</div>
 					<div v-else>
-						<p>{{scope.row.name}}</p>
+						<p>{{scope.row.student_id}}</p>
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="年级" align="center">
 				<template #default="scope">
 					<div v-if="columnEdit[scope.$index]">
-						<el-select v-model="scope.row.gender" placeholder="请选择">
-							<el-option label="1" value="一年级" />
-							<el-option label="2" value="二年级" />
-							<el-option label="2" value="三年级" />
+						<el-select v-model="scope.row.grade_id" @change="genderSel" placeholder="请选择">
+							<el-option v-for="item in selOption.grades" :label="item.name" :value="item.id" />
 						</el-select>
 					</div>
 					<div v-else>
@@ -63,24 +61,22 @@
 			<el-table-column label="班级" align="center">
 				<template #default="scope">
 					<div v-if="columnEdit[scope.$index]">
-						<el-select v-model="scope.row.gender" placeholder="请选择">
-							<el-option label="1" value="一年级" />
-							<el-option label="2" value="二年级" />
-							<el-option label="2" value="三年级" />
+						<el-select v-model="scope.row.class_id" placeholder="请选择">
+							<el-option v-for="item in classOp" :label="item.name" :value="item.id" />
 						</el-select>
 					</div>
 					<div v-else>
-						<p>{{scope.row.gender}}</p>
+						<p>{{scope.row.class_id}}</p>
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="入学时间" align="center">
 				<template #default="scope">
 					<div v-if="columnEdit[scope.$index]">
-						<el-date-picker v-model="scope.row.date" type="date" placeholder="请选择" />
+						<el-date-picker v-model="scope.row.enter_school_date" type="date" value-format="YYYY-MM-DD" placeholder="请选择" />
 					</div>
 					<div v-else>
-						<p>{{scope.row.date}}</p>
+						<p>{{scope.row.enter_school_date}}</p>
 					</div>
 				</template>
 			</el-table-column>
@@ -94,38 +90,54 @@
 				</template>
 			</el-table-column>
 		</el-table>
-
 		<el-button style="width: 100%;border: 1px solid #979797;" @click="addItem">添加</el-button>
 	</div>
 </template>
 
 <script setup>
-	import { addStudent } from "@/api/base"
+	import { addStudent,getStuAddOptions } from "@/api/base"
 	const tableData = ref([])
 	const columnShow = ref([{
 		name: false,
 		date: false
 	}])
+	const classOp = ref('')
+	const selOption = ref([])
 	const columnEdit = reactive([])
-
+	onMounted(()=>{
+		getStuAddOptions().then(res=>{
+			console.log(res)
+			selOption.value = res
+		})
+	})
 	const columnSubmit = (index, row) => {
 		console.log(index, row)
 		columnEdit[index] = false
-		let test = {
-			name:'name',
-			gender:'1',
-			id_card:'111',
-			student_id:'11',
-			grade_id:'1',
-			class_id:'2',
-			enter_school_date:'22',
-			edu_commission_id:'333',
-			school_id:'4'
-		}
-		addStudent(test).then(res=>{
+		console.log(tableData.value[index])
+		// return 
+		// let test = {
+		// 	name:'name',
+		// 	gender:'1',
+		// 	id_card:'111',
+		// 	student_id:'11',
+		// 	grade_id:'1',
+		// 	class_id:'2',
+		// 	enter_school_date:'22',
+		// 	edu_commission_id:'333',
+		// 	school_id:'4'
+		// }
+		addStudent(tableData.value[index]).then(res=>{
 			console.log(res)
 			ElMessage.success('操作成功')
 		})
+	}
+	const genderSel = (value)=>{
+		let res=selOption.value.grades.filter(item=>{
+			if(item.id==value){
+				return true
+			}
+		})
+		classOp.value = res[0].classes || []
 	}
 	const handleEdit = (index, row) => {
 		console.log(index, row)
@@ -133,11 +145,7 @@
 	}
 
 	const addItem = () => {
-		tableData.value.push({
-			date: '',
-			name: '',
-			address: '',
-		})
+		tableData.value.push({})
 	}
 </script>
 

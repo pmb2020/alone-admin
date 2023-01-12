@@ -1,8 +1,12 @@
 <template>
 	<div>
 		<div class="ty-box">
+			<h3 class="title">设备信息列表</h3>
 			<div class="al-flex-between">
-				<h3 class="title" style="margin-bottom: 0;">设备信息列表</h3>
+				<div class="al-flex">
+					<el-input v-model="keywords" placeholder="请输入" />
+					<el-button class="ty-btn" type="primary" size="default" @click="getListData()">查询</el-button>
+				</div>
 				<div>
 					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
@@ -95,6 +99,7 @@
 	const total = ref(0)
 	const isFromEdit = ref(false)
 	const queryForm = reactive({})
+	const keywords = ref('')
 	const queryOptionSchool = ref({})
 	const formRef = ref(null)
 	const form = ref({})
@@ -120,10 +125,14 @@
 		})
 	})
 	const getListData = (page = 1) => {
-		getDevice({
+		let params = {
 			page: page,
 			page_size: pageSize.value
-		}).then(res => {
+		}
+		if(keywords.value){
+			params.key = keywords.value
+		}
+		getDevice(params).then(res => {
 			console.log(res)
 			total.value = res.total
 			tableData.length = 0

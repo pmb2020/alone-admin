@@ -67,3 +67,7 @@ export const updateRole = (data)=>{
 export const deleteRole = (params)=>{
 	return get('/role/delete/',params)
 }
+
+export const getAuthList = (params)=>{
+	return get('/role/auths/',params)
+}

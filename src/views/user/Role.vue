@@ -35,13 +35,19 @@
 			</div>
 		</div>
 		<!-- 弹框表单 -->
-		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑角色信息' :'新增角色信息'" destroy-on-close>
-			<el-form ref="formRef" :model="form" :rules="rules" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑角色信息' :'新增角色信息'"
+			destroy-on-close>
+			<el-form ref="formRef" :model="form" :rules="rules" class="demo-form-inline" label-width="80" size="default"
+				:scroll-to-error="true">
 				<el-form-item label="角色名称" prop="title" style="width: 50%;">
 					<el-input v-model="form.title" placeholder="请输入" />
 				</el-form-item>
 				<el-form-item label="备注" prop="desc" style="width: 50%;">
 					<el-input v-model="form.desc" :rows="3" type="textarea" placeholder="请输入" />
+				</el-form-item>
+				<el-form-item label="功能权限" prop="desc" style="width: 50%;font-weight: bold;">
+					<el-tree ref="treeRef" :data="authList" show-checkbox default-expand-all node-key="id"
+						highlight-current :props="defaultProps" />
 				</el-form-item>
 				<div style="display: flex;justify-content: center;">
 					<el-button @click="dialogFormVisible=false">取消</el-button>
@@ -57,7 +63,8 @@
 		getRole,
 		addRole,
 		updateRole,
-		deleteRole
+		deleteRole,
+		getAuthList
 	} from '@/api/user'
 	const page = ref(1)
 	const pageSize = ref(20)
@@ -65,9 +72,12 @@
 	const formRef = ref(null)
 	const isFromEdit = ref(false)
 	const keywords = ref('')
-	const queryForm = reactive({
-		user: '',
-		region: '',
+	const queryForm = reactive({})
+	const authList = reactive([])
+	const treeRef = ref(null)
+	const defaultProps = ref({
+		children: 'children',
+		label: 'label',
 	})
 	const form = ref({})
 	const rules = reactive({})
@@ -75,13 +85,17 @@
 	const dialogFormVisible = ref(false)
 	onMounted(() => {
 		getListData()
+		getAuthList().then(res => {
+			console.log(res)
+			authList.push(...res)
+		})
 	})
 	const getListData = (page = 1) => {
 		let params = {
 			page: page,
 			page_size: pageSize.value
 		}
-		if(keywords.value){
+		if (keywords.value) {
 			params.key = keywords.value
 		}
 		getRole(params).then(res => {
@@ -100,7 +114,9 @@
 		getListData(number)
 	}
 	const handleEdit = (row) => {
-		form.value = {...row}
+		form.value = {
+			...row
+		}
 		isFromEdit.value = true
 		dialogFormVisible.value = true
 	}
@@ -110,7 +126,9 @@
 			cancelButtonText: '取消',
 			type: 'warning'
 		}).then(() => {
-			deleteRole({id:id}).then(res => {
+			deleteRole({
+				id: id
+			}).then(res => {
 				getListData(page.value)
 				ElMessage.success('删除成功')
 			})
@@ -131,13 +149,13 @@
 					ElMessage.success('操作成功')
 				})
 			}
-	
+
 		})
 	}
 </script>
 
 <style>
-	.query-btn{
+	.query-btn {
 		display: flex;
 		height: 100%;
 		flex-direction: column;

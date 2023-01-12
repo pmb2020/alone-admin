@@ -62,7 +62,7 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">体测计划列表</h3>
 				<div>
-					<button @click="isFromAdd=true;dialogFormVisible=true" class="ty-btn">
+					<button @click="isFromAdd=true;form={};dialogFormVisible=true" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18"><CirclePlusFilled /></el-icon>
 						新增体测计划
 					</button>
@@ -84,7 +84,7 @@
 				<el-table-column prop="project_id" label="体测项目" align="center" />
 				<el-table-column prop="grade_id" label="体测对象" align="center" />
 				<el-table-column prop="school_type" label="学校学段" align="center" />
-				<el-table-column prop="start_date" label="计划执行时间" align="center" />
+				<el-table-column prop="start_date" label="计划执行时间" align="center" width="120" />
 				<el-table-column label="详细信息" align="center" width="80">
 					<template #default="scope">
 						<router-link to="/base/plan/info">查看</router-link>
@@ -116,12 +116,12 @@
 							<el-input v-model="form.name" placeholder="请输入" autocomplete />
 						</el-form-item>
 						<el-form-item label="体测对象">
-							<el-select v-model="form.grade_id" placeholder="请选择">
+							<el-select v-model="form.grade_ids" placeholder="请选择">
 								<el-option v-for="item in queryOption.grades" :label="item.name" :value="item.id" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="体测项目">
-							<el-select v-model="form.project_id" placeholder="请选择">
+							<el-select v-model="form.project_ids" placeholder="请选择">
 								<el-option v-for="item in queryOption.projects" :label="item.name" :value="item.id" />
 							</el-select>
 						</el-form-item>
@@ -162,6 +162,7 @@
 	const queryForm = reactive({})
 	const isFromAdd = ref(false)
 	const form = ref({})
+	const formRef = ref({})
 	const rules = reactive({})
 	const queryOption = ref({})
 	const tableData = reactive([])
@@ -191,7 +192,22 @@
 		dialogFormVisible.value = true
 	}
 	const onSubmit = () => {
-		console.log('submit!')
+		formRef.value.validate((valid) => {
+			if (!valid) return
+			if (isFromAdd.value) {
+				addPlan(form.value).then(res => {
+					dialogFormVisible.value = false
+					ElMessage.success('操作成功')
+				})
+			} else {
+				// updateDevice(form.value).then(res => {
+				// 	getListData(page.value)
+				// 	dialogFormVisible.value = false
+				// 	ElMessage.success('操作成功')
+				// })
+			}
+	
+		})
 	}
 	const handleSizeChange = (number) => {
 		pageSize.value = number

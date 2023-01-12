@@ -98,15 +98,9 @@
 	const pageSize = ref(20)
 	const total = ref(0)
 	const isFromEdit = ref(false)
-	const queryForm = reactive({
-		user: '',
-		region: '',
-	})
+	const queryForm = reactive({})
 	const formRef = ref(null)
-	const form = ref({
-		name: '',
-		area: '',
-	})
+	const form = ref({})
 	const rules = reactive({
 		name: [{
 			required: true,

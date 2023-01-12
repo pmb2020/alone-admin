@@ -4,80 +4,78 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">设备信息列表</h3>
 				<div>
-					<button @click="dialogFormVisible=true" class="ty-btn">新增设备信息</button>
-					<button class="ty-btn">导入设备信息</button>
-					<button class="ty-btn">下载模版</button>
+					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">
+						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
+							<CirclePlusFilled />
+						</el-icon>
+						新增设备信息
+					</button>
+					<el-upload class="upload-demo" style="display: inline-block;" name="File"
+						action="https://tiyuapi.nkjwx.com/api/school/fileupload/" :on-error="uploadFileError"
+						:on-success="uploadFileError">
+						<!-- <el-button type="primary" link>导入学校信息</el-button> -->
+						<button class="ty-btn">导入设备信息</button>
+					</el-upload>
+					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学校导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
-				<el-table-column prop="date" label="Date" align="center" width="180" />
-				<el-table-column prop="name" label="Name" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column prop="address" label="Address" align="center" />
-				<el-table-column label="体测详情" align="center" width="80">
+				<el-table-column type="index" label="序号" align="center" width="80" />
+				<el-table-column prop="name" label="学校名称" align="center" />
+				<el-table-column prop="device_number" label="设备编号" align="center" />
+				<el-table-column prop="purchase_date" label="购入时间" align="center" />
+				<el-table-column prop="school_name" label="分配学校" align="center" />
+				<el-table-column prop="area" label="片区" align="center" />
+				<el-table-column prop="edu_group" label="集团" align="center" />
+				<el-table-column label="操作" align="center" width="160">
 					<template #default="scope">
-						<router-link to="/base/student/info">查看</router-link>
-					</template>
-				</el-table-column>
-				<el-table-column label="操作" align="center" width="80">
-					<template #default="scope">
-						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
-							style="border: none;background-color: transparent;">
-							<el-icon>
-								<EditPen />
-							</el-icon>
-						</el-button>
+						<el-button link @click="handleEdit(scope.row)">编辑</el-button>
+						<!-- <el-button link @click="handleDelete(scope.row.id)">删除</el-button> -->
 					</template>
 				</el-table-column>
 			</el-table>
-		</div>
-		<!-- 新增弹出 -->
-		<el-dialog class="" v-model="dialogFormVisible" title="新增设备信息" destroy-on-close>
-			<div>
-				新增设备信息
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
 			</div>
-		</el-dialog>
-		<!-- 编辑 -->
-		<el-dialog v-model="dialogEditFormVisible" title="编辑设备信息" destroy-on-close>
-			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
-				<el-row :gutter="30">
-					<el-col :span="12">
-						<el-form-item label="设备名称">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+		</div>
+		<!-- 弹框表单 -->
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑设备信息' :'新增设备信息'"
+			destroy-on-close>
+			<el-form ref="formRef" :model="form" :rules="rules" class="demo-form-inline" label-width="80"
+				:scroll-to-error="true">
+				<div class="al-flex">
+					<div style="margin-right: 30px;">
+						<el-form-item label="设备名称" prop="name">
+							<el-input v-model="form.name" placeholder="请输入" />
 						</el-form-item>
-						<el-form-item label="设备编号">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+						<el-form-item label="设备编号" prop="device_number">
+							<el-input v-model="form.device_number" placeholder="请输入" />
 						</el-form-item>
-						<el-form-item label="购入时间">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+						<el-form-item label="购入时间" prop="purchase_date">
+							<el-date-picker v-model="form.purchase_date" type="date" value-format="YYYY-MM-DD"
+								placeholder="请选择" />
 						</el-form-item>
-						<el-form-item label="备注">
-							<el-input v-model="formInline.user" :rows="3" type="textarea" placeholder="请输入" />
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="所属学校">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
+					</div>
+					<div>
+						<el-form-item label="分配学校" prop="school_id">
+							<el-select v-model="form.school_id" placeholder="请输入">
+								<el-option v-for="item in queryOptionSchool" :label="item.name" :value="item.id" />
 							</el-select>
 						</el-form-item>
-						<el-form-item label="分配片区">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
+						<el-form-item label="片区" prop="area">
+							<el-select v-model="form.area" placeholder="请输入">
 							</el-select>
 						</el-form-item>
-						<el-form-item label="分配集团">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
+						<el-form-item label="集团" prop="edu_group">
+							<el-select v-model="form.edu_group" placeholder="请输入">
 							</el-select>
 						</el-form-item>
-					</el-col>
-				</el-row>
+					</div>
+				</div>
 				<div style="display: flex;justify-content: center;">
-					<el-button>取消</el-button>
+					<el-button @click="dialogFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
 				</div>
 			</el-form>
@@ -86,47 +84,109 @@
 </template>
 
 <script setup>
-	const queryForm = reactive({
-		user: '',
-		region: '',
+	import {
+		getDevice,
+		addDevice,
+		updateDevice,
+		getDeviceOption
+	} from '@/api/device'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
+	const isFromEdit = ref(false)
+	const queryForm = reactive({})
+	const queryOptionSchool = ref({})
+	const formRef = ref(null)
+	const form = ref({})
+	const rules = reactive({
+		name: [{
+			required: true,
+			message: '必填项'
+		}, ],
+		device_number: [{
+			required: true,
+			message: '必填项'
+		}],
+		purchase_date: [{
+			required: true,
+			message: '必填项'
+		}]
 	})
-	const formInline = reactive({
-		user: '',
-		region: '',
+	onMounted(() => {
+		getListData()
+		getDeviceOption().then(res => {
+			console.log(res)
+			queryOptionSchool.value = res
+		})
 	})
-	const tableData = reactive([{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
-			name: 'Tom',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
-	])
+	const getListData = (page = 1) => {
+		getDevice({
+			page: page,
+			page_size: pageSize.value
+		}).then(res => {
+			console.log(res)
+			total.value = res.total
+			tableData.length = 0
+			tableData.push(...res.list)
+		})
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		getListData()
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		getListData(number)
+	}
+	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
-	const handleEdit = () => {
-		dialogEditFormVisible.value = true
+	const handleEdit = (row) => {
+		form.value = {
+			...row
+		}
+		isFromEdit.value = true
+		dialogFormVisible.value = true
+	}
+	const handleDelete = (id) => {
+		ElMessageBox.confirm('确认要删除吗', '提示', {
+			confirmButtonText: '确定',
+			cancelButtonText: '取消',
+			type: 'warning'
+		}).then(() => {
+			deleteSchool({
+				id: id
+			}).then(res => {
+				getListData(page.value)
+				ElMessage.success('删除成功')
+			})
+		})
 	}
 	const onSubmit = () => {
-		console.log('submit!')
+		formRef.value.validate((valid) => {
+			if (!valid) return
+			if (!isFromEdit.value) {
+				addDevice(form.value).then(res => {
+					dialogFormVisible.value = false
+					ElMessage.success('操作成功')
+				})
+			} else {
+				updateDevice(form.value).then(res => {
+					getListData(page.value)
+					dialogFormVisible.value = false
+					ElMessage.success('操作成功')
+				})
+			}
+
+		})
+	}
+	const uploadFileError = (f) => {
+		console.log(f)
 	}
 </script>
 
 <style>
-	.query-btn{
+	.query-btn {
 		display: flex;
 		height: 100%;
 		flex-direction: column;

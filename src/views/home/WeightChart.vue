@@ -5,21 +5,21 @@
 				<div id='pieChart' style="height: 220px;"></div>
 				<div class="chart-bottom">
 					<h4>全区学生总体占比</h4>
-					<p>全区应测人数900人，实测人数900人</p>
+					<p>全区应测人数{{data.chart.student_num}}人，实测人数{{data.chart.test_student_num}}人</p>
 				</div>
 			</el-col>
 			<el-col :span="7">
 				<div id='boyChart' style="height: 220px;"></div>
 				<div class="chart-bottom">
 					<h4>全区男生占比</h4>
-					<p>应测男生人数900人，实测人数900人</p>
+					<p>应测男生人数{{data.boyChart.student_num}}人，实测人数{{data.boyChart.test_student_num}}人</p>
 				</div>
 			</el-col>
 			<el-col :span="7">
 				<div id='girlChart' style="height: 220px;"></div>
 				<div class="chart-bottom">
 					<h4>全区女生占比</h4>
-					<p>应测男生人数900人，实测人数900人</p>
+					<p>应测女生人数{{data.girlChart.student_num}}人，实测人数{{data.girlChart.test_student_num}}人</p>
 				</div>
 			</el-col>
 		</el-row>
@@ -28,7 +28,15 @@
 
 <script setup>
 	import echarts from '@/utils/echarts.js'
+	const props = defineProps(['data','boydata'])
+	import {getHomeData} from '@/api/home'
+	const data = reactive({
+		chart:[],
+		boyChart:[],
+		girlChart:[]
+	})
 	onMounted(() => {
+		getInitData()
 		let myChart = echarts.init(document.getElementById("pieChart"));
 		let boyChart = echarts.init(document.getElementById("boyChart"));
 		let girlChart = echarts.init(document.getElementById("girlChart"));
@@ -70,15 +78,27 @@
 				]
 			}]
 		};
-		
-		myChart.setOption(option);
-		delete(option.legend)
-		boyChart.setOption(option);
-		girlChart.setOption(option);
+		setTimeout(()=>{
+			option.series[0].data = data.chart.data
+			myChart.setOption(option);
+			delete(option.legend)
+			option.series[0].data = data.boyChart.data
+			boyChart.setOption(option);
+			option.series[0].data = data.girlChart.data
+			girlChart.setOption(option);
+		},500)
 		window.onresize = function() {
 			myChart.resize();
 		};
 	})
+	const getInitData = async ()=>{
+		await getHomeData().then(res=>{
+			console.log(res);
+			data.chart = res.BMI_chart
+			data.boyChart = res.BMI_chart_boy
+			data.girlChart = res.BMI_chart_girl
+		})
+	}
 </script>
 
 <style lang="scss" scoped>

@@ -44,6 +44,10 @@ export const updateGrade = (data)=>{
 export const getGradeOptions = (params)=>{
 	return get('/grade/options/',params)
 }
+//关联老师用(老师列表)
+export const getTeaList = (params)=>{
+	return get('/grade/teachers/',params)
+}
 
 // 老师管理
 export const getTeacher = (params)=>{

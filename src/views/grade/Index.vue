@@ -64,17 +64,30 @@
 			</div>
 		</div>
 		<!-- 关联 -->
-		<el-dialog class="ty-dialog" width="600px" v-model="dialogFormVisible" title="关联老师" destroy-on-close>
+		<el-dialog class="ty-dialog" style="min-height: 500px;" v-model="dialogFormVisible" title="关联老师"
+			destroy-on-close>
 			<el-form :model="form" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
+				<!-- <template #default>
+					<el-dialog v-model="innerVisible" width="30%" title="Inner Dialog" append-to-body />
+				</template> -->
 				<div class="al-flex" style="">
 					<div class="" style="margin-right: 30px;position: relative;left: -20px;">
 						<el-form-item label="学级">
 							<el-input v-model="form.year" disabled placeholder="" />
 						</el-form-item>
-						<el-form-item label="关联老师">
-							<el-select v-model="form.region" placeholder="请选择">
-								<el-option label="男" value="1" />
-								<el-option label="女" value="2" />
+						<el-form-item label="关联老师" style="position: relative;">
+							<el-select v-model="form.region" popper-class="selTea" @click="selTeacher"
+								placeholder="请选择">
+								<div style="height: 500px;width: 800px;">
+									<el-option style="font-size: 16px;color: #666;font-weight: bold;"  disabled label="选择老师" value="1" />
+									<el-checkbox v-model="checkAll" :indeterminate="isIndeterminate"
+										@change="handleCheckAllChange">全选</el-checkbox>
+									<el-checkbox-group v-model="checkedTea" @change="handleCheckedCitiesChange">
+										<el-checkbox v-for="tea in teaList" :key="tea.id" :label="tea.name">
+											{{tea.name}}
+										</el-checkbox>
+									</el-checkbox-group>
+								</div>
 							</el-select>
 						</el-form-item>
 					</div>
@@ -104,7 +117,8 @@
 		getGrade,
 		addGrade,
 		updateGrade,
-		getGradeOptions
+		getGradeOptions,
+		getTeaList
 	} from '@/api/base'
 	import AddForm from './AddForm.vue'
 	const page = ref(1)
@@ -116,11 +130,22 @@
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
+	//选择
+	const teaList  = reactive([])
+	const checkedTea = ref([])
+	const checkAll = ref(false)
+	const isIndeterminate = ref(true)
+	const checkedCities = ref(['Shanghai', 'Beijing'])
+	const cities = ['Shanghai', 'Beijing', 'Guangzhou', 'Shenzhen']
 	onMounted(() => {
 		getListData()
 		getGradeOptions().then(res => {
 			queryOption.value = res
-			console.log(res)
+		})
+		getTeaList().then(res => {
+			res.forEach(item=>{
+				teaList.push(...item.teacher_list)
+			})
 		})
 	})
 	const getListData = () => {
@@ -137,6 +162,9 @@
 			total.value = res.total
 			tableData.push(...res.list)
 		})
+	}
+	const selTeacher = () => {
+		console.log('选择')
 	}
 	const guanLian = (row) => {
 		dialogFormVisible.value = true
@@ -159,7 +187,22 @@
 		pageSize.value = number
 		getListData(page.value)
 	}
+	const handleCheckAllChange = (val) => {
+		checkedCities.value = val ? cities : []
+		isIndeterminate.value = false
+	}
+	const handleCheckedCitiesChange = (value) => {
+		console.log(value)
+		// const checkedCount = value.length
+		// checkAll.value = checkedCount === cities.length
+		// isIndeterminate.value = checkedCount > 0 && checkedCount < cities.length
+	}
 </script>
 
 <style>
+	.selTea {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
 </style>

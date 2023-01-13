@@ -15,7 +15,7 @@
 						新增员工信息
 					</button>
 					<button class="ty-btn">导入员工信息</button>
-					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/员工导入模板.xlsx">下载模版</a></button>
+					<button class="ty-btn"><a target="_blank" href="https://tiyuapi.nkjwx.com/static/员工（老师）导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">

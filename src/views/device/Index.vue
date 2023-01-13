@@ -20,7 +20,7 @@
 						<!-- <el-button type="primary" link>导入学校信息</el-button> -->
 						<button class="ty-btn">导入设备信息</button>
 					</el-upload>
-					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学校导入模板.xlsx">下载模版</a></button>
+					<button class="ty-btn"><a target="_blank" href="https://tiyuapi.nkjwx.com/static/设备导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">

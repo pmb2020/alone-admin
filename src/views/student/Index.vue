@@ -87,7 +87,7 @@
 						新增学生信息
 					</button>
 					<button class="ty-btn">导入学生信息</button>
-					<button class="ty-btn">下载模版</button>
+					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学生导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">

@@ -55,7 +55,7 @@
 		</div>
 		<div class="ty-box">
 			<h3 class="title">全区学生体重指数占比</h3>
-			<WeightChart :data="gTabIndex" :boydata="homeData.BMI_chart_boy" :girldata="homeData.BMI_chart_girl" />
+			<WeightChart />
 		</div>
 		<!-- 全区各项体测指标分析 -->
 		<div class="ty-box">

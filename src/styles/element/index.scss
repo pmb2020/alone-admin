@@ -1,0 +1,27 @@
+:root {
+  --el-font-family:Arial,PingFang SC,-apple-system,BlinkMacSystemFont,Segoe UI,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  --el-color-primary: #005EFF;
+  --el-menu-bg-color:#fff;
+  --al-header-height: 60px;
+  --el-border-color:#fff;
+  // --aside-bg:#001529;
+  // --el-fill-color-blank:#F5F5F5;
+  --el-menu-level-padding:35px;
+}
+.el-input{
+	--el-input-bg-color:#F5F5F5;
+	--el-fill-color-blank:#F5F5F5;
+}
+.el-menu{
+	--el-menu-bg-color:#fff;
+	--el-menu-text-color:#313333;
+	--el-menu-active-color:#005EFF;;
+	--el-menu-hover-bg-color:#ccc;
+}
+.el-main{
+	overflow: hidden;
+}
+
+.el-form-item label{
+	font-weight: 600;
+}

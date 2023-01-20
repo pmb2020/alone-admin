@@ -1,0 +1,186 @@
+body,ul,li,p,a,h1,h2,h3,h4,h5,h6{
+	margin: 0;
+	padding: 0;
+}
+ul{
+	list-style: none;
+}
+a{
+	color: inherit;
+	text-decoration: none;
+}
+html,body,#app{
+	height: 100%;
+}
+// 公用的一些css
+@mixin al-flex {
+	// display: flex;
+}
+
+.al-flex{
+	display: flex;
+}
+
+.al-container{
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 5px;
+	box-shadow: var(--el-box-shadow);
+	margin-bottom: 15px;
+}
+
+.al-flex-between{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	// width: 100%;
+}
+
+.al-box{
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 30px;
+	margin-bottom: 15px;
+	box-shadow: var(--el-box-shadow);
+	@include al-flex;
+}
+
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all .5s;
+}
+
+.fade-transform-enter-form {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.al-uploader .el-upload {
+	border: 1px dashed var(--el-border-color);
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	transition: var(--el-transition-duration-fast);
+}
+	
+.al-uploader .el-upload:hover {
+	border-color: var(--el-color-primary);
+}
+	
+.al-uploader-icon {
+	font-size: 28px;
+	color: #8c939d;
+	width: 178px;
+	height: 178px;
+	text-align: center;
+}
+
+.al-avatar{
+	border-radius: 50%;
+	width: 32px;
+	height: 32px;
+}
+// 体育
+.ty-box{
+	// display: flex;
+	background-color: #fff;
+	padding: 30px;
+	box-shadow: 0px 3px 15px 1px rgba(10,57,255,0.16);
+	border-radius: 15px;
+	margin-bottom: 30px;
+	.title{
+		font-family: PingFangSC-Medium, PingFang SC;
+		margin: 0;
+		margin-bottom: 25px;
+		font-size: 16px;
+	}
+}
+
+.ty-tab{
+	display: flex;
+	font-size: 14px;
+	color: #666;
+	li{
+		padding: 8px 16px;
+		background-color: #F5F5F5;
+		border-radius: 10px 10px 0px 0px;
+		margin-right: 5px;
+		cursor: pointer;
+		}
+	.active{
+		color: #fff;
+		background: linear-gradient(180deg, #0097FF 0%, #005EFF 100%);
+	}
+}
+
+.ty-btn{
+	background-color: #F5F5F5;
+	border: none;
+	outline: none;
+	padding: 8px 20px;
+	border-radius: 5px;
+	color: #666;
+	font-size: 14px;
+	margin-left: 5px;
+	cursor: pointer;
+	&:hover{
+		color: #005EFF;
+	}
+}
+
+.ty-dialog{
+	box-shadow: 0px 3px 15px 1px rgba(10,57,255,0.16) !important;
+	border-radius: 15px !important;
+	overflow: hidden;
+	font-size: 14px;
+	.el-dialog__body{
+		// padding-left: 0;
+	}
+	// .el-form-item{
+	// 	width: 240px !important;
+	// }
+}
+
+.ty-table{
+	width: 100%;
+	text-align: center;
+	thead{
+		color: #909399;
+		font-size:15px;
+	}
+	tbody{
+		color: #606266;
+		td{
+			padding: 15px;
+		}
+	}
+}
+
+.ty-tabs {
+	display: flex;
+	position: absolute;
+	top: -42px;
+	left: 0;
+	font-size: 14px;
+	color: #666;
+	font-weight: 500;
+	.tab-item{
+		padding: 12px 20px;
+		margin-right: 2px;
+		background-color: #fff;
+		box-shadow: 0px 3px 15px 1px rgba(10,57,255,0.16);
+		border-top-left-radius: 20px;
+		border-top-right-radius: 20px;
+		cursor: pointer;
+	}
+	.active{
+		color: #005EFF;
+	}
+}

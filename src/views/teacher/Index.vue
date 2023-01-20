@@ -1,0 +1,209 @@
+<template>
+	<div>
+		<div class="ty-box">
+			<el-form :inline="true" :model="queryForm" class="demo-form-inline">
+				<el-row>
+					<el-col :span="20">
+						<el-row>
+							<el-col :span="6">
+								<el-form-item label="班级">
+									<el-select v-model="queryForm.class_name" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.classes" :label="item"
+											:value="item" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="年级">
+									<el-select v-model="queryForm.grade_id" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.grades" :label="item.name"
+											:value="item.id" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="学级">
+									<el-select v-model="queryForm.year" placeholder="请选择">
+										<el-option v-for="(item,index) in queryOption.years" :label="item"
+											:value="item" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="老师">
+									<el-input v-model="queryForm.teacher_name" placeholder="请输入" />
+								</el-form-item>
+							</el-col>
+						</el-row>
+					</el-col>
+					<el-col :span="4">
+						<div style="display: flex;justify-content: center;">
+							<el-button style="float: right;" type="primary" @click="getListData">查询</el-button>
+						</div>
+					</el-col>
+				</el-row>
+			</el-form>
+		</div>
+		<div class="ty-box">
+			<div class="al-flex-between">
+				<h3 class="title" style="margin-bottom: 0;">老师信息列表</h3>
+			</div>
+			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
+				<el-table-column type="index" label="序号" align="center" width="80" />
+				<el-table-column prop="name" label="老师姓名" align="center" />
+				<el-table-column prop="working_years" label="工龄" align="center" />
+				<el-table-column prop="job_title" label="职务" align="center" />
+				<el-table-column label="目前所带学级" align="center" width="80">
+					<template #default="scope">
+						<p v-for="item in scope.row.years">
+							{{item.year}}级
+						</p>
+					</template>
+				</el-table-column>
+				<el-table-column label="目前所带年级" align="center" width="80">
+					<template #default="scope">
+						<p v-for="item in scope.row.grades">
+							{{item.name}}
+						</p>
+					</template>
+				</el-table-column>
+				<el-table-column label="目前所带班级" align="center" width="80">
+					<template #default="scope">
+						<p v-for="item in scope.row.grades">
+							{{item.name}}
+						</p>
+					</template>
+				</el-table-column>
+				<el-table-column label="详细信息" align="center" width="80">
+					<template #default="scope">
+						<!-- <router-link to="#">查看</router-link> -->
+						<router-link :to="'/base/teacher/info?id='+scope.row.id">查看</router-link>
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" align="center" width="120">
+					<template #default="scope">
+						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
+							style="border: none;background-color: transparent;">
+							关联班级
+						</el-button>
+					</template>
+				</el-table-column>
+				<el-table-column label="状态" align="center" width="120">
+					<template #default="scope">
+						<el-button link @click="statusClick(scope.row.id,1)">启用</el-button>
+						<el-button link @click="statusClick(scope.row.id,0)">禁用</el-button>
+					</template>
+				</el-table-column>
+			</el-table>
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
+			</div>
+		</div>
+		<!-- 新增弹出 -->
+		<el-dialog class="" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
+		</el-dialog>
+		<!-- 编辑 -->
+		<el-dialog class="ty-dialog" width="600px" v-model="dialogEditFormVisible" title="编辑学生信息" destroy-on-close>
+			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default"
+				:scroll-to-error="true">
+				<div class="al-flex" style="">
+					<div class="" style="margin-right: 30px;position: relative;left: -20px;">
+						<el-form-item label="姓名">
+							<el-input v-model="formInline.user" placeholder="请输入" />
+						</el-form-item>
+						<el-form-item label="性别">
+							<el-select v-model="formInline.region" placeholder="请选择">
+								<el-option label="男" value="1" />
+								<el-option label="女" value="2" />
+							</el-select>
+						</el-form-item>
+						<el-form-item label="年龄">
+							<el-input v-model="formInline.user" placeholder="请输入" />
+						</el-form-item>
+					</div>
+					<div style="">
+						<el-form-item label="归属学校">
+							<el-select v-model="formInline.region" placeholder="请输入">
+								<el-option label="Zone one" value="shanghai" />
+								<el-option label="Zone two" value="beijing" />
+							</el-select>
+						</el-form-item>
+						<el-form-item label="归属片区">
+							<el-select v-model="formInline.region" placeholder="请输入">
+								<el-option label="Zone one" value="shanghai" />
+								<el-option label="Zone two" value="beijing" />
+							</el-select>
+						</el-form-item>
+						<el-form-item label="身份证号">
+							<el-input v-model="formInline.user" placeholder="请输入" />
+						</el-form-item>
+					</div>
+				</div>
+				<div style="display: flex;justify-content: center;">
+					<el-button>取消</el-button>
+					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
+				</div>
+			</el-form>
+		</el-dialog>
+	</div>
+</template>
+
+<script setup>
+	import {
+		getTeacher,
+		getTeacherOptions,updateTeaStatus
+	} from '@/api/base'
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
+	const queryOption = ref({})
+	const queryForm = reactive({})
+	const formInline = reactive({})
+	const tableData = reactive([])
+	const dialogFormVisible = ref(false)
+	const dialogEditFormVisible = ref(false)
+	onMounted(() => {
+		getListData()
+		getTeacherOptions().then(res => {
+			queryOption.value = res
+			console.log(res)
+		})
+	})
+	const getListData = () => {
+		let params = {
+			page: page.value,
+			page_size: pageSize.value
+		}
+		getTeacher({...params,...queryForm}).then(res => {
+			console.log(res)
+			tableData.length = 0
+			total.value = res.total
+			tableData.push(...res.list)
+		})
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		getListData(page.value)
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		getListData(page.value)
+	}
+	const handleEdit = () => {
+		dialogEditFormVisible.value = true
+	}
+	//状态，禁用/启用
+	const statusClick = (id,status)=>{
+		updateTeaStatus({teacher_id:id,status:status}).then(res=>{
+			ElMessage.success('状态已'+ (status == 1 ? '启用':'禁用'))
+		})
+	}
+	const onSubmit = () => {
+		console.log('submit!')
+	}
+</script>
+
+<style>
+</style>

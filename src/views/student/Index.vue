@@ -86,7 +86,10 @@
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18"><CirclePlusFilled /></el-icon>
 						新增学生信息
 					</button>
-					<button class="ty-btn">导入学生信息</button>
+					<el-upload class="upload-demo" style="display: inline-block;" :show-file-list="false" name="File"
+						:action="'https://tiyuapi.nkjwx.com/api/student/fileupload/?token='+token" :on-success="uploadFileSuccess">
+						<button class="ty-btn">导入学生信息</button>
+					</el-upload>
 					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学生导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
@@ -216,6 +219,7 @@
 <script setup>
 	import {getStudent,updateStudent,getStuOptions} from '@/api/base'
 	import AddForm from './AddForm.vue'
+	const token = ref(localStorage.getItem('token'))
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
@@ -288,6 +292,14 @@
 	const handleSizeChange = (number) => {
 		pageSize.value = number
 		getListData(page.value)
+	}
+	//文件上传成功
+	const uploadFileSuccess = (val)=>{
+		if(val.responseCode==0){
+			ElMessage.success('修改成功')
+		}else{
+			ElMessage.error(val.responseMsg)
+		}
 	}
 </script>
 

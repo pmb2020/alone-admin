@@ -40,10 +40,9 @@
 						</el-icon>
 						新增设备信息
 					</button>
-					<el-upload class="upload-demo" style="display: inline-block;" name="File"
-						action="https://tiyuapi.nkjwx.com/api/device/fileUpload/" :on-error="uploadFileError"
-						:on-success="uploadFileError">
-						<!-- <el-button type="primary" link>导入学校信息</el-button> -->
+					<el-upload class="upload-demo" style="display: inline-block;" :show-file-list="false" name="DeviceFile"
+						:action="'https://tiyuapi.nkjwx.com/api/device/fileUpload/?token='+token+'&school_id='+schoolId" 
+						:on-success="uploadFileSuccess">
 						<button class="ty-btn">导入设备信息</button>
 					</el-upload>
 					<button class="ty-btn"><a target="_blank" href="https://tiyuapi.nkjwx.com/static/设备导入模板.xlsx">下载模版</a></button>
@@ -122,6 +121,7 @@
 		getDeviceOption
 	} from '@/api/device'
 	const userType = ref(localStorage.getItem('usertype'))
+	const token = ref(localStorage.getItem('token'))
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
@@ -237,8 +237,13 @@
 
 		})
 	}
-	const uploadFileError = (f) => {
-		console.log(f)
+	//文件上传成功
+	const uploadFileSuccess = (val)=>{
+		if(val.responseCode==0){
+			ElMessage.success('修改成功')
+		}else{
+			ElMessage.error(val.responseMsg)
+		}
 	}
 </script>
 

@@ -10,9 +10,8 @@
 						</el-icon>
 						新增学校信息
 					</button>
-					<el-upload class="upload-demo" style="display: inline-block;" name="File"
-						action="https://tiyuapi.nkjwx.com/api/school/fileupload/" :on-error="uploadFileError" :on-success="uploadFileError">
-						<!-- <el-button type="primary" link>导入学校信息</el-button> -->
+					<el-upload class="upload-demo" style="display: inline-block;" :show-file-list="false" name="schoolFile"
+						:action="'https://tiyuapi.nkjwx.com/api/school/fileupload/?token='+token" :on-success="uploadFileSuccess">
 						<button class="ty-btn">导入学校信息</button>
 					</el-upload>
 					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学校导入模板.xlsx">下载模版</a></button>
@@ -94,6 +93,7 @@
 		updateSchool,
 		deleteSchool
 	} from '@/api/user'
+	const token = ref(localStorage.getItem('token'))
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
@@ -167,8 +167,13 @@
 
 		})
 	}
-	const uploadFileError = (f)=>{
-		console.log(f)
+	//文件上传成功
+	const uploadFileSuccess = (val)=>{
+		if(val.responseCode==0){
+			ElMessage.success('修改成功')
+		}else{
+			ElMessage.error(val.responseMsg)
+		}
 	}
 </script>
 

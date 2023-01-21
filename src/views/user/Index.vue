@@ -40,7 +40,10 @@
 						</el-icon>
 						新增员工信息
 					</button>
-					<button class="ty-btn">导入员工信息</button>
+					<el-upload class="upload-demo" style="display: inline-block;" :show-file-list="false" name="UserFile"
+						:action="'https://tiyuapi.nkjwx.com/api/user/fileupload/?token='+token+'&school_id='+schoolId" :on-success="uploadFileSuccess">
+						<button class="ty-btn">导入员工信息</button>
+					</el-upload>
 					<button class="ty-btn"><a target="_blank" href="https://tiyuapi.nkjwx.com/static/员工（老师）导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
@@ -142,6 +145,7 @@
 		getUser,addUser,updateUser,deleteUser,getSelectOption,getOrgan
 	} from '@/api/user'
 	const userType = ref(localStorage.getItem('usertype'))
+	const token = ref(localStorage.getItem('token'))
 	const pageSize = ref(20)
 	const total = ref(0)
 	const organ = ref({}) //组织架构
@@ -236,6 +240,14 @@
 				ElMessage.success('删除成功')
 			})
 		})
+	}
+	//文件上传成功
+	const uploadFileSuccess = (val)=>{
+		if(val.responseCode==0){
+			ElMessage.success('修改成功')
+		}else{
+			ElMessage.error(val.responseMsg)
+		}
 	}
 </script>
 

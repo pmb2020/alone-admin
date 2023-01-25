@@ -1,16 +1,23 @@
 <template>
 	<div class="al-flex-between">
-		<h3 v-if="userType=='edu'" class="title" style="margin-bottom: 0;">全区各项体测指标记录</h3>
-		<h3 v-else class="title" style="margin-bottom: 0;">本校各项体测指标记录</h3>
+		<h3 class="title" style="margin-bottom: 0;">本校各项体测指标记录</h3>
+		<div class="al-flex" style="align-items: center;">
+			<p style="color: #222426;">体测计划</p>
+			<el-select v-model="planParams.plan_start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+				<el-option v-for="plan in homeData.plan_data" :label="plan.name" :value="plan.id" />
+			</el-select>
+			<span style="width: 25px;height: 1px;background: #979797;"></span>
+			<el-select v-model="planParams.plan_end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+				<el-option v-for="plan in homeData.plan_data" :label="plan.name" :value="plan.id" />
+			</el-select>
+			<el-button type="primary" @click="getTiCeData">查询</el-button>
+		</div>
 		<!-- <ul class="ty-tab">
 			<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">小学</li>
 			<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">初中</li>
 			<li :class="{'active':gTabIndex==2}" @click="gTabClick(2)">高中</li>
 		</ul> -->
 	</div>
-	<!-- <div>
-		<p>体测计划</p>
-	</div> -->
 	<div style="margin: 30px 0;">
 		<ul class="ty-tab">
 			<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index,tab.id)">{{tab.name}}</li>
@@ -24,10 +31,14 @@
 
 <script setup>
 	import echarts from '@/utils/echarts.js'
-	import {getProjectChat,getGradeChart,getProjectChatEdu,getGradeChartEdu} from '@/api/home'
+	import {getProjectChat,getGradeChart} from '@/api/home'
 	const props = defineProps(['homeData','userType'])
 	const projects = ref([])
 	const homeData = ref({})
+	const planParams = ref({
+		plan_start_id:'',
+		plan_end_id:''
+	})
 	const tabs = ref([
 		{id:1,name:'体重指数'},
 	])
@@ -41,7 +52,7 @@
 	const tabClick = (index,id)=>{
 		tabIndex.value = index
 		project_id.value=id
-		adProjectChat()
+		getTiCeData()
 	}
 	const project_id = ref('')
 	const gradeChat = ref(null)
@@ -51,16 +62,9 @@
 	const gTabIndex = ref(0)
 	const gTabClick = (index)=>{
 		gTabIndex.value = index
-		// if(index==0){
-		// 	projects.value = homeData.value.projects[0].小学
-		// }else if(index==1){
-		// 	projects.value = homeData.value.projects[1].初中
-		// }else if(index==2){
-		// 	projects.value = homeData.value.projects[2].高中
-		// }
 	}
 	onMounted(() => {
-		initData()
+		getTiCeData()
 		barChat.value = echarts.init(document.getElementById("barChat"));
 		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
 		option.value = {
@@ -150,39 +154,32 @@
 			gradeChat.value.resize();
 		};
 	})
-	//调整图表（均值）
-	const adProjectChat = ()=>{
-		getProjectChat({
-			plan_start_id:3,
-			plan_end_id:6,
-			project_id:project_id.value || 3
-		}).then(res=>{
-			// console.log(res)
+	const getTiCeData = ()=>{
+		let params = {
+			project_id:project_id.value || 3,
+			plan_start_id:planParams.value.plan_start_id || 3,
+			plan_end_id:planParams.value.plan_end_id || 6
+		}
+		getProjectChat(params).then(res=>{
 			let series = [{
 				type: 'bar',
-				name: res.source[1]
+				name: res.source[0][1]
 			}, {
 				type: 'bar',
-				name: res.source[2]
+				name: res.source[0][2]
 			}, {
 				type: 'bar',
-				name: res.source[3]
+				name: res.source[0][3]
 			}, {
 				type: 'bar',
-				name: res.source[4]
+				name: res.source[0][4]
 			}]
 			option.value.dataset.source = res.source
 			option.value.series = series
 			barChat.value.setOption(option.value);
 		})
-	}
-	const initData = ()=>{
-		adProjectChat()
-		getGradeChart({
-			plan_start_id:3,
-			plan_end_id:6,
-			project_id:3
-		}).then(res=>{
+		//线图
+		getGradeChart(params).then(res=>{
 			// console.log(res)
 			gradeChatOption.value.legend.data = res.legendData
 			gradeChatOption.value.series = res.series

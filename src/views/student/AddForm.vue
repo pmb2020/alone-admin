@@ -39,10 +39,10 @@
 			<el-table-column label="学号" align="center">
 				<template #default="scope">
 					<div v-if="columnEdit[scope.$index]">
-						<el-input v-model="scope.row.student_id" placeholder="请输入" />
+						<el-input v-model="scope.row.student_ID" placeholder="请输入" />
 					</div>
 					<div v-else>
-						<p>{{scope.row.student_id}}</p>
+						<p>{{scope.row.student_ID}}</p>
 					</div>
 				</template>
 			</el-table-column>
@@ -86,7 +86,7 @@
 						@click="columnSubmit(scope.$index, scope.row)">确定</el-button>
 					<el-button v-else link type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑
 					</el-button>
-					<el-button link type="primary" size="small">清空</el-button>
+					<el-button link type="primary" size="small" @click="handleReset(scope.row)">清空</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -143,7 +143,16 @@
 		console.log(index, row)
 		columnEdit[index] = true
 	}
-
+	const handleReset = (row) =>{
+		row.name = ''
+		row.gender = ''
+		row.id_card = ''
+		row.student_ID = ''
+		row.grade_id = ''
+		row.class_id = ''
+		row.enter_school_date = ''
+		row.edu_commission_id = ''
+	}
 	const addItem = () => {
 		tableData.value.push({})
 	}

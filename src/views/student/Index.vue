@@ -156,7 +156,7 @@
 							<el-input v-model="form.age" placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="学号">
-							<el-input v-model="form.student_id" placeholder="请输入" />
+							<el-input v-model="form.student_ID" placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="班级">
 							<el-select v-model="form.class_id" disabled placeholder="请选择">

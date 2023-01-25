@@ -1,6 +1,6 @@
 <template>
 	<div class="al-flex-between">
-		<h3 class="title">学生体测数据展示</h3>
+		<h3 class="title">学生体测得分数据分析</h3>
 	</div>
 	<div id='gradeChat' style="height: 300px;"></div>
 </template>

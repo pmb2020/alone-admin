@@ -133,7 +133,12 @@
 						<el-table-column prop="50*8往返跑得分" label="得分" />
 						<el-table-column prop="50*8往返跑等级" label="等级" />
 					</el-table-column>
-					<el-table-column fixed="right" prop="date" label="班级" width="150" />
+					<el-table-column fixed="right" label="班级" width="150" align="center">
+						<template #default="scope">
+							<span>{{studentInfo.grade_name+studentInfo.class_name}}</span>
+						</template>
+					</el-table-column>
+					<!-- <el-table-column fixed="right" prop="date" label="班级" width="150" /> -->
 				</el-table>
 				<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目为参加测试。</p>
 			</div>
@@ -178,7 +183,7 @@
 			params.plan_end_id=planParams.value.plan_end_id
 		}
 		getStudentData(params).then(res=>{
-			console.log(res)
+			// console.log(res)
 			tableData.value = res.score_list
 			chartData.value = res.chart_data
 		})

@@ -44,6 +44,9 @@ export const updateClass = (data)=>{
 export const getClassOptions = (params)=>{
 	return get('/class/options/',params)
 }
+export const getClassAddOptions = (params)=>{
+	return get('/class/class_options/',params)
+}
 
 export const getClassTCPlan = (params)=>{
 	return get('/score/class_plans/',params)

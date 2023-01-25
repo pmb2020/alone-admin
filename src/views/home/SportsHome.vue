@@ -58,10 +58,10 @@
 			<h3 v-if="userType=='edu'" class="title">全区学生体重指数占比</h3>
 			<h3 v-else class="title">本校学生体重指数占比</h3>
 			<template v-if="userType=='edu'">
-				<WeightChart />
+				<WeightChart :home-data="homeData" />
 			</template>
 			<template v-if="userType=='school'">
-				<WeightChart1 />
+				<WeightChart1 :home-data="homeData" />
 			</template>
 		</div>
 		<!-- 全区各项体测指标分析 -->
@@ -111,6 +111,7 @@
 	const homeData = ref({
 		area_data:{},
 		highest_record:[],
+		BMI_chart:{},
 		BMI_chart_boy:{},
 		BMI_chart_girl:{},
 		projects:[]

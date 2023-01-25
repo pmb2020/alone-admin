@@ -1,17 +1,24 @@
 <template>
 	<div class="al-flex-between">
 		<!-- <h3 class="title" style="margin-bottom: 0;">全区各项体测指标分析</h3> -->
-		<h3 v-if="userType=='edu'" class="title" style="margin-bottom: 0;">全区各项体测指标记录</h3>
-		<h3 v-else class="title" style="margin-bottom: 0;">本校各项体测指标记录</h3>
+		<h3 class="title" style="margin-bottom: 0;">全区各项体测指标记录</h3>
 		<ul class="ty-tab">
 			<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">小学</li>
 			<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">初中</li>
 			<li :class="{'active':gTabIndex==2}" @click="gTabClick(2)">高中</li>
 		</ul>
 	</div>
-	<!-- <div>
-		<p>体测计划</p>
-	</div> -->
+	<div style="display: flex;justify-content: flex-end;align-items: center;margin-top: 20px;">
+		<p style="color: #222426;">体测计划</p>
+		<el-select v-model="planParams.plan_start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+			<el-option v-for="plan in plans" :label="plan.name" :value="plan.id" />
+		</el-select>
+		<span style="width: 25px;height: 1px;background: #979797;"></span>
+		<el-select v-model="planParams.plan_end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+			<el-option v-for="plan in plans" :label="plan.name" :value="plan.id" />
+		</el-select>
+		<el-button type="primary" @click="getTiCeData">查询</el-button>
+	</div>
 	<div style="margin: 30px 0;">
 		<ul class="ty-tab">
 			<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index,tab.id)">
@@ -34,6 +41,16 @@
 	const props = defineProps(['homeData', 'userType'])
 	const projects = ref([])
 	const homeData = ref({})
+	const plans = ref([])
+	const planOpt = ref({
+		'xiaoxue' :[],
+		'chuzhong':[],
+		'gaozhong':[]
+	})
+	const planParams = ref({
+		plan_start_id:'',
+		plan_end_id:''
+	})
 	const tabs = ref([{
 		id: 1,
 		name: '体重指数'
@@ -41,14 +58,22 @@
 	watch(props, (n, o) => {
 		homeData.value = n.homeData
 		projects.value = n.homeData.projects[0].小学
-		console.log(projects.value, '监听')
+		// console.log(projects.value, '监听')
+		console.log(homeData.value.plan_data[0].小学, '监听')
+		planOpt.value = {
+			xiaoxue :homeData.value.plan_data[0].小学,
+			chuzhong:homeData.value.plan_data[1].初中,
+			gaozhong:homeData.value.plan_data[2].高中
+		}
+		plans.value = planOpt.value.xiaoxue
+		console.log(planOpt.value)
 	})
 	// const tabs = ref(props.homeData.projects.小学)
 	const tabIndex = ref(0)
 	const tabClick = (index, id) => {
 		tabIndex.value = index
 		project_id.value = id
-		adProjectChat()
+		getTiCeData()
 	}
 	const gradeChat = ref(null)
 	const barChat = ref(null)
@@ -57,17 +82,25 @@
 	const project_id = ref('')
 	const gTabIndex = ref(0)
 	const gTabClick = (index) => {
+		tabIndex.value = 0
+		project_id.value = projects.value[0].id
 		gTabIndex.value = index
+		planParams.value.plan_start_id=''
+		planParams.value.plan_end_id=''
 		if (index == 0) {
+			plans.value = planOpt.value.xiaoxue
 			projects.value = homeData.value.projects[0].小学
 		} else if (index == 1) {
+			plans.value = planOpt.value.chuzhong
 			projects.value = homeData.value.projects[1].初中
 		} else if (index == 2) {
+			plans.value = planOpt.value.gaozhong
 			projects.value = homeData.value.projects[2].高中
 		}
+		getTiCeData()
 	}
 	onMounted(() => {
-		initData()
+		getTiCeData()
 		barChat.value = echarts.init(document.getElementById("barChat"));
 		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
 		option.value = {
@@ -78,7 +111,6 @@
 					['product','',''],
 					['2022年第1期', 83.1, 73.4, 55.1, 22.2],
 					['2022年第2期', 86.4, 65.2, 82.5, 35.1],
-					['2022年第3期', 72.4, 53.9, 39.1, 19.2],
 				]
 			},
 			xAxis: {
@@ -157,41 +189,40 @@
 			gradeChat.value.resize();
 		};
 	})
-	//调整图表（均值）
-	const adProjectChat = () => {
-		getProjectChatEdu({
-			grade_type: "小学",
-			plan_start_id: 3,
-			plan_end_id: 6,
-			project_id: project_id.value || 3
-		}).then(res => {
+	const getTiCeData = ()=>{
+		let params = {
+			project_id:project_id.value || 3,
+			plan_start_id:planParams.value.plan_start_id || 3,
+			plan_end_id:planParams.value.plan_end_id || 6
+		}
+		if(gTabIndex.value==0){
+			params.grade_type='小学'
+		}else if(gTabIndex.value==1){
+			params.grade_type='初中'
+		}else if(gTabIndex.value==2){
+			params.grade_type='高中'
+		}
+		getProjectChatEdu(params).then(res => {
 			// console.log(res)
 			let series = [{
 				type: 'bar',
-				name: res.source[1]
+				name: res.source[0][1]
 			}, {
 				type: 'bar',
-				name: res.source[2]
+				name: res.source[0][2]
 			}, {
 				type: 'bar',
-				name: res.source[3]
+				name: res.source[0][3]
 			}, {
 				type: 'bar',
-				name: res.source[4]
+				name: res.source[0][4]
 			}]
 			option.value.dataset.source = res.source
 			option.value.series = series
 			barChat.value.setOption(option.value);
 		})
-	}
-	const initData = () => {
-		adProjectChat()
-		getGradeChartEdu({
-			grade_type: "小学",
-			plan_start_id: 3,
-			plan_end_id: 6,
-			project_id: 3
-		}).then(res => {
+		//线表
+		getGradeChartEdu(params).then(res => {
 			// console.log(res)
 			gradeChatOption.value.legend.data = res.legendData
 			gradeChatOption.value.series = res.series

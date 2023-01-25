@@ -1,11 +1,15 @@
 <template>
 	<div>
 		<div class="al-flex-between" style="margin-bottom: 20px;">
-			<h3 class="title" style="margin-bottom: 0;">班级体测数据展示及分析</h3>
+			<h3 class="title" style="margin-bottom: 0;">各项体测指标均值分析</h3>
 			<div class="al-flex" style="align-items: center;">
 				<p style="color: #222426;">体测计划</p>
-				<el-select v-model="queryParams.plan_id" style="width: 100px;margin: 0 10px;" placeholder="请选择">
-					<el-option v-for="(item,index) in ticePlanOption" :label="item.name" :value="item.id" />
+				<el-select v-model="queryParams.plan_start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+					<el-option v-for="plan in ticePlanOption" :label="plan.name" :value="plan.id" />
+				</el-select>
+				<span style="width: 25px;height: 1px;background: #979797;"></span>
+				<el-select v-model="queryParams.plan_end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+					<el-option v-for="plan in ticePlanOption" :label="plan.name" :value="plan.id" />
 				</el-select>
 				<p style="color: #222426;">性别</p>
 				<el-select v-model="queryParams.gender" class="m-2" style="width: 100px;margin: 0 10px;"
@@ -45,6 +49,10 @@
 	const tabIndex = ref(0)
 	const barData = ref(null)
 	const gradeData = ref(null)
+	const barChat = ref(null)
+	const gradeChat = ref(null)
+	const option = ref({})
+	const gradeChatOption = ref({})
 	watch(props,(n,o)=>{
 		console.log(n)
 		classId.value = n.classId
@@ -57,9 +65,9 @@
 	
 	onMounted(() => {
 		initData()
-		let barChat = echarts.init(document.getElementById("barChat"));
-		let gradeChat = echarts.init(document.getElementById("gradeChat"));
-		const option = {
+		barChat.value = echarts.init(document.getElementById("barChat"));
+		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
+		option.value = {
 			legend: {},
 			tooltip: {},
 			dataset: {
@@ -67,10 +75,7 @@
 					['product', '正常', '超体重', '超重', '肥胖'],
 					['2021年第6期', 43.3, 85.8, 93.7, 27],
 					['2022年第1期', 83.1, 73.4, 55.1, 22.2],
-					['2022年第2期', 86.4, 65.2, 82.5, 35.1],
 					['2022年第3期', 72.4, 53.9, 39.1, 19.2],
-					['2022年第4期', 32.4, 17.9, 122.1, 12.4],
-					['2022年第5期', 32.4, 17.9, 122.1, 12.4],
 				]
 			},
 			xAxis: {
@@ -95,7 +100,7 @@
 				type: 'bar'
 			}]
 		};
-		const gradeChatOption = {
+		gradeChatOption.value = {
 			title: {
 				subtext: '得分',
 				left: 30, // 距离左边位置
@@ -142,27 +147,38 @@
 			]
 		};
 		setTimeout(()=>{
-			gradeChatOption.legend.data = gradeData.legendData
-			gradeChatOption.series = gradeData.series
-			gradeChatOption.xAxis.data = gradeData.value.yAxisData
+			gradeChatOption.value.legend.data = gradeData.value.legendData
+			gradeChatOption.value.series = gradeData.value.series
+			gradeChatOption.value.xAxis.data = gradeData.value.yAxisData
 			// console.log(gradeChatOption.xAxis.data)
 			// console.log(gradeData.value)
-			gradeChat.setOption(gradeChatOption);
+			gradeChat.value.setOption(gradeChatOption.value);
 			
-			option.dataset.source = barData.value.source
-			barChat.setOption(option);
+			option.value.dataset.source = barData.value.source
+			barChat.value.setOption(option.value);
 		},1000)
 		
 		window.onresize = function() {
-			barChat.resize();
-			gradeChat.resize();
+			barChat.value.resize();
+			gradeChat.value.resize();
 		};
 	})
 	
 	const initData = ()=>{
 		getCalssData()
 	}
-	
+	const getTiCeData = ()=>{
+		let params = {class_id:props.classId}
+		//均值折线
+		getClassPeriodAvg(params).then(res=>{
+			// console.log(res)
+			gradeData.value = res
+		})
+		getClassPeriod(params).then(res=>{
+			console.log(res)
+			barData.value = res
+		})
+	}
 	const getCalssData = ()=>{
 		let params = {class_id:props.classId}
 		getClassPeriodAvg(params).then(res=>{

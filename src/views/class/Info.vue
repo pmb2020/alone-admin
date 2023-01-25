@@ -52,7 +52,7 @@
 					班级体测数据展示及分析
 				</div>
 				<div class="tab-item" :class="{'active':tabIndex==1}" @click="tabIndex=1">
-					{{classInfo.class_detail.year}}级体测数据阶段分析
+					{{classInfo.class_detail.year}}级{{classInfo.class_detail.name}}体测数据阶段分析
 				</div>
 			</div>
 			<div v-if="tabIndex==0">

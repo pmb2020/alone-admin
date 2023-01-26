@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-	import {getClassTCAvg,getClassProjectD,getGradeTCAvg,getGradeProjectD} from '@/api/base'
+	import {getGradeTCAvg,getGradeProjectD} from '@/api/base'
 	import echarts from '@/utils/echarts.js'
 	const props = defineProps(['gradeId','planQuery','projects','gradeId'])
 	const avgData = ref({})

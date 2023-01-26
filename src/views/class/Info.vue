@@ -166,7 +166,6 @@
 		getPlanData()
 	})
 	const getPlanData = () => {
-		planQuery
 		let params = {
 			class_id: classId.value
 		}

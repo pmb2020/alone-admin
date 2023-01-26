@@ -63,7 +63,7 @@
 						<el-option v-for="(item,index) in gradeInfo.classes" :label="item.name"
 							:value="item.id" />
 					</el-select>
-					<el-button type="primary">查询</el-button>
+					<el-button type="primary" @click="getTiCeData">查询</el-button>
 				</div>
 			</div>
 			<div style="margin-bottom: 50px;">
@@ -119,22 +119,28 @@
 	const projects = ref([])
 	const planQuery = ref({
 		plan_id:'',
-		gender:''
+		gender:'全部'
 	})
 	const tableData = ref([])
 	onMounted(()=>{
 		gradeId.value = route.query.id
 		if(!gradeId.value) return
-		getGradeInfo({grade_id:gradeId.value}).then(res=>{
+		getTiCeData()
+	})
+	
+	const getTiCeData = ()=>{
+		planQuery.value.grade_id = gradeId.value
+		console.log(planQuery.value)
+		getGradeInfo(planQuery.value).then(res=>{
 			// console.log(res)
 			gradeInfo.value = res
 		})
-		getGradeTable({grade_id:gradeId.value}).then(res=>{
+		getGradeTable(planQuery.value).then(res=>{
 			console.log(res.score_list)
 			projects.value = res.projects
 			tableData.value =res.score_list
 		})
-	})
+	}
 </script>
 
 <style lang="scss">

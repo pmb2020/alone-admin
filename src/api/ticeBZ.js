@@ -11,3 +11,8 @@ export const getScore = (params)=>{
 export const getBonus = (params)=>{
 	return get('/standards/bonus_score',params)
 }
+
+//考试项目标准
+export const getExam = (params)=>{
+	return get('/standards/weight',params)
+}

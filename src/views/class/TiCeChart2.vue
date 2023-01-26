@@ -4,28 +4,28 @@
 			<h3 class="title" style="margin-bottom: 0;">各项体测指标均值分析</h3>
 			<div class="al-flex" style="align-items: center;">
 				<p style="color: #222426;">体测计划</p>
-				<el-select v-model="queryParams.plan_start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+				<el-select v-model="planParams.plan_start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
 					<el-option v-for="plan in ticePlanOption" :label="plan.name" :value="plan.id" />
 				</el-select>
 				<span style="width: 25px;height: 1px;background: #979797;"></span>
-				<el-select v-model="queryParams.plan_end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+				<el-select v-model="planParams.plan_end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
 					<el-option v-for="plan in ticePlanOption" :label="plan.name" :value="plan.id" />
 				</el-select>
 				<p style="color: #222426;">性别</p>
-				<el-select v-model="queryParams.gender" class="m-2" style="width: 100px;margin: 0 10px;"
+				<el-select v-model="planParams.gender" class="m-2" style="width: 100px;margin: 0 10px;"
 					placeholder="请选择">
 					<el-option label="全部" value="全部" />
 					<el-option label="男" value="男" />
 					<el-option label="女" value="女" />
 				</el-select>
-				<el-button type="primary" @click="getCalssData">查询</el-button>
+				<el-button type="primary" @click="getTiCeData">查询</el-button>
 			</div>
 		</div>
 		<div id='gradeChat' style="height: 300px;"></div>
 		<h3 class="title">各项体测指标等级分析</h3>
 		<div style="margin: 30px 0;">
 			<ul class="ty-tab">
-				<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index)">
+				<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index,tab.id)">
 					{{tab.name}}</li>
 			</ul>
 		</div>
@@ -37,9 +37,10 @@
 	import {getClassPeriodAvg,getClassPeriod} from '@/api/base'
 	import echarts from '@/utils/echarts.js'
 	const props = defineProps(['classId','planQuery','projects','ticePlanOption'])
-	const queryParams = reactive({
-		user: '',
-		region: '',
+	const planParams = ref({
+		plan_start_id:'',
+		plan_end_id:'',
+		gender:'全部'
 	})
 	const tabs = ref([{
 			id: 1,
@@ -57,14 +58,16 @@
 		console.log(n)
 		classId.value = n.classId
 		planQuery.value = n.planQuery
-		initData()
+		// getTiCeData()
 	})
-	const tabClick = (index) => {
+	const tabClick = (index,id) => {
 		tabIndex.value = index
+		planParams.value.project_id = id
+		adClassPeriod()
 	}
 	
 	onMounted(() => {
-		initData()
+		getTiCeData()
 		barChat.value = echarts.init(document.getElementById("barChat"));
 		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
 		option.value = {
@@ -146,18 +149,6 @@
 				}
 			]
 		};
-		setTimeout(()=>{
-			gradeChatOption.value.legend.data = gradeData.value.legendData
-			gradeChatOption.value.series = gradeData.value.series
-			gradeChatOption.value.xAxis.data = gradeData.value.yAxisData
-			// console.log(gradeChatOption.xAxis.data)
-			// console.log(gradeData.value)
-			gradeChat.value.setOption(gradeChatOption.value);
-			
-			option.value.dataset.source = barData.value.source
-			barChat.value.setOption(option.value);
-		},1000)
-		
 		window.onresize = function() {
 			barChat.value.resize();
 			gradeChat.value.resize();
@@ -165,29 +156,45 @@
 	})
 	
 	const initData = ()=>{
-		getCalssData()
+		getTiCeData()
 	}
 	const getTiCeData = ()=>{
-		let params = {class_id:props.classId}
+		planParams.value.class_id = props.classId
 		//均值折线
-		getClassPeriodAvg(params).then(res=>{
+		getClassPeriodAvg(planParams.value).then(res=>{
 			// console.log(res)
-			gradeData.value = res
+			// gradeData.value = res
+			gradeChatOption.value.legend.data = res.legendData
+			gradeChatOption.value.series = res.series
+			gradeChatOption.value.xAxis.data = res.yAxisData
+			gradeChat.value.setOption(gradeChatOption.value);
 		})
-		getClassPeriod(params).then(res=>{
-			console.log(res)
-			barData.value = res
-		})
+		adClassPeriod()
 	}
-	const getCalssData = ()=>{
-		let params = {class_id:props.classId}
-		getClassPeriodAvg(params).then(res=>{
-			// console.log(res)
-			gradeData.value = res
-		})
-		getClassPeriod(params).then(res=>{
-			console.log(res)
-			barData.value = res
+	//等级分析柱状图
+	const adClassPeriod = ()=>{
+		planParams.value.class_id = props.classId
+		if(!planParams.value.project_id){
+			planParams.value.project_id = props.projects[0].id
+		}
+		// console.log(planParams.value)
+		getClassPeriod(planParams.value).then(res=>{
+			let series = [{
+				type: 'bar',
+				name: res.source[0][1]
+			}, {
+				type: 'bar',
+				name: res.source[0][2]
+			}, {
+				type: 'bar',
+				name: res.source[0][3]
+			}, {
+				type: 'bar',
+				name: res.source[0][4]
+			}]
+			option.value.series = series
+			option.value.dataset.source = res.source
+			barChat.value.setOption(option.value);
 		})
 	}
 </script>

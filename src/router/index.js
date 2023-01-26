@@ -77,6 +77,11 @@ const routes = [
 				component: () => import('../views/school/Info.vue'),
 			},
 			{
+				path:'plan/info',
+				hidden: true,
+				component: () => import('../views/plan/Info.vue'),
+			},
+			{
 				path:'class',
 				component: () => import('../views/class/Index.vue'),
 				meta: {

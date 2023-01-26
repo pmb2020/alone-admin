@@ -36,7 +36,7 @@
 									</el-select>
 								</el-form-item>
 								<el-form-item label="计划执行时间">
-									<el-date-picker v-model="queryForm.start_date" type="date" value-format="YYYY-MM-DD"
+									<el-date-picker v-model="queryForm.date" type="date" value-format="YYYY-MM-DD"
 										placeholder="请选择" />
 								</el-form-item>
 							</el-col>
@@ -87,7 +87,7 @@
 				<el-table-column prop="start_date" label="计划执行时间" align="center" width="120" />
 				<el-table-column label="详细信息" align="center" width="80">
 					<template #default="scope">
-						<router-link to="/base/plan/info">查看</router-link>
+						<router-link :to="'/base/plan/info?id='+scope.row.id">查看</router-link>
 					</template>
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="180">

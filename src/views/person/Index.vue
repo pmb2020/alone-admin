@@ -10,8 +10,8 @@
 					<el-form-item label="角色">
 						<el-input v-model="form.role_name" disabled placeholder="" />
 					</el-form-item>
-					<el-form-item label="教师ID">
-						<el-input v-model="form.title" disabled placeholder="" />
+					<el-form-item label="工号">
+						<el-input v-model="form.username" disabled placeholder="" />
 					</el-form-item>
 					<el-form-item label="手机号码">
 						<el-input v-model="form.phone" disabled placeholder="" />

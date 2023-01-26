@@ -106,6 +106,14 @@ export const getGradeProjectD = (params)=>{
 export const getTeaList = (params)=>{
 	return get('/grade/teachers/',params)
 }
+//详情-阶段数据分析
+export const getGradePeriodAvg = (params)=>{
+	return get('/score/grade_period_avg/',params)
+}
+
+export const getGradePeriod = (params)=>{
+	return get('/score/class_period_grade/',params)
+}
 
 // 老师管理
 export const getTeacher = (params)=>{

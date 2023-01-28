@@ -179,7 +179,7 @@
 							<el-date-picker v-model="form.end_date" type="date" value-format="YYYY-MM-DD"
 								placeholder="请选择" />
 						</el-form-item>
-						<el-form-item label="参与学校" style="font-weight: bold;">
+						<el-form-item v-if="userType=='edu'" label="参与学校" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
 									<el-button link type="info">请选择</el-button>

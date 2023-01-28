@@ -97,6 +97,10 @@
 			plans.value = planOpt.value.gaozhong
 			projects.value = homeData.value.projects[2].高中
 		}
+		if(plans.value){
+			planParams.value.plan_start_id= plans.value[0].id
+			planParams.value.plan_end_id= plans.value[plans.value.length-1].id
+		}
 		getTiCeData()
 	}
 	onMounted(() => {

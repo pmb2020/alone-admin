@@ -13,7 +13,10 @@
 					<td class="grade">{{item.name}}</td>
 					<template v-for="it in item.list">
 						<td>
-							<p style="margin-bottom: 5px;">{{it.project_name}}</p>
+							<p style="margin-bottom: 5px;">
+								{{it.project_name}}
+								<span v-if="it.gender != '所有'">({{it.gender}})</span>
+							</p>
 							<p>{{it.weight}}%</p>
 						</td>
 					</template>
@@ -27,7 +30,10 @@
 					<td class="grade">{{item.name}}</td>
 					<template v-for="it in item.list">
 						<td>
-							<p style="margin-bottom: 5px;">{{it.project_name}}</p>
+							<p style="margin-bottom: 5px;">
+								{{it.project_name}}
+								<span v-if="it.gender != '所有'">({{it.gender}})</span>
+							</p>
 							<p>{{it.weight}}%</p>
 						</td>
 					</template>
@@ -37,7 +43,10 @@
 					<td class="grade">{{item.name}}</td>
 					<template v-for="it in item.list">
 						<td>
-							<p style="margin-bottom: 5px;">{{it.project_name}}</p>
+							<p style="margin-bottom: 5px;">
+								{{it.project_name}}
+								<span v-if="it.gender != '所有'">({{it.gender}})</span>
+							</p>
 							<p>{{it.weight}}%</p>
 						</td>
 					</template>

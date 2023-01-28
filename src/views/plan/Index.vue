@@ -81,8 +81,20 @@
 						<p v-else-if="scope.row.status==3">已完成</p>
 					</template>
 				</el-table-column>
-				<el-table-column prop="project_id" label="体测项目" align="center" />
-				<el-table-column prop="grade_id" label="体测对象" align="center" />
+				<el-table-column prop="projects" label="体测项目" align="center" width="180">
+					<template #default="scope">
+						<span v-for="item in scope.row.projects">
+							{{item.name}}，
+						</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="grades" label="体测对象" align="center">
+					<template #default="scope">
+						<span v-for="item in scope.row.grades">
+							{{item.name}}，
+						</span>
+					</template>
+				</el-table-column>
 				<el-table-column prop="school_type" label="学校学段" align="center" />
 				<el-table-column prop="start_date" label="计划执行时间" align="center" width="120" />
 				<el-table-column label="详细信息" align="center" width="80">
@@ -108,17 +120,22 @@
 			destroy-on-close>
 			<el-form ref="formRef" :model="form" :rules="rules" label-width="80" label-position="left" size="default" :scroll-to-error="true">
 				<el-row>
-					<el-col :span="6">
+					<el-col :span="12">
 						<el-form-item label="计划编号" prop="plan_number">
 							<el-input v-model="form.plan_number" placeholder="请输入" autocomplete />
 						</el-form-item>
 						<el-form-item label="计划名称" prop="name">
 							<el-input v-model="form.name" placeholder="请输入" autocomplete />
 						</el-form-item>
-						<el-form-item label="体测对象">
+						<!-- <el-form-item label="体测对象">
 							<el-select v-model="form.grade_ids" placeholder="请选择">
 								<el-option v-for="item in queryOption.grades" :label="item.name" :value="item.id" />
 							</el-select>
+						</el-form-item> -->
+						<el-form-item label="体测对象">
+							<el-checkbox-group v-model="form.grade_ids">
+								<el-checkbox v-for="item in queryOption.grades" :key="item.id" :label="item.id">{{item.name}}</el-checkbox>
+							</el-checkbox-group>
 						</el-form-item>
 						<el-form-item label="体测项目">
 							<el-select v-model="form.project_ids" placeholder="请选择">
@@ -126,7 +143,7 @@
 							</el-select>
 						</el-form-item>
 					</el-col>
-					<el-col :span="12" :offset="6">
+					<el-col :span="11" :offset="1">
 						<el-row>
 							<el-col :span="24">
 								<el-form-item label="执行开始时间" label-width="100" prop="title">
@@ -159,9 +176,12 @@
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
+	const userType = ref(localStorage.getItem('usertype'))
 	const queryForm = reactive({})
 	const isFromAdd = ref(false)
-	const form = ref({})
+	const form = ref({
+		grade_ids:[]
+	})
 	const formRef = ref({})
 	const rules = reactive({})
 	const queryOption = ref({})
@@ -194,6 +214,7 @@
 	const onSubmit = () => {
 		formRef.value.validate((valid) => {
 			if (!valid) return
+			form.value.grade_ids = form.value.grade_ids.toString()
 			if (isFromAdd.value) {
 				addPlan(form.value).then(res => {
 					dialogFormVisible.value = false

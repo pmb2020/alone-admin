@@ -48,7 +48,7 @@
 				</el-col>
 				<el-col :span="3">
 					<div class="tx-text-num">
-						<p><span class="num">{{homeData.area_data.test_num || 0}}</span>所</p>
+						<p><span class="num">{{homeData.area_data.test_num || 0}}</span>次</p>
 						<p>检测次数</p>
 					</div>
 				</el-col>

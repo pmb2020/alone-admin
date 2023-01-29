@@ -50,16 +50,16 @@
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
 				<el-table-column type="index" label="序号" align="center" width="80" />
-				<el-table-column prop="name" label="学校名称" align="center" />
+				<el-table-column prop="name" label="设备名称" align="center" />
 				<el-table-column prop="device_number" label="设备编号" align="center" />
 				<el-table-column prop="purchase_date" label="购入时间" align="center" />
 				<el-table-column prop="school_name" label="分配学校" align="center" />
 				<el-table-column prop="area" label="片区" align="center" />
 				<el-table-column prop="edu_group" label="集团" align="center" />
-				<el-table-column label="操作" align="center" width="160">
+				<el-table-column label="操作" align="center" width="140">
 					<template #default="scope">
 						<el-button link @click="handleEdit(scope.row)">编辑</el-button>
-						<!-- <el-button link @click="handleDelete(scope.row.id)">删除</el-button> -->
+						<el-button link @click="handleDelete(scope.row.id)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -85,6 +85,9 @@
 						<el-form-item label="购入时间" prop="purchase_date">
 							<el-date-picker v-model="form.purchase_date" type="date" value-format="YYYY-MM-DD"
 								placeholder="请选择" />
+						</el-form-item>
+						<el-form-item label="备注" prop="remark">
+							<el-input v-model="form.remark" type="textarea" placeholder="请输入" />
 						</el-form-item>
 					</div>
 					<div>
@@ -118,7 +121,8 @@
 		getDevice,
 		addDevice,
 		updateDevice,
-		getDeviceOption
+		getDeviceOption,
+		deleteDevice
 	} from '@/api/device'
 	const userType = ref(localStorage.getItem('usertype'))
 	const token = ref(localStorage.getItem('token'))
@@ -211,7 +215,7 @@
 			cancelButtonText: '取消',
 			type: 'warning'
 		}).then(() => {
-			deleteSchool({
+			deleteDevice({
 				id: id
 			}).then(res => {
 				getListData(page.value)

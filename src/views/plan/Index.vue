@@ -37,9 +37,8 @@
 											:value="item.id" />
 									</el-select>
 								</el-form-item>
-								<el-form-item label="计划执行时间">
-									<el-date-picker v-model="queryForm.date" type="date" value-format="YYYY-MM-DD"
-										placeholder="请选择" />
+								<el-form-item label="学校名称">
+									<el-input v-model="queryForm.school_name" placeholder="请输入" />
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
@@ -49,6 +48,11 @@
 											:value="item" />
 									</el-select>
 								</el-form-item>
+								<el-form-item label="计划执行时间">
+									<el-date-picker v-model="queryForm.date" type="date" value-format="YYYY-MM-DD"
+										placeholder="请选择" />
+								</el-form-item>
+								
 							</el-col>
 						</el-row>
 					</el-col>
@@ -205,8 +209,9 @@
 					</el-col>
 				</el-row>
 				<div style="display: flex;justify-content: center;">
-					<el-button @click="dialogFormVisible=false">取消</el-button>
-					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
+					<el-button type="primary" @click="dialogFormVisible=false">取消</el-button>
+					<el-button type="primary" size="default" @click="onSubmit">保存</el-button>
+					<el-button type="primary" size="default" @click="onSubmit">发布</el-button>
 				</div>
 			</el-form>
 		</el-dialog>

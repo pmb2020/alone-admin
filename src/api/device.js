@@ -6,7 +6,9 @@ export const getDevice = (params)=>{
 export const addDevice = (data)=>{
 	return post('/device/add/',data)
 }
-
+export const deleteDevice = (params)=>{
+	return get('/device/delete/',params)
+}
 export const updateDevice = (data)=>{
 	return post('/device/edit/',data)
 }

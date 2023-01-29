@@ -27,7 +27,7 @@
 			</el-collapse>
 		</div>
 		<div class="ty-box" :style="{width: userType==='edu' ? '70%' : '100%'}">
-			<h3 class="title">员工列表</h3>
+			<!-- <h3 class="title">员工列表</h3> -->
 			<div class="al-flex-between">
 				<div class="al-flex">
 					<el-input v-model="keywords" placeholder="请输入" />
@@ -210,13 +210,13 @@
 			if (!valid) return
 			if (!isFromEdit.value) {
 				addUser(form.value).then(res => {
-					getListData(page.value)
+					getListData()
 					dialogFormVisible.value = false
 					ElMessage.success('操作成功')
 				})
 			} else {
 				updateUser(form.value).then(res => {
-					getListData(page.value)
+					getListData()
 					dialogFormVisible.value = false
 					ElMessage.success('操作成功')
 				})

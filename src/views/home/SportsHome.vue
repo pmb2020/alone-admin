@@ -75,8 +75,8 @@
 		</div>
 		<div class="ty-box">
 			<div class="al-flex-between" style="margin-bottom: 20px;">
-				<h3 v-if="userType=='edu'" class="title" style="margin-bottom: 0;">全区各项体测指标记录</h3>
-				<h3 v-else class="title" style="margin-bottom: 0;">本校各项体测指标记录</h3>
+				<h3 v-if="userType=='edu'" class="title" style="margin-bottom: 0;">全区各项体测指标最优记录</h3>
+				<h3 v-else class="title" style="margin-bottom: 0;">本校各项体测指标最优记录</h3>
 				<ul v-if="userType=='edu'" class="ty-tab">
 					<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">小学</li>
 					<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">初中</li>

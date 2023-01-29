@@ -39,6 +39,7 @@
 					</el-col>
 					<el-col :span="4">
 						<div style="display: flex;justify-content: center;">
+							<el-button @click="resetForm">重置</el-button>
 							<el-button style="float: right;" type="primary" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
@@ -175,6 +176,13 @@
 	const handleSizeChange = (number) => {
 		pageSize.value = number
 		getListData(page.value)
+	}
+	//重置
+	const resetForm = ()=>{
+		queryForm.key = ''
+		queryForm.area = ''
+		queryForm.edu_group = ''
+		queryForm.period = ''
 	}
 </script>
 

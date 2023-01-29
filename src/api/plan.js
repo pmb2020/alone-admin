@@ -12,6 +12,10 @@ export const addPlan = (data) =>{
 	return post('/plan/add/',data)
 }
 
+export const updatePlan = (data) =>{
+	return post('/plan/edit/',data)
+}
+
 export const getPlanInfo = (params) =>{
 	return get('/plan/detail/',params)
 }

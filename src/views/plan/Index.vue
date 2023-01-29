@@ -141,7 +141,7 @@
 						<el-form-item label="体测对象" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button link type="info">请选择</el-button>
+									<el-button link type="info">{{checkTextGrade}}</el-button>
 								</template>
 								<el-checkbox v-model="checkAllGrade" :indeterminate="isIndeterminateGrade"
 								 @change="handleCheckAllGrade">全选</el-checkbox>
@@ -154,11 +154,11 @@
 						<el-form-item label="体测项目" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button link type="info">请选择</el-button>
+									<el-button link type="info">{{checkTextProject}}</el-button>
 								</template>
 								<el-checkbox v-model="checkAllProject" :indeterminate="isIndeterminateProject"
 								 @change="handleCheckAllProject">全选</el-checkbox>
-								<el-checkbox-group v-model="form.project_ids">
+								<el-checkbox-group v-model="form.project_ids" @change="CheckedProjectChange">
 									<el-checkbox v-for="item in queryOption.projects" :key="item.id" :label="item.id">
 										{{item.name}}</el-checkbox>
 								</el-checkbox-group>
@@ -217,7 +217,7 @@
 	import {
 		getPlan,
 		getPlanOption,
-		addPlan
+		addPlan,updatePlan
 	} from '@/api/plan'
 	const page = ref(1)
 	const pageSize = ref(20)
@@ -276,12 +276,12 @@
 					ElMessage.success('操作成功')
 				})
 			} else {
-				console.log('sss')
-				// updateDevice(form.value).then(res => {
-				// 	getListData(page.value)
-				// 	dialogFormVisible.value = false
-				// 	ElMessage.success('操作成功')
-				// })
+				console.log(form.value,'更新')
+				updatePlan(form.value).then(res => {
+					getListData(page.value)
+					dialogFormVisible.value = false
+					ElMessage.success('更新成功')
+				})
 			}
 
 		})
@@ -295,6 +295,7 @@
 		getListData(number)
 	}
 	//全选
+	const checkTextGrade = ref('请选择')
 	const checkAllGrade = ref(false)
 	const isIndeterminateGrade = ref(false)
 	const handleCheckAllGrade = (val)=>{
@@ -302,12 +303,16 @@
 		form.value.grade_ids = val ? grades : [],
 		isIndeterminateGrade.value = false
 	}
+	const checkTextProject = ref('请选择')
 	const checkAllProject = ref(false)
 	const isIndeterminateProject = ref(false)
 	const handleCheckAllProject = (val)=>{
 		let projects = queryOption.value.projects.map(v=>{return v.id})
 		form.value.project_ids = val ? projects : [],
 		isIndeterminateProject.value = false
+	}
+	const CheckedProjectChange = (val)=>{
+		console.log(val)
 	}
 	const checkAllSchool = ref(false)
 	const isIndeterminateSchool = ref(false)

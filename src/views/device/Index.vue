@@ -92,16 +92,22 @@
 					</div>
 					<div>
 						<el-form-item label="分配学校" prop="school_id">
-							<el-select v-model="form.school_id" placeholder="请输入">
+							<el-select v-model="form.school_id" @change="changeSchool" placeholder="请输入">
 								<el-option v-for="item in queryOptionSchool" :label="item.name" :value="item.id" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="片区" prop="area">
 							<el-select v-model="form.area" placeholder="请输入">
+								<template v-for="item in queryOptionSchool" :key="item.id">
+									<el-option v-if="item.id === form.school_id" :label="item.area" :value="item.area" />
+								</template>
 							</el-select>
 						</el-form-item>
 						<el-form-item label="集团" prop="edu_group">
 							<el-select v-model="form.edu_group" placeholder="请输入">
+								<template v-for="item in queryOptionSchool" :key="item.id">
+									<el-option v-if="item.id === form.school_id" :label="item.edu_group" :value="item.edu_group" />
+								</template>
 							</el-select>
 						</el-form-item>
 					</div>
@@ -248,6 +254,9 @@
 		}else{
 			ElMessage.error(val.responseMsg)
 		}
+	}
+	const changeSchool = (val)=>{
+		console.log(val)
 	}
 </script>
 

@@ -18,18 +18,26 @@
 					</div>
 					<div class="text-lr">
 						<span>体测对象</span>
-						<span class="value">{{infoData.school_type}}</span>
+						<span class="value">
+							<span style="line-height: 1.8;" v-for="item in infoData.grades">
+								{{item.name}}，
+							</span>
+						</span>
 					</div>
 					<div class="text-lr">
 						<span>体测项目</span>
-						<span class="value">{{infoData.name}}</span>
+						<span class="value">
+							<span style="line-height: 1.8;" v-for="item in infoData.projects">
+								{{item.name}}，
+							</span>
+						</span>
 					</div>
 					<div v-if="userType=='shool'" class="text-lr">
 						<span>备注</span>
 						<span class="value">{{infoData.remark}}</span>
 					</div>
 				</el-col>
-				<el-col :span="10">
+				<el-col :span="10" :offset="1">
 					<div class="text-lr">
 						<span>计划状态</span>
 						<span class="value" v-if="infoData.status==-1">已取消</span>

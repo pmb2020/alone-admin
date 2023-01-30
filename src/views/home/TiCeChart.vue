@@ -149,9 +149,7 @@
 					color: "#baf"
 				}
 			},
-			tooltip: {
-				trigger: 'axis'
-			},
+			tooltip: {},
 			legend: {
 				data: ['体重指数', '肺活量', '50米跑']
 			},

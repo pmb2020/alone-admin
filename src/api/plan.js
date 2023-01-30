@@ -27,3 +27,7 @@ export const getPlanClass = (params) =>{
 export const getPlanSchool = (params) =>{
 	return get('/plan/school_list/',params)
 }
+
+export const updateStatus = (params) =>{
+	return get('/plan/status/',params)
+}

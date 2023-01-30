@@ -85,7 +85,7 @@
 					<template #default="scope">
 						<p v-if="scope.row.status==-1">已取消</p>
 						<p v-else-if="scope.row.status==0">待发布</p>
-						<p v-else-if="scope.row.status==1">已发布</p>
+						<p v-else-if="scope.row.status==1">待执行</p>
 						<p v-else-if="scope.row.status==2">执行中</p>
 						<p v-else-if="scope.row.status==3">已完成</p>
 					</template>
@@ -113,8 +113,10 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="180">
 					<template #default="scope">
-						<el-button link @click="handleEdit(scope.row)">编辑</el-button>
-						<el-button link @click="">发布任务</el-button>
+						<el-button v-if="scope.row.status==0 || scope.row.status==1" link @click="handleEdit(scope.row)">编辑</el-button>
+						<el-button v-if="scope.row.status==0" link @click="updatePlanStatus(scope.row.id,1)">发布任务</el-button>
+						<el-button v-if="scope.row.status==1 || scope.row.status==2" link @click="updatePlanStatus(scope.row.id,-1)">取消任务</el-button>
+						<el-button v-if="scope.row.status==3" link>不可编辑</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -222,7 +224,7 @@
 	import {
 		getPlan,
 		getPlanOption,
-		addPlan,updatePlan
+		addPlan,updatePlan,updateStatus
 	} from '@/api/plan'
 	const page = ref(1)
 	const pageSize = ref(20)
@@ -298,6 +300,16 @@
 	const handleCurrentChange = (number) => {
 		page.value = number
 		getListData(number)
+	}
+	//更新计划状态
+	const updatePlanStatus = (id,status)=>{
+		updateStatus({
+			id:id,
+			status:status
+		}).then(res=>{
+			getListData()
+			ElMessage.success('操作成功')
+		})
 	}
 	//全选
 	const checkTextGrade = ref('请选择')

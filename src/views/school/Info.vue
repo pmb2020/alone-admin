@@ -1,210 +1,189 @@
 <template>
 	<div>
-		<div class="ty-box" style="display: flex;">
-			<el-row style="width: 80%;">
-				<el-col :span="6">
-					<div class="text-lr">
-						<span>班级</span>
-						<span class="value">{{classInfo.class_detail.name}}</span>
-					</div>
+		<div class="ty-box">
+			<el-row>
+				<el-col :span="5">
 					<div class="text-lr">
 						<span>学校</span>
-						<span class="value"></span>
+						<span class="value">{{homeData.school_info.name}}</span>
 					</div>
 				</el-col>
-				<el-col :span="6">
-					<div class="text-lr">
-						<span>学级</span>
-						<span class="value">{{classInfo.class_detail.year}}</span>
-					</div>
+				<el-col :span="5">
 					<div class="text-lr">
 						<span>片区</span>
-						<span class="value"></span>
+						<span class="value">{{homeData.school_info.area}}</span>
 					</div>
 				</el-col>
-				<el-col :span="6">
-					<div class="text-lr">
-						<span>年级</span>
-						<span class="value"></span>
-					</div>
+				<el-col :span="5">
 					<div class="text-lr">
 						<span>集团</span>
-						<span class="value">{{classInfo.class_detail.edu_group}}</span>
+						<span class="value">{{homeData.school_info.edu_group}}</span>
 					</div>
 				</el-col>
-				<el-col :span="6">
-					<div class="text-lr">
-						<span>老师</span>
-						<span class="value">
-							<span v-for="item in classInfo.class_detail.joined_teachers">{{item.name}}，</span>
-						</span>
-					</div>
+				<el-col :span="5">
 					<div class="text-lr">
 						<span>教委</span>
-						<span class="value"></span>
+						<span class="value">{{homeData.school_info.edu_commission_name}}</span>
 					</div>
 				</el-col>
 			</el-row>
 		</div>
-		<div class="ty-box" style="position: relative;margin-top: 80px;">
-			<div class="ty-tabs">
-				<div class="tab-item" :class="{'active':tabIndex==0}" @click="tabIndex=0">
-					班级体测数据展示及分析
-				</div>
-				<div class="tab-item" :class="{'active':tabIndex==1}" @click="tabIndex=1">
-					{{classInfo.class_detail.year}}级体测数据阶段分析
-				</div>
-			</div>
-			<div v-if="tabIndex==0">
-				<!-- <h3 class="title">学生体测数据展示</h3> -->
-				<div class="al-flex-between" style="margin-bottom: 20px;">
-					<h3 class="title" style="margin-bottom: 0;">班级体测数据展示及分析</h3>
-					<div class="al-flex" style="align-items: center;">
-						<p style="color: #222426;">体测计划</p>
-						<el-select v-model="planQuery.plan_id" style="width: 100px;margin: 0 10px;" placeholder="请选择">
-							<el-option v-for="(item,index) in ticePlanOption" :label="item.name" :value="item.id" />
-						</el-select>
-						<p style="color: #222426;">性别</p>
-						<el-select v-model="planQuery.gender" class="m-2" style="width: 100px;margin: 0 10px;"
-							placeholder="请选择">
-							<el-option label="全部" value="全部" />
-							<el-option label="男" value="男" />
-							<el-option label="女" value="女" />
-						</el-select>
-						<el-button type="primary" @click="getPlanData">查询</el-button>
+		<div class="ty-box">
+			<h3 class="title">学校情况</h3>
+			<el-row :gutter="20">
+				<el-col :span="3">
+					<div class="tx-text-num">
+						<p><span class="num">{{homeData.area_data.teacher_num || 0}}</span>人</p>
+						<p>老师数量</p>
 					</div>
-				</div>
-				<div style="margin-bottom: 50px;">
-					<el-table :data="tableData" style="width: 100%" :border="true">
-						<el-table-column type="index" label="序号" align="center" width="80" />
-						<el-table-column prop="name" label="姓名" align="center" />
-						<el-table-column prop="gender" label="性别" align="center" />
-						<el-table-column prop="总分" label="总分(权重)" align="center" />
-						<!-- <el-table-column label="体测计划" width="180" align="center">
-						<template #default="scope">
-							<span style="margin-left: 10px">2021年第8期</span>
-						</template>
-					</el-table-column> -->
-						<el-table-column label="体重指数(BMI)" align="center">
-							<el-table-column prop="体重指数（BMI）成绩" label="成绩" />
-							<el-table-column prop="体重指数（BMI）得分" label="得分" />
-							<el-table-column prop="体重指数（BMI）等级" label="等级" />
-						</el-table-column>
-						<el-table-column label="肺活量" align="center">
-							<el-table-column prop="肺活量成绩" label="成绩" />
-							<el-table-column prop="肺活量得分" label="得分" />
-							<el-table-column prop="肺活量等级" label="等级" />
-						</el-table-column>
-						<el-table-column label="50m跑" align="center">
-							<el-table-column prop="50米跑成绩" label="成绩" />
-							<el-table-column prop="50米跑得分" label="得分" />
-							<el-table-column prop="50米跑等级" label="等级" />
-						</el-table-column>
-						<el-table-column label="坐位体前屈" align="center">
-							<el-table-column prop="坐位体前屈成绩" label="成绩" />
-							<el-table-column prop="坐位体前屈得分" label="得分" />
-							<el-table-column prop="坐位体前屈等级" label="等级" />
-						</el-table-column>
-						<el-table-column label="1分钟跳绳" align="center">
-							<el-table-column prop="一分钟跳绳成绩" label="成绩" />
-							<el-table-column prop="一分钟跳绳得分" label="得分" />
-							<el-table-column prop="一分钟跳绳等级" label="等级" />
-						</el-table-column>
-						<el-table-column fixed="right" label="班级" width="150" align="center">
-							<template #default="scope">
-								<p>{{classInfo.class_detail.year}}级{{classInfo.class_detail.name}}</p>
-							</template>
-						</el-table-column>
-						<!-- <el-table-column fixed="right" prop="date" label="班级" width="150" /> -->
-					</el-table>
-					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目为参加测试。</p>
-				</div>
-				<TiCeChart :class-id="classId" :plan-query="planQuery" :projects="projects"></TiCeChart>
+				</el-col>
+				<el-col :span="3">
+					<div class="tx-text-num">
+						<p><span class="num">{{homeData.area_data.class_num || 0}}</span>个</p>
+						<p>班级数量</p>
+					</div>
+				</el-col>
+				<el-col :span="3">
+					<div class="tx-text-num">
+						<p><span class="num">{{homeData.area_data.student_num || 0}}</span>人</p>
+						<p>学生数量</p>
+					</div>
+				</el-col>
+				<el-col :span="3">
+					<div class="tx-text-num">
+						<p><span class="num">{{homeData.area_data.boy_num || 0}}</span>人</p>
+						<p>男生数量</p>
+					</div>
+				</el-col>
+				<el-col :span="3">
+					<div class="tx-text-num">
+						<p><span class="num">{{homeData.area_data.girl_num || 0}}</span>人</p>
+						<p>女生数量</p>
+					</div>
+				</el-col>
+				<el-col :span="3">
+					<div class="tx-text-num">
+						<p><span class="num">{{homeData.area_data.device_num || 0}}</span>台</p>
+						<p>设备数量</p>
+					</div>
+				</el-col>
+				<el-col :span="3">
+					<div class="tx-text-num">
+						<p><span class="num">{{homeData.area_data.test_num || 0}}</span>次</p>
+						<p>检测次数</p>
+					</div>
+				</el-col>
+			</el-row>
+		</div>
+		<div class="ty-box">
+			<h3 class="title">学校学生体重指数占比</h3>
+			<WeightChart1 :home-data="homeData" />
+		</div>
+		<!-- 全区各项体测指标分析 -->
+		<div class="ty-box">
+			<TiCeChart1 :home-data="homeData" :userType="userType" />
+		</div>
+		<div class="ty-box">
+			<div class="al-flex-between" style="margin-bottom: 20px;">
+				<h3 class="title" style="margin-bottom: 0;">学校各项体测指记录</h3>
+				<!-- <ul class="ty-tab">
+					<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">小学</li>
+					<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">初中</li>
+					<li :class="{'active':gTabIndex==2}" @click="gTabClick(2)">高中</li>
+				</ul> -->
 			</div>
-			<div v-else>
-				<TiCeChart2 :class-id="classId" :plan-query="planQuery" :ticePlanOption="ticePlanOption" :projects="projects"></TiCeChart2>
+			<div>
+				<el-table :data="ticeTable" stripe style="width: 100%">
+					<el-table-column prop="project_name" label="体测项目" />
+					<el-table-column prop="name" label="姓名" width="180" />
+					<el-table-column prop="achievement" label="成绩" />
+					<el-table-column prop="score" label="得分" />
+					<el-table-column prop="end_time" label="记录时间" />
+					<el-table-column prop="school_name" label="所属学校" />
+					<el-table-column prop="year" label="所属学年" />
+					<el-table-column prop="grade_name" label="所属年级" />
+					<el-table-column prop="class_name" label="所属班级" />
+				</el-table>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import {
-		getClassInfo,
-		getClassTCPlan,
-		getClassData
-	} from '@/api/base'
-	import {
-		useRoute
-	} from 'vue-router';
-	import TiCeChart from './TiCeChart.vue'
-	import TiCeChart2 from './TiCeChart2.vue'
+	import {getHomeData} from '@/api/home'
+	import WeightChart1 from './WeightChart1.vue'
+	import TiCeChart1 from './TiCeChart1.vue'
+	import {useRoute} from 'vue-router';
 	const route = useRoute()
-	const value = ref(null)
-	const classId = ref('')
-	const tabIndex = ref(0)
-	const ticePlanOption = ref([])
-	const projects = ref([])
-	const planQuery = ref({
-		plan_id: '',
-		gender: ''
+	const gTabIndex = ref(0)
+	const id = ref('')
+	const userType = ref(localStorage.getItem('usertype'))
+	const homeData = ref({
+		school_info:{},
+		area_data:{},
+		highest_record:[],
+		BMI_chart:{},
+		BMI_chart_boy:{},
+		BMI_chart_girl:{},
+		projects:[]
 	})
-	const classInfo = ref({
-		class_detail: {}
-	})
-	const tableData = ref([])
-	onMounted(() => {
-		classId.value = route.query.id
-		if (!classId.value) return
-		getClassInfo({
-			class_id: classId.value
-		}).then(res => {
-			console.log(res)
-			classInfo.value = res
-		})
-		getPlanList()
-		getPlanData()
-	})
-	const getPlanData = () => {
-		planQuery
-		let params = {
-			class_id: classId.value
+	const ticeTable = reactive([])
+	const gTabClick = (index)=>{
+		ticeTable.length =0 
+		gTabIndex.value = index
+		if(index==0){
+			ticeTable.push(...homeData.value.xiaoxue)
+		}else if(index==1){
+			ticeTable.push(...homeData.value.chuzhong)
+		}else if(index==2){
+			ticeTable.push(...homeData.value.gaozhong)
 		}
-		getClassData({
-			...params,
-			...planQuery.value
-		}).then(res => {
-			// console.log(res.projects)
-			projects.value = res.projects
-			tableData.value = res.score_list
-		})
 	}
-	//查体测计划期数
-	const getPlanList = () => {
-		getClassTCPlan({
-			class_id: classId.value
-		}).then(res => {
-			ticePlanOption.value = res
+	onBeforeMount(()=>{
+		// gTabIndex.value=9922
+		// provide('homeData','ssssss')
+	})
+	onMounted(()=>{
+		id.value = route.query.id
+		if(!id.value) return 
+		getInitData()
+	})
+	const getInitData = async ()=>{
+		console.log(id.value)
+		await getHomeData({school_id:id.value}).then(res=>{
+			console.log(res)
+			homeData.value = res;
+			homeData.value.area_data = res.school_data
+			ticeTable.push(...res.highest_record)
 		})
+		
 	}
 </script>
 
 <style lang="scss">
+	.tx-text-num {
+		color: #666;
+		font-size: 14px;
+
+		& p:first-child {
+			margin-bottom: 10px;
+		}
+
+		.num {
+			font-size: 18px;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: 600;
+			margin-right: 2px;
+			color: #005EFF;
+		}
+	}
 	.text-lr {
 		font-family: PingFangSC-Regular, PingFang SC;
 		color: #666;
 		font-size: 14px;
-		margin-bottom: 20px;
-
 		.value {
 			margin-left: 20px;
 			color: #222426;
 		}
-	}
-
-	.tip-text {
-		font-size: 14px;
-		color: #979797;
-		margin: 30px 30px;
 	}
 </style>

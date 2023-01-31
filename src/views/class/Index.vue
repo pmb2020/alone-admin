@@ -62,9 +62,13 @@
 						<span>{{scope.row.year}}级</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="base_grade_id" label="年级" align="center" />
+				<el-table-column prop="grade_name" label="年级" align="center" />
 				<el-table-column prop="name" label="班级" align="center" />
-				<el-table-column prop="address" label="所属老师" align="center" />
+				<el-table-column prop="teachers" label="所属老师" align="center">
+					<template #default="scope">
+						<span v-for="tea in scope.row.teachers" :key="tea.id">{{tea.name}}，</span>
+					</template>
+				</el-table-column>
 				<el-table-column prop="student_num" label="班级人数" align="center" />
 				<el-table-column label="体测详情" align="center" width="80">
 					<template #default="scope">
@@ -73,7 +77,7 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="80">
 					<template #default="scope">
-						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
+						<el-button size="default" @click="handleEdit(scope.row,scope.$index)"
 							style="border: none;background-color: transparent;">
 							<el-icon>
 								<EditPen />
@@ -93,22 +97,22 @@
 			<AddForm :query-option="queryOption"></AddForm>
 		</el-dialog>
 		<!-- 编辑 -->
-		<el-dialog class="ty-dialog" width="600px" v-model="dialogEditFormVisible" title="编辑班级信息" destroy-on-close>
+		<el-dialog class="ty-dialog" width="800px" v-model="dialogEditFormVisible" title="编辑班级信息" destroy-on-close>
 			<el-form :inline="false" :model="form" class="demo-form-inline" label-width="80" size="default"
 				:scroll-to-error="true">
 				<div class="al-flex" style="">
 					<div class="" style="margin-right: 30px;position: relative;left: -20px;">
-						<el-form-item label="姓名">
-							<el-input v-model="form.user" placeholder="请输入" />
-						</el-form-item>
-						<el-form-item label="性别">
-							<el-select v-model="form.region" placeholder="请选择">
-								<el-option label="男" value="1" />
-								<el-option label="女" value="2" />
+						<el-form-item label="学级">
+							<el-select v-model="form.year" placeholder="请选择">
+								<el-option v-for="(item,index) in queryOption.years" :label="item.year"
+									:value="item.year" />
 							</el-select>
 						</el-form-item>
-						<el-form-item label="年龄">
-							<el-input v-model="form.user" placeholder="请输入" />
+						<el-form-item label="年级">
+							<el-select v-model="queryForm.grade_id" placeholder="请选择">
+								<el-option v-for="(item,index) in queryOption.grades" :label="item.name"
+									:value="item.id" />
+							</el-select>
 						</el-form-item>
 					</div>
 					<div style="">
@@ -117,15 +121,6 @@
 								<el-option label="Zone one" value="shanghai" />
 								<el-option label="Zone two" value="beijing" />
 							</el-select>
-						</el-form-item>
-						<el-form-item label="归属片区">
-							<el-select v-model="form.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
-							</el-select>
-						</el-form-item>
-						<el-form-item label="身份证号">
-							<el-input v-model="form.user" placeholder="请输入" />
 						</el-form-item>
 					</div>
 				</div>
@@ -139,7 +134,7 @@
 </template>
 
 <script setup>
-	import {getClass,addClass,updateClass,getClassOptions} from '@/api/base'
+	import {getClass,addClass,updateClass,getClassOptions,getClassData} from '@/api/base'
 	import AddForm from './AddForm.vue'
 	const page = ref(1)
 	const pageSize = ref(20)
@@ -172,7 +167,12 @@
 			tableData.push(...res.list)
 		})
 	}
-	const handleEdit = () => {
+	const handleEdit = (row) => {
+		console.log(row)
+		form.value = {...row}
+		// getClassData({class_id:row.id}).then(res=>{
+		// 	console.log(res)
+		// })
 		dialogEditFormVisible.value = true
 	}
 	const onSubmit = () => {

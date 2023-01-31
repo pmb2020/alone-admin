@@ -144,7 +144,7 @@
 	const isFromEdit = ref(false)
 	const queryForm = reactive({})
 	const keywords = ref('')
-	const queryOptionSchool = ref({})
+	const queryOptionSchool = ref([])
 	const formRef = ref(null)
 	const form = ref({})
 	const rules = reactive({
@@ -255,8 +255,15 @@
 			ElMessage.error(val.responseMsg)
 		}
 	}
+	//选择学校，片区、集团、联动
 	const changeSchool = (val)=>{
-		console.log(val)
+		queryOptionSchool.value.forEach(item=>{
+			if(item.id===val){
+				form.value.area = item.area
+				form.value.edu_group = item.edu_group
+			}
+		})
+		
 	}
 </script>
 

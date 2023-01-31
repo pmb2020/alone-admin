@@ -16,7 +16,7 @@
 							</template>
 							<ul class="single-ul">
 								<!-- <p>{{item[Object.keys(item)[0]]}}</p> -->
-								<li :class="{'active':index==singleIndex}" v-for="(it,index) in item[Object.keys(item)[0]]" :key="index"
+								<li :class="{'active':index===singleIndex}" v-for="(it,index) in item[Object.keys(item)[0]]" :key="index"
 									@click="singleClick(index,it.id)">
 									{{it.name}}
 								</li>
@@ -50,7 +50,7 @@
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
 				<el-table-column type="index" label="序号" align="center" width="80" />
 				<el-table-column prop="name" label="姓名" align="center" />
-				<el-table-column prop="role_id" label="角色" align="center" />
+				<el-table-column prop="role_name" label="角色" align="center" />
 				<el-table-column prop="phone" label="电话" align="center" />
 				<el-table-column prop="department" label="部门" align="center" />
 				<el-table-column label="状态" align="center" width="150">
@@ -97,7 +97,7 @@
 							<el-input v-model="form.id_card" placeholder="请输入" autocomplete />
 						</el-form-item>
 						<el-form-item label="状态" prop="status">
-							<el-switch v-model="form.status" active-value="1" inactive-value="0"
+							<el-switch v-model="form.status" :active-value="1" :inactive-value="0"
 								style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ccc" inline-prompt
 								active-text="启用" inactive-text="禁用" />
 						</el-form-item>
@@ -151,7 +151,7 @@
 	const organ = ref({}) //组织架构
 	const activeNames = ref(['1'])
 	const activeNames1 = ref([])
-	const singleIndex = ref(0)
+	const singleIndex = ref('')
 	const schoolId = ref('')
 	const selectOption = ref({})
 	onMounted(() => {
@@ -170,7 +170,7 @@
 	const singleClick = (index,id)=>{
 		singleIndex.value = index
 		schoolId.value = id
-		getListData(page.value)
+		getListData()
 	}
 	const handleCurrentChange = (number) => {
 		page.value = number
@@ -178,7 +178,7 @@
 	}
 	const handleSizeChange = (number) => {
 		pageSize.value = number
-		getListData(page.value)
+		getListData()
 	}
 	const keywords = ref('')
 	const formRef = ref(null)
@@ -244,7 +244,8 @@
 	//文件上传成功
 	const uploadFileSuccess = (val)=>{
 		if(val.responseCode==0){
-			ElMessage.success('修改成功')
+			ElMessage.success(val.responseMsg)
+			getListData()
 		}else{
 			ElMessage.error(val.responseMsg)
 		}

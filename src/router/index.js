@@ -22,6 +22,7 @@ const routes = [
 	},
 	{
 		path:'/',
+		name:"SportsHome",
 		component: Layout,
 		children:[
 			{
@@ -38,6 +39,7 @@ const routes = [
 	{
 		path:'/base',
 		component: Layout,
+		name:'base',
 		meta:{
 			title:'基础信息管理',
 			icon:'Discount',
@@ -46,6 +48,7 @@ const routes = [
 		children:[
 			{
 				path:'student',
+				name:'baseStudent',
 				component: () => import('../views/student/Index.vue'),
 				meta: {
 				  title: '学生信息管理',
@@ -83,6 +86,7 @@ const routes = [
 			},
 			{
 				path:'class',
+				name:'baseClass',
 				component: () => import('../views/class/Index.vue'),
 				meta: {
 				  title: '班级信息管理',
@@ -90,6 +94,7 @@ const routes = [
 			},
 			{
 				path:'grade',
+				name:'baseGrade',
 				component: () => import('../views/grade/Index.vue'),
 				meta: {
 				  title: '年级信息管理',
@@ -97,6 +102,7 @@ const routes = [
 			},
 			{
 				path:'teacher',
+				name:'baseTeacher',
 				component: () => import('../views/teacher/Index.vue'),
 				meta: {
 				  title: '老师信息管理',
@@ -104,6 +110,7 @@ const routes = [
 			},
 			{
 				path:'school',
+				name:'baseSchool',
 				component: () => import('../views/school/Index.vue'),
 				meta: {
 				  title: '学校信息管理',
@@ -113,6 +120,7 @@ const routes = [
 	},
 	{
 		path:'/ticeChart',
+		name:'ticeChart',
 		component: Layout,
 		children:[
 			{
@@ -128,6 +136,7 @@ const routes = [
 	},
 	{
 		path:'/ticeBZ',
+		name:'ticeBZ',
 		component: Layout,
 		meta:{
 			title:'国家体测标准',
@@ -137,6 +146,7 @@ const routes = [
 		children:[
 			{
 				path:'primary',
+				name:'ticeBZPrimary',
 				component: () => import('../views/ticeBZ/Primary.vue'),
 				meta: {
 				  title: '小学体测标准评分',
@@ -144,6 +154,7 @@ const routes = [
 			},
 			{
 				path:'middle',
+				name:'ticeBZMiddle',
 				component: () => import('../views/ticeBZ/Middle.vue'),
 				meta: {
 				  title: '初中体测标准评分',
@@ -151,6 +162,7 @@ const routes = [
 			},
 			{
 				path:'high',
+				name:'ticeBZHigh',
 				component: () => import('../views/ticeBZ/High.vue'),
 				meta: {
 				  title: '高中体测标准评分',
@@ -158,6 +170,7 @@ const routes = [
 			},
 			{
 				path:'exam',
+				name:'ticeBZExam',
 				component: () => import('../views/ticeBZ/Exam.vue'),
 				meta: {
 				  title: '考试项目标准',
@@ -167,6 +180,7 @@ const routes = [
 	},
 	{
 		path:'/plan',
+		name:'plan',
 		component: Layout,
 		children:[
 			{
@@ -182,6 +196,7 @@ const routes = [
 	},
 	{
 		path:'/device',
+		name:'device',
 		component: Layout,
 		children:[
 			{
@@ -198,6 +213,7 @@ const routes = [
 	{
 		path:'/user',
 		redirect:'/user/index',
+		name:'user',
 		component: Layout,
 		meta:{
 			title:'用户管理',
@@ -207,6 +223,7 @@ const routes = [
 		children:[
 			{
 				path:'index',
+				name:'userIndex',
 				component: () => import('../views/user/Index.vue'),
 				meta: {
 				  title: '用户列表',
@@ -214,6 +231,7 @@ const routes = [
 			},
 			{
 				path:'school',
+				name:'userSchool',
 				component: () => import('../views/user/School.vue'),
 				meta: {
 				  title: '学校列表',
@@ -221,6 +239,7 @@ const routes = [
 			},
 			{
 				path:'role',
+				name:'userRole',
 				component: () => import('../views/user/Role.vue'),
 				meta: {
 				  title: '角色列表',
@@ -230,6 +249,7 @@ const routes = [
 	},
 	{
 		path:'/person',
+		name:'person',
 		redirect:'/person/index',
 		component: Layout,
 		children:[

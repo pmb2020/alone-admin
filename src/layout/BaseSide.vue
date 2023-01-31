@@ -29,7 +29,7 @@
 						<el-menu-item-group>
 							<template v-for="(subItem,subIndex) in items.children" :key="subIndex">
 								<el-menu-item v-if="!subItem.hidden" :index="items.path+'/'+subItem.path">
-									{{subItem.meta.title}}
+									1{{subItem.meta.title}}
 								</el-menu-item>
 							</template>
 						</el-menu-item-group>
@@ -41,8 +41,9 @@
 </template>
 
 <script setup>
-import { watch } from 'vue';
+	import { watch } from 'vue';
 	import {useRoute,useRouter} from 'vue-router';
+	import {getMenu} from '@/api/auth'
 	const route = useRoute()
 	const router = useRouter()
 	const isCollapse = ref(false)
@@ -52,15 +53,34 @@ import { watch } from 'vue';
 		console.log('sss' + n)
 	})
 	onMounted(()=>{
-		console.log(router.options.routes)
 		menuRoute.value = route.path
-		menuItems.value = router.options.routes.filter((item) => {
-			if (item.path == '/') {
-				item.path = ''
-			}
-			return !item.hidden
+		getMenu().then(res=>{
+			// console.log(res)
+			// res.splice(0,2)
+			// console.log(res)
+			menuItems.value=router.options.routes.filter(item=>{
+				if(item.hidden || test(res,item.name)==-1){
+					return false
+				}
+				return true
+			})
+			console.log(menuItems.value)
 		})
+		// menuItems.value = router.options.routes.filter((item) => {
+		// 	if (item.path == '/') {
+		// 		item.path = ''
+		// 	}
+		// 	return !item.hidden
+		// })
+		// console.log(menuItems.value)
 	})
+	
+	const test = (data=[],val)=>{
+		return data.findIndex(item=>{
+			return item.name == val
+		})
+	}
+	
 	const handleOpen = ()=>{
 		
 	}

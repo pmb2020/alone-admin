@@ -31,3 +31,7 @@ export const getPlanSchool = (params) =>{
 export const updateStatus = (params) =>{
 	return get('/plan/status/',params)
 }
+
+export const planNotice = (params) =>{
+	return get('/plan/notice_again/',params)
+}

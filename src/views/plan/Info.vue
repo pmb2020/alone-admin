@@ -91,7 +91,7 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="180">
 					<template #default="scope">
-						<el-button link @click="">再次通知</el-button>
+						<el-button link @click="againNotice(scope.row.id)">再次通知</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -118,7 +118,7 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="180">
 					<template #default="scope">
-						<el-button link @click="">再次通知</el-button>
+						<el-button link @click="againNotice(scope.row.id)">再次通知</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-	import {getPlanInfo,getPlanClass,getPlanSchool} from '@/api/plan'
+	import {getPlanInfo,getPlanClass,getPlanSchool,planNotice} from '@/api/plan'
 	import {useRoute} from 'vue-router';
 	const route = useRoute()
 	const userType = ref(localStorage.getItem('usertype'))
@@ -154,6 +154,16 @@
 			})
 		}
 		
+	}
+	//再次通知
+	const againNotice = (id)=>{
+		let params = {
+			id:id,
+			usertype: userType.value=='edu' ? 'class' :'school'
+		}
+		planNotice(params).then(res=>{
+			ElMessage.success('通知成功')
+		})
 	}
 </script>
 

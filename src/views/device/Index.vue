@@ -16,8 +16,8 @@
 							</template>
 							<ul class="single-ul">
 								<!-- <p>{{item[Object.keys(item)[0]]}}</p> -->
-								<li :class="{'active':index==singleIndex}" v-for="(it,index) in item[Object.keys(item)[0]]" :key="index"
-									@click="singleClick(index,it.id)">
+								<li :class="{'active':index*100+index1===singleIndex}" v-for="(it,index1) in item[Object.keys(item)[0]]" :key="it.id"
+									@click="singleClick(index*100+index1,it.id)">
 									{{it.name}}
 								</li>
 							</ul>

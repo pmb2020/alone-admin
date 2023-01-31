@@ -128,8 +128,8 @@
 						<el-table-column prop="一分钟仰卧起坐得分" label="得分" />
 						<el-table-column prop="一分钟仰卧起坐等级" label="等级" />
 					</el-table-column>
-					<el-table-column label="50*8往返跑成绩" align="center">
-						<el-table-column prop="50*8往返跑得分" label="成绩" />
+					<el-table-column label="50*8往返跑" align="center">
+						<el-table-column prop="50*8往返跑成绩" label="成绩" />
 						<el-table-column prop="50*8往返跑得分" label="得分" />
 						<el-table-column prop="50*8往返跑等级" label="等级" />
 					</el-table-column>
@@ -140,7 +140,7 @@
 					</el-table-column>
 					<!-- <el-table-column fixed="right" prop="date" label="班级" width="150" /> -->
 				</el-table>
-				<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目为参加测试。</p>
+				<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
 			</div>
 			<TiCeChart :student-id="studentId" :chart-data="chartData"></TiCeChart>
 		</div>

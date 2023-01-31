@@ -12,7 +12,10 @@
 						</el-select>
 					</div>
 					<div v-else>
-						<p>{{scope.row.base_grade_id}}</p>
+						<el-select disabled v-model="scope.row.base_grade_id" placeholder="请选择">
+							<el-option v-for="(item,index) in selOption.grades" :label="item.name"
+								:value="item.id" />
+						</el-select>
 					</div>
 				</template>
 			</el-table-column>
@@ -128,6 +131,7 @@
 			year: '',
 			auto_promotion:0
 		})
+		columnEdit[tableData.value.length-1] = true
 	}
 	//清空
 	const handleReset = (row) =>{

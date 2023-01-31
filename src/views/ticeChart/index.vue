@@ -29,7 +29,7 @@
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="集团">
-									<el-input v-model="queryForm.jituan" placeholder="请输入内容" />
+									<el-input v-model="queryForm.edu_group" placeholder="请输入内容" />
 								</el-form-item>
 								<el-form-item label="班级">
 									<el-select v-model="queryForm.class_id" placeholder="请选择" @change="selClass">
@@ -167,9 +167,7 @@
 					color: "#baf"
 				}
 			},
-			tooltip: {
-				trigger: 'axis'
-			},
+			tooltip: {},
 			legend: {
 				data: ['体重指数', '肺活量', '50米跑', '坐位体前屈', '1分钟跳绳']
 			},
@@ -218,8 +216,8 @@
 		// barChat.value.setOption(option.value);
 		// gradeChat.value.setOption(gradeChatOption.value);
 		window.onresize = function() {
-			barChat.resize();
-			gradeChat.resize();
+			barChat.value.resize();
+			gradeChat.value.resize();
 		};
 	})
 	const initData = ()=>{
@@ -260,6 +258,12 @@
 		queryForm.year = null
 		queryForm.grade_id = null
 		queryForm.class_id = null
+		queryOption.value.school.forEach(item=>{
+			if(item.id===school_id){
+				queryForm.area = item.area
+				queryForm.edu_group = item.edu_group
+			}
+		})
 		getYearOpt({school_id:school_id}).then(res=>{
 			queryOption.value.year = res
 		})

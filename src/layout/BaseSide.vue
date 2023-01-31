@@ -40,37 +40,32 @@
 	</div>
 </template>
 
-<script lang="ts">
-	export default {
-		data() {
-			return {
-				isCollapse: false,
-				menuItems: [],
-				menuRoute: ''
+<script setup>
+import { watch } from 'vue';
+	import {useRoute,useRouter} from 'vue-router';
+	const route = useRoute()
+	const router = useRouter()
+	const isCollapse = ref(false)
+	const menuItems = ref([])
+	const menuRoute = ref('')
+	watch(isCollapse,(n,o)=>{
+		console.log('sss' + n)
+	})
+	onMounted(()=>{
+		console.log(router.options.routes)
+		menuRoute.value = route.path
+		menuItems.value = router.options.routes.filter((item) => {
+			if (item.path == '/') {
+				item.path = ''
 			}
-		},
-		watch: {
-			isCollapse(n, o) {
-				console.log('sss' + n)
-			}
-		},
-		mounted() {
-			this.menuRoute = this.$route.path
-			this.menuItems = this.$router.options.routes.filter((item) => {
-				if (item.path == '/') {
-					item.path = ''
-				}
-				return !item.hidden
-			})
-		},
-		methods: {
-			handleOpen() {
-
-			},
-			handleClose() {
-
-			}
-		}
+			return !item.hidden
+		})
+	})
+	const handleOpen = ()=>{
+		
+	}
+	const handleClose = ()=>{
+		
 	}
 </script>
 

@@ -7,3 +7,7 @@ export const login = (data) =>{
 export const loginOut = (params) =>{
 	return get('/user/logout/',params)
 }
+
+export const getMenu = (params) =>{
+	return get('/role/menu/',params)
+}

@@ -117,7 +117,7 @@
 						</el-table-column>
 						<!-- <el-table-column fixed="right" prop="date" label="班级" width="150" /> -->
 					</el-table>
-					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目为参加测试。</p>
+					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
 				</div>
 				<TiCeChart :class-id="classId" :plan-query="planQuery" :projects="projects"></TiCeChart>
 			</div>

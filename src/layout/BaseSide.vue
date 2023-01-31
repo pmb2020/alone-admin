@@ -26,10 +26,11 @@
 							<img class="menu-icon" :src="'./icons/'+items.meta.image">
 							<span>{{items.meta.title}}</span>
 						</template>
+						<!-- 二级菜单 -->
 						<el-menu-item-group>
 							<template v-for="(subItem,subIndex) in items.children" :key="subIndex">
 								<el-menu-item v-if="!subItem.hidden" :index="items.path+'/'+subItem.path">
-									1{{subItem.meta.title}}
+									{{subItem.meta.title}}
 								</el-menu-item>
 							</template>
 						</el-menu-item-group>

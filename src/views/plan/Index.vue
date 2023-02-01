@@ -38,13 +38,19 @@
 									</el-select>
 								</el-form-item>
 								<el-form-item label="学校名称">
-									<el-input v-model="queryForm.school_name" placeholder="请输入" />
+									<el-select v-model="queryForm.school_name" placeholder="请选择">
+										<el-option v-for="item in queryOption.school_list" :label="item.name"
+											:value="item.name" />
+									</el-select>
 								</el-form-item>
+								<!-- <el-form-item label="学校名称">
+									<el-input v-model="queryForm.school_name" placeholder="请输入" />
+								</el-form-item> -->
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="学校学段">
-									<el-select v-model="queryForm.school_type" placeholder="请选择">
-										<el-option v-for="item in queryOption.school_type" :label="item"
+									<el-select v-model="queryForm.school_type" @change="selSchType" placeholder="请选择">
+										<el-option v-for="item in queryOptionOrigin.school_type" :label="item"
 											:value="item" />
 									</el-select>
 								</el-form-item>
@@ -52,13 +58,12 @@
 									<el-date-picker v-model="queryForm.date" type="date" value-format="YYYY-MM-DD"
 										placeholder="请选择" />
 								</el-form-item>
-								
 							</el-col>
 						</el-row>
 					</el-col>
 					<el-col :span="4" style="padding-bottom: 18px;">
-						<div
-							style="display: flex;align-items: center;justify-content: end;flex-direction: column;height: 100%;">
+						<div class="query-btn">
+							<el-button @click="resetForm(queryFormRef)">重置</el-button>
 							<el-button type="primary" style="margin-left: 0;" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
@@ -92,15 +97,15 @@
 				</el-table-column>
 				<el-table-column prop="projects" label="体测项目" align="center" width="180">
 					<template #default="scope">
-						<span v-for="item in scope.row.projects">
-							{{item.name}}，
+						<span v-for="(item,index) in scope.row.projects">
+							{{item.name}}<span v-if="index < scope.row.projects.length-1">，</span>
 						</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="grades" label="体测对象" align="center">
 					<template #default="scope">
-						<span v-for="item in scope.row.grades">
-							{{item.name}}，
+						<span v-for="(item,index) in scope.row.grades">
+							{{item.name}}<span v-if="index < scope.row.projects.length-1">，</span>
 						</span>
 					</template>
 				</el-table-column>
@@ -140,8 +145,8 @@
 							<el-input v-model="form.name" placeholder="请输入" autocomplete />
 						</el-form-item>
 						<el-form-item v-if="userType=='edu'" label="学校学段">
-							<el-select v-model="form.school_type" placeholder="请选择">
-								<el-option v-for="item in queryOption.school_type" :label="item" :value="item" />
+							<el-select v-model="form.school_type" @change="selSchType" placeholder="请选择">
+								<el-option v-for="item in queryOptionOrigin.school_type" :label="item" :value="item" />
 							</el-select>
 						</el-form-item>
 						<el-form-item label="体测对象" style="font-weight: bold;">
@@ -170,11 +175,6 @@
 								</el-checkbox-group>
 							</el-popover>
 						</el-form-item>
-						<!-- <el-form-item label="体测项目">
-							<el-select v-model="form.project_ids" placeholder="请选择">
-								<el-option v-for="item in queryOption.projects" :label="item.name" :value="item.id" />
-							</el-select>
-						</el-form-item> -->
 					</el-col>
 					<el-col :span="12" :offset="1">
 						<el-form-item label="执行开始时间" label-width="100" prop="title">
@@ -193,15 +193,15 @@
 								<el-checkbox v-model="checkAllSchool" :indeterminate="isIndeterminateSchool"
 								 @change="handleCheckAllSchool">全选</el-checkbox>
 								<el-checkbox-group v-model="form.school_ids">
-									<el-checkbox v-for="item in queryOption.school_list.小学" :key="item.id" :label="item.id">
+									<el-checkbox v-for="item in queryOption.school_list" :key="item.id" :label="item.id">
 										{{item.name}}
 									</el-checkbox>
-									<el-checkbox v-for="item in queryOption.school_list.初中" :key="item.id" :label="item.id">
+									<!-- <el-checkbox v-for="item in queryOption.school_list.初中" :key="item.id" :label="item.id">
 										{{item.name}}
 									</el-checkbox>
 									<el-checkbox v-for="item in queryOption.school_list.高中" :key="item.id" :label="item.id">
 										{{item.name}}
-									</el-checkbox>
+									</el-checkbox> -->
 								</el-checkbox-group>
 							</el-popover>
 						</el-form-item>
@@ -240,13 +240,14 @@
 	const formRef = ref({})
 	const rules = reactive({})
 	const queryOption = ref({})
+	const queryOptionOrigin = ref({})
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	onMounted(() => {
 		getListData()
 		getPlanOption().then(res => {
 			console.log(res)
-			queryOption.value = res
+			queryOptionOrigin.value = res
 		})
 	})
 	const getListData = () => {
@@ -270,6 +271,17 @@
 		}
 		isFromAdd.value = false
 		dialogFormVisible.value = true
+	}
+	//联动-选择学段
+	const selSchType = (val)=>{
+		// console.log(val)
+		queryForm.school_name = ''
+		queryForm.project_id = ''
+		queryForm.grade_id = ''
+		queryOption.value.grades = queryOptionOrigin.value.grades[val]
+		queryOption.value.projects = queryOptionOrigin.value.projects[val]
+		queryOption.value.school_list = queryOptionOrigin.value.school_list[val]
+		console.log(queryOption.value)
 	}
 	const onSubmit = () => {
 		formRef.value.validate((valid) => {
@@ -334,6 +346,12 @@
 	const checkAllSchool = ref(false)
 	const isIndeterminateSchool = ref(false)
 	const handleCheckAllSchool = (val)=>{
+		let schools = queryOption.value.school_list.map(v=>{return v.id})
+		form.value.school_ids = val ? schools : [],
+		isIndeterminateSchool.value = false
+	}
+	//老的
+	const handleCheckAllSchool1 = (val)=>{
 		let schools1 = queryOption.value.school_list.小学.map(v=>{return v.id})
 		let schools2 = queryOption.value.school_list.初中.map(v=>{return v.id})
 		let schools3 = queryOption.value.school_list.高中.map(v=>{return v.id})

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="ty-box">
-			<h3 class="title">角色列表</h3>
+			<h3 class="title">权限列表</h3>
 			<div class="al-flex-between">
 				<div class="al-flex">
 					<el-input v-model="keywords" placeholder="请输入" />
@@ -12,13 +12,13 @@
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
 							<CirclePlusFilled />
 						</el-icon>
-						新增角色信息
+						新增权限信息
 					</button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
 				<el-table-column type="index" label="序号" align="center" width="80" />
-				<el-table-column prop="title" label="角色名称" align="center" width="180" />
+				<el-table-column prop="title" label="权限名称" align="center" />
 				<el-table-column prop="desc" label="备注" align="center" />
 				<el-table-column prop="create_at" label="创建时间" align="center" />
 				<el-table-column label="操作" align="center" width="120">
@@ -35,11 +35,11 @@
 			</div>
 		</div>
 		<!-- 弹框表单 -->
-		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑角色信息' :'新增角色信息'"
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑权限信息' :'新增权限信息'"
 			destroy-on-close>
 			<el-form ref="formRef" :model="form" :rules="rules" class="demo-form-inline" label-width="80" size="default"
 				:scroll-to-error="true">
-				<el-form-item label="角色名称" prop="title" style="width: 50%;">
+				<el-form-item label="权限名称" prop="title" style="width: 50%;">
 					<el-input v-model="form.title" placeholder="请输入" />
 				</el-form-item>
 				<el-form-item label="备注" prop="desc" style="width: 50%;">

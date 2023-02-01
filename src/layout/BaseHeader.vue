@@ -2,8 +2,8 @@
 	<el-header>
 		<div class="al-flex" style="color: #222426;font-weight: 600;align-items: center;">
 			<img style="width: 60px;margin-right: 5px;" src="@/assets/logo.png" alt="">
-			<p>体育智慧服务平台</p>
-			<p style="margin-left: 80px;font-weight: 500;">{{platform_name}}</p>
+			<p>{{platform_name}}智慧体测管理平台</p>
+			<!-- <p style="margin-left: 80px;font-weight: 500;">{{platform_name}}</p> -->
 		</div>
 		<div class="al-flex" style="align-items: center;margin: 0 10px;">
 			<!-- <el-badge :value="0" type="warning" class="item" style="margin: 0 30px;">

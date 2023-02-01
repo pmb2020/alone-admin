@@ -4,31 +4,31 @@
 		<el-form class="person-form" ref="formRef" :model="form" label-width="90px" label-position="left">
 			<el-row>
 				<el-col :span="6">
-					<el-form-item label="姓名">
+					<el-form-item label="名称">
 						<el-input v-model="form.name" disabled placeholder="" />
 					</el-form-item>
-					<el-form-item label="角色">
+					<el-form-item label="权限范围">
 						<el-input v-model="form.role_name" disabled placeholder="" />
 					</el-form-item>
-					<el-form-item label="工号">
+					<el-form-item label="账号">
 						<el-input v-model="form.username" disabled placeholder="" />
 					</el-form-item>
 					<el-form-item label="手机号码">
 						<el-input v-model="form.phone" disabled placeholder="" />
 					</el-form-item>
-					<el-form-item label="身份证号">
+					<!-- <el-form-item label="身份证号">
 						<el-input v-model="form.id_card" disabled placeholder="" />
-					</el-form-item>
+					</el-form-item> -->
 					<el-form-item label="邮箱">
 						<el-input v-model="form.mail" disabled placeholder="" />
 					</el-form-item>
-					<el-form-item label="所属学校">
+					<el-form-item label="所属机构">
 						<el-input v-model="form.school_name" disabled placeholder="" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="6" :offset="3">
 					<el-form-item label="初始密码">
-						<el-input v-model="form.password" placeholder="123456" />
+						<el-input disabled v-model="form.password" placeholder="123456" />
 					</el-form-item>
 					<el-form-item label="新密码">
 						<el-input v-model="form.new_password" type="password" show-password placeholder="请输入" />
@@ -55,7 +55,7 @@
 		})
 	})
 	const onSubmit = ()=>{
-		if(!form.value.password || !form.value.new_password){
+		if(!form.value.new_password){
 			return ElMessage.warning('密码不能为空！')
 		}
 		if(form.value.new_password != form.value.verify_password){

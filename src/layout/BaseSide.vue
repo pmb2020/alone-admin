@@ -57,20 +57,42 @@
 		menuRoute.value = route.path
 		getMenu().then(res=>{
 			// console.log(res)
+			let childrens = []
+			res.filter(item=>{
+				if(item.children.length>1){
+					childrens.push(item.children)
+				}
+			})
+			// console.log(childrens)
 			// res.splice(0,2)
 			// console.log(res)
 			menuItems.value=router.options.routes.filter(item=>{
 				if(item.hidden || test(res,item.name)==-1){
 					return false
 				}
+				if (item.path == '/') {
+					item.path = ''
+				}
+				//处理二级菜单
+				if(item.children.length>1){
+					item.children.forEach(it=>{
+						console.log(it)
+						console.log(childrens)
+						console.log(test(childrens,it.name),'是否存在')
+						if(test(childrens,it.name) == -1){
+							it.hidden = true
+						}
+					})
+				}
+				// console.log(item.children)
 				return true
 			})
 			console.log(menuItems.value)
 		})
 		// menuItems.value = router.options.routes.filter((item) => {
-		// 	if (item.path == '/') {
-		// 		item.path = ''
-		// 	}
+			// if (item.path == '/') {
+			// 	item.path = ''
+			// }
 		// 	return !item.hidden
 		// })
 		// console.log(menuItems.value)
@@ -78,7 +100,7 @@
 	
 	const test = (data=[],val)=>{
 		return data.findIndex(item=>{
-			return item.name == val
+			return item.name === val
 		})
 	}
 	

@@ -38,19 +38,19 @@
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
 							<CirclePlusFilled />
 						</el-icon>
-						新增员工信息
+						新增账号信息
 					</button>
 					<el-upload class="upload-demo" style="display: inline-block;" :show-file-list="false" name="UserFile"
 						:action="'https://tiyuapi.nkjwx.com/api/user/fileupload/?token='+token+'&school_id='+schoolId" :on-success="uploadFileSuccess">
-						<button class="ty-btn">导入员工信息</button>
+						<button class="ty-btn">导入账号信息</button>
 					</el-upload>
 					<button class="ty-btn"><a target="_blank" href="https://tiyuapi.nkjwx.com/static/员工（老师）导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
 				<el-table-column type="index" label="序号" align="center" width="80" />
-				<el-table-column prop="name" label="姓名" align="center" />
-				<el-table-column prop="role_name" label="角色" align="center" />
+				<el-table-column prop="name" label="名称" align="center" />
+				<el-table-column prop="role_name" label="权限范围" align="center" />
 				<el-table-column prop="phone" label="电话" align="center" />
 				<el-table-column prop="department" label="部门" align="center" />
 				<el-table-column label="状态" align="center" width="150">
@@ -59,8 +59,8 @@
 						<span v-else-if="scope.row.status==0">禁用</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="name" label="教师ID" align="center" />
-				<el-table-column prop="id_card" label="身份证号" align="center" width="150" />
+				<el-table-column prop="name" label="账号" align="center" />
+				<!-- <el-table-column prop="id_card" label="身份证号" align="center" width="150" /> -->
 				<el-table-column label="操作" align="center" width="150">
 					<template #default="scope">
 						<el-button link @click="handleEdit(scope.row)">编辑</el-button>
@@ -75,16 +75,16 @@
 			</div>
 		</div>
 		<!-- 弹框表单 -->
-		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑员工信息' :'新增员工信息'"
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" :title="isFromEdit ? '编辑账号信息' :'新增账号信息'"
 			destroy-on-close>
 			<el-form ref="formRef" :model="form" :rules="rules" label-width="80" label-position="left" size="default"
 				:scroll-to-error="true">
 				<el-row>
 					<el-col :span="8">
-						<el-form-item label="姓名" prop="name">
+						<el-form-item label="名称" prop="name">
 							<el-input v-model="form.name" placeholder="请输入" autocomplete />
 						</el-form-item>
-						<el-form-item label="工号" prop="username">
+						<el-form-item label="账号" prop="username">
 							<el-input v-model="form.username" placeholder="请输入" autocomplete />
 						</el-form-item>
 						<el-form-item label="手机号码" prop="phone">
@@ -93,9 +93,9 @@
 						<el-form-item label="邮箱" prop="mail">
 							<el-input v-model="form.mail" placeholder="请输入" autocomplete />
 						</el-form-item>
-						<el-form-item label="身份证号" prop="id_card">
+						<!-- <el-form-item label="身份证号" prop="id_card">
 							<el-input v-model="form.id_card" placeholder="请输入" autocomplete />
-						</el-form-item>
+						</el-form-item> -->
 						<el-form-item label="状态" prop="status">
 							<el-switch v-model="form.status" :active-value="1" :inactive-value="0"
 								style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ccc" inline-prompt
@@ -105,16 +105,16 @@
 					<el-col :span="12" :offset="4">
 						<el-row>
 							<el-col :span="24">
-								<el-form-item label="角色">
+								<el-form-item label="权限范围">
 									<el-select v-model="form.role_id" placeholder="请选择">
 										<el-option v-for="role in selectOption.roles" :label="role.title" :value="role.id" />
 									</el-select>
 								</el-form-item>
 								<el-form-item label="角色标识">
 									<el-select v-model="form.usertype" placeholder="请选择">
-										<el-option :label="selectOption.usertype['edu']" value="edu" />
+										<el-option v-if="userType=='edu'" :label="selectOption.usertype['edu']" value="edu" />
 										<el-option :label="selectOption.usertype['school']" value="school" />
-										<el-option :label="selectOption.usertype['teacher']" value="teacher" />
+										<el-option v-if="userType=='school'" :label="selectOption.usertype['teacher']" value="teacher" />
 									</el-select>
 								</el-form-item>
 								<el-form-item label="选择机构">

@@ -226,7 +226,7 @@ const routes = [
 				name:'userIndex',
 				component: () => import('../views/user/Index.vue'),
 				meta: {
-				  title: '用户列表',
+				  title: '账号列表',
 				},
 			},
 			{
@@ -242,7 +242,7 @@ const routes = [
 				name:'userRole',
 				component: () => import('../views/user/Role.vue'),
 				meta: {
-				  title: '角色列表',
+				  title: '权限列表',
 				},
 			},
 		]

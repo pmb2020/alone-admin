@@ -133,7 +133,6 @@
 		// provide('homeData','ssssss')
 	})
 	onMounted(()=>{
-		console.log(userType.value)
 		getInitData()
 	})
 	const getInitData = async ()=>{

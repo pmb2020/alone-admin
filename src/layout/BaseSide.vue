@@ -60,7 +60,7 @@
 			let childrens = []
 			res.filter(item=>{
 				if(item.children.length>1){
-					childrens.push(item.children)
+					childrens.push(...item.children)
 				}
 			})
 			// console.log(childrens)
@@ -76,9 +76,9 @@
 				//处理二级菜单
 				if(item.children.length>1){
 					item.children.forEach(it=>{
-						console.log(it)
-						console.log(childrens)
-						console.log(test(childrens,it.name),'是否存在')
+						// console.log(it)
+						// console.log(childrens)
+						// console.log(test(childrens,it.name),'是否存在')
 						if(test(childrens,it.name) == -1){
 							it.hidden = true
 						}

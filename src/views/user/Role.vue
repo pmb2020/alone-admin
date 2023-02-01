@@ -46,7 +46,7 @@
 					<el-input v-model="form.desc" :rows="3" type="textarea" placeholder="请输入" />
 				</el-form-item>
 				<el-form-item label="功能权限" prop="desc" style="width: 50%;font-weight: bold;">
-					<el-tree ref="treeRef" :data="authList" show-checkbox node-key="id"
+					<el-tree ref="treeRef" :data="authList" :default-checked-keys="checkedAuthId" show-checkbox node-key="id"
 						highlight-current :props="defaultProps" />
 				</el-form-item>
 				<div style="display: flex;justify-content: center;">
@@ -73,8 +73,8 @@
 	const isFromEdit = ref(false)
 	const keywords = ref('')
 	const queryForm = reactive({})
-	const authList = reactive([
-	])
+	const checkedAuthId = ref([])
+	const authList = reactive([])
 	const treeRef = ref(null)
 	const defaultProps = ref({
 		children: 'children',
@@ -126,6 +126,8 @@
 		getListData(number)
 	}
 	const handleEdit = (row) => {
+		console.log(row.auth_ids.split(','))
+		checkedAuthId.value=row.auth_ids.split(',')
 		form.value = {
 			...row
 		}
@@ -149,7 +151,6 @@
 	const onSubmit = () => {
 		// console.log(treeRef.value!.getCheckedNodes(false, false))
 		let auth_ids = treeRef.value.getCheckedKeys().join()
-		console.log(auth_ids)
 		// console.log(treeRef.value.getCheckedKeys())
 		formRef.value.validate((valid) => {
 			if (!valid) return

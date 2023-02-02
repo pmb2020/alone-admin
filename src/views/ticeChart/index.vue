@@ -6,7 +6,7 @@
 					<el-col :span="20">
 						<el-row>
 							<el-col :span="6">
-								<el-form-item label="学校">
+								<el-form-item v-if="userType=='edu'" label="学校">
 									<el-select v-model="queryForm.school_id" placeholder="请选择">
 										<el-option v-for="item in queryOption.schools" :label="item.name" :value="item.id" />
 									</el-select>
@@ -18,7 +18,7 @@
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="学段">
+								<el-form-item v-if="userType=='edu'" label="学段">
 									<el-select v-model="queryForm.grade_type" placeholder="请选择">
 										<el-option label="小学" value="小学" />
 										<el-option label="初中" value="初中" />
@@ -32,7 +32,7 @@
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="集团">
+								<el-form-item v-if="userType=='edu'" label="集团">
 									<el-select v-model="queryForm.edu_group" placeholder="请选择">
 										<el-option v-for="item in queryOption.edu_groups" :label="item.edu_group" :value="item.edu_group" />
 									</el-select>
@@ -44,7 +44,7 @@
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="片区">
+								<el-form-item v-if="userType=='edu'" label="片区">
 									<el-select v-model="queryForm.area" placeholder="请选择">
 										<el-option v-for="item in queryOption.areas" :label="item.area" :value="item.area" />
 									</el-select>
@@ -126,6 +126,7 @@
 		plan_end_id:'',
 		gender:'全部'
 	})
+	const userType = ref(localStorage.getItem('usertype')) 
 	const barData = ref(null)
 	const gradeData = ref(null)
 	const chartParams = ref({})
@@ -247,7 +248,6 @@
 	})
 	const initData = ()=>{
 		getBaseOpt().then(res=>{
-			console.log(res.projects[0])
 			projectId.value = res.projects[0].id
 			queryOption.value = res
 		})

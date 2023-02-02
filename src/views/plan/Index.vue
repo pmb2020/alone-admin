@@ -266,9 +266,16 @@
 		})
 	}
 	const handleEdit = (row) => {
+		console.log(queryOptionOrigin.value)
 		form.value = {
 			...row
 		}
+		if(row.grades[0].id===0){
+			form.value.grade_ids = queryOptionOrigin.value.grades[row.school_type].map(v=>{return v.id})
+		}else{
+			form.value.grade_ids = row.grades.map(item=>{return item.id})
+		}
+		form.value.project_ids = row.projects.map(item=>{return item.id})
 		isFromAdd.value = false
 		dialogFormVisible.value = true
 		if(row.school_type){

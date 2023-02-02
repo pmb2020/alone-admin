@@ -7,33 +7,46 @@
 						<el-row>
 							<el-col :span="6">
 								<el-form-item label="学校">
-									<el-select v-model="queryForm.school_id" placeholder="请选择" @change="selSchool">
-										<el-option v-for="item in queryOption.school" :label="item.name" :value="item.id" />
+									<el-select v-model="queryForm.school_id" placeholder="请选择">
+										<el-option v-for="item in queryOption.schools" :label="item.name" :value="item.id" />
 									</el-select>
 								</el-form-item>
 								<el-form-item label="学级">
-									<el-select v-model="queryForm.year" placeholder="请选择" @change="selYear">
-										<el-option v-for="item in queryOption.year" :label="item" :value="item" />
+									<el-select v-model="queryForm.year" placeholder="请选择">
+										<el-option v-for="item in queryOption.years" :label="item" :value="item" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="片区">
-									<el-input v-model="queryForm.area" placeholder="请输入内容" />
+								<el-form-item label="学段">
+									<el-select v-model="queryForm.grade_type" placeholder="请选择">
+										<el-option label="小学" value="小学" />
+										<el-option label="初中" value="初中" />
+										<el-option label="高中" value="高中" />
+									</el-select>
 								</el-form-item>
 								<el-form-item label="年级">
-									<el-select v-model="queryForm.grade_id" placeholder="请选择" @change="selGrade">
-										<el-option v-for="item in queryOption.grade" :label="item.name" :value="item.id" />
+									<el-select v-model="queryForm.grade_id" placeholder="请选择">
+										<el-option v-for="item in queryOption.grades" :label="item.name" :value="item.id" />
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="集团">
-									<el-input v-model="queryForm.edu_group" placeholder="请输入内容" />
+									<el-select v-model="queryForm.edu_group" placeholder="请选择">
+										<el-option v-for="item in queryOption.edu_groups" :label="item.edu_group" :value="item.edu_group" />
+									</el-select>
 								</el-form-item>
 								<el-form-item label="班级">
-									<el-select v-model="queryForm.class_id" placeholder="请选择" @change="selClass">
-										<el-option v-for="item in queryOption.class" :label="item.name" :value="item.id" />
+									<el-select v-model="queryForm.class_id" placeholder="请选择">
+										<el-option v-for="item in queryOption.classes" :label="item" :value="item" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item label="片区">
+									<el-select v-model="queryForm.area" placeholder="请选择">
+										<el-option v-for="item in queryOption.areas" :label="item.area" :value="item.area" />
 									</el-select>
 								</el-form-item>
 							</el-col>
@@ -42,7 +55,7 @@
 					<el-col :span="4" style="padding-bottom: 18px;">
 						<div
 							style="display: flex;align-items: center;justify-content: end;flex-direction: column;height: 100%;">
-							<el-button type="primary" style="margin-left: 0;" @click="getData">查询</el-button>
+							<el-button type="primary" style="margin-left: 0;" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
 				</el-row>
@@ -54,22 +67,29 @@
 				<div class="al-flex" style="align-items: center;">
 					<!-- <p style="color: #222426;">体测计划</p> -->
 					<p style="color: #222426;">体测计划</p>
-					<el-select v-model="planQuery.plan_id" style="width: 100px;margin: 0 10px;" placeholder="请选择">
-						<el-option v-for="(item,index) in ticePlanOption" :label="item.name" :value="item.id" />
+					<el-select v-model="queryForm.plan_start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+						<el-option v-for="plan in queryOption.plans" :label="plan.name" :value="plan.id" />
 					</el-select>
+					<span style="width: 25px;height: 1px;background: #979797;"></span>
+					<el-select v-model="queryForm.plan_end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+						<el-option v-for="plan in queryOption.plans" :label="plan.name" :value="plan.id" />
+					</el-select>
+					<!-- <el-select v-model="planQuery.plan_id" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+						<el-option v-for="(item,index) in ticePlanOption" :label="item.name" :value="item.id" />
+					</el-select> -->
 					<p style="color: #222426;">性别</p>
-					<el-select v-model="planQuery.gender" class="m-2" style="width: 100px;margin: 0 10px;"
+					<el-select v-model="queryForm.gender" class="m-2" style="width: 100px;margin: 0 10px;"
 						placeholder="请选择">
 						<el-option label="全部" value="全部" />
 						<el-option label="男" value="男" />
 						<el-option label="女" value="女" />
 					</el-select>
-					<el-button type="primary" @click="getData">查询</el-button>
+					<el-button type="primary" @click="getListData">查询</el-button>
 				</div>
 			</div>
 			<div style="margin: 30px 0;">
-				<ul class="ty-tab">
-					<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index)">{{tab.name}}</li>
+				<ul class="ty-tab" style="flex-wrap: wrap;">
+					<li style="margin-bottom: 15px;" :class="{'active':tabIndex===index}" v-for="(tab,index) in queryOption.projects" @click="tabClick(index,tab.id)">{{tab.name}}</li>
 				</ul>
 			</div>
 			<!-- <TiCeChart2 :class-id="queryForm.class_id"></TiCeChart2> -->
@@ -77,15 +97,13 @@
 			<div id='gradeChat' style="height: 300px;"></div>
 			<h3 class="title" style="margin-top:20px">等级数据分析</h3>
 			<div id='barChat' style="height: 300px;"></div>
-			
+			<a class="download-a" :href="downloadUrl" download target="_blank">下载</a>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import {getSchoolOpt,getYearOpt,getGradeOpt,getClassOpt} from '@/api/ticeChart'
-	import {getClassInfo,getClassTCPlan,getClassData} from '@/api/base'
-	import {getClassPeriodAvg,getClassPeriod} from '@/api/base'
+	import {getBaseOpt,getBaseChart} from '@/api/ticeChart'
 	import TiCeChart2 from "./TiCeChart2.vue"
 	const queryOption = ref({
 		school:[],
@@ -104,21 +122,28 @@
 	const queryForm = reactive({
 		school_id: '',
 		year: '',
+		plan_start_id:'',
+		plan_end_id:'',
+		gender:'全部'
 	})
 	const barData = ref(null)
 	const gradeData = ref(null)
 	const chartParams = ref({})
 	const tabIndex = ref(0)
+	const projectId = ref('')
+	const downloadUrl = ref('')
 	const option = ref({})
 	const barChat = ref(null)
 	const gradeChat = ref(null)
 	const gradeChatOption = ref({})
-	const tabClick = (index)=>{
+	const tabClick = (index,id)=>{
 		tabIndex.value = index
+		projectId.value = id
+		getListData()
 	}
 	import echarts from '@/utils/echarts.js'
 	onMounted(() => {
-		ElMessage.warning('请先选择班级！')
+		// ElMessage.warning('请先选择班级！')
 		initData()
 		barChat.value = echarts.init(document.getElementById("barChat"));
 		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
@@ -221,79 +246,70 @@
 		};
 	})
 	const initData = ()=>{
-		getSchoolOpt().then(res=>{
-			queryOption.value.school = res
+		getBaseOpt().then(res=>{
+			console.log(res.projects[0])
+			projectId.value = res.projects[0].id
+			queryOption.value = res
 		})
 	}
-	
-	const getData = ()=>{
-		getClassTCPlan({
-			class_id: queryForm.class_id
-		}).then(res => {
-			ticePlanOption.value = res
-		})
-		getClassData({class_id:queryForm.class_id}).then(res=>{
+	const getListData = ()=>{
+		queryForm.project_id = projectId.value
+		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/project_analysis_chart/?'+objToUrl(queryForm)
+		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
+		getBaseChart(queryForm).then(res=>{
 			console.log(res)
-			projects.value = res.projects
-		})
-		getCalssData()
-	}
-	const getCalssData = ()=>{
-		let params = {class_id:queryForm.class_id}
-		getClassPeriodAvg(params).then(res=>{
-			console.log(res)
-			gradeData.value = res
-			gradeChatOption.value.legend.data = gradeData.legendData
-			gradeChatOption.value.series = gradeData.series
-			gradeChatOption.value.xAxis.data = gradeData.value.yAxisData
+			//得分数据分析,折线图
+			gradeChatOption.value.legend.data = res.avg_score_chart.legendData
+			gradeChatOption.value.series = res.avg_score_chart.series
+			gradeChatOption.value.xAxis.data = res.avg_score_chart.yAxisData
 			gradeChat.value.setOption(gradeChatOption.value);
-		})
-		getClassPeriod(params).then(res=>{
-			console.log(res)
-			option.value.dataset.source = res.source
+			//等级数据分析，柱状图
+			let series = [{
+				type: 'bar',
+				name: res.grade_chart[0][1]
+			}, {
+				type: 'bar',
+				name: res.grade_chart[0][2]
+			}, {
+				type: 'bar',
+				name: res.grade_chart[0][3]
+			}, {
+				type: 'bar',
+				name: res.grade_chart[0][4]
+			}]
+			option.value.dataset.source = res.grade_chart
+			option.value.series = series
 			barChat.value.setOption(option.value);
 		})
 	}
-	const selSchool = (school_id)=>{
-		queryForm.year = null
-		queryForm.grade_id = null
-		queryForm.class_id = null
-		queryOption.value.school.forEach(item=>{
-			if(item.id===school_id){
-				queryForm.area = item.area
-				queryForm.edu_group = item.edu_group
-			}
-		})
-		getYearOpt({school_id:school_id}).then(res=>{
-			queryOption.value.year = res
+	const download = ()=>{
+		queryForm.project_id = projectId.value
+		queryForm.download = 1
+		getBaseChart(queryForm).then(res=>{
+			
 		})
 	}
-	
-	const selYear = (year)=>{
-		queryForm.grade_id = null
-		queryForm.class_id = null
-		getGradeOpt({
-			school_id:queryForm.school_id,
-			year:queryForm.year,
-		}).then(res=>{
-			queryOption.value.grade = res
-		})
-	}
-	const selGrade = (grade_id)=>{
-		queryForm.class_id = null
-		getClassOpt({
-			school_id:queryForm.school_id,
-			year:queryForm.year,
-			grade_id:queryForm.grade_id
-		}).then(res=>{
-			queryOption.value.class = res
-		})
-	}
-	//选择班级之后。调用班级相关图表接口
-	const selClass = (class_id)=>{
-		console.log(class_id)
+	//序列化
+	const objToUrl = obj => {
+	    let arr = [];
+	    for(let i in obj){
+	        if (obj.hasOwnProperty(i)) {
+	            arr.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
+	        }
+	    }
+	    return arr.join("&");
 	}
 </script>
 
 <style>
+	.download-a{
+		color: #fff;
+		float: right;
+		background-color: #005EFF;
+		font-size: 14px;
+		border-radius: 4px;
+		position: relative;
+		padding: 5px 10px;
+		top: -30px;
+	}
 </style>

@@ -38,7 +38,7 @@ export const addClass = (data)=>{
 	return post('/class/add/',data)
 }
 export const updateClass = (data)=>{
-	return post('/class/amend/',data)
+	return post('/class/edit/',data)
 }
 
 export const getClassOptions = (params)=>{

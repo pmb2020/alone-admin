@@ -63,7 +63,7 @@
 					</el-col>
 					<el-col :span="4" style="padding-bottom: 18px;">
 						<div class="query-btn">
-							<el-button @click="resetForm(queryFormRef)">重置</el-button>
+							<el-button @click="resetForm">重置</el-button>
 							<el-button type="primary" style="margin-left: 0;" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
@@ -271,6 +271,12 @@
 		}
 		isFromAdd.value = false
 		dialogFormVisible.value = true
+		if(row.school_type){
+			let val = row.school_type
+			queryOption.value.grades = queryOptionOrigin.value.grades[val]
+			queryOption.value.projects = queryOptionOrigin.value.projects[val]
+			queryOption.value.school_list = queryOptionOrigin.value.school_list[val]
+		}
 	}
 	//联动-选择学段
 	const selSchType = (val)=>{
@@ -281,7 +287,6 @@
 		queryOption.value.grades = queryOptionOrigin.value.grades[val]
 		queryOption.value.projects = queryOptionOrigin.value.projects[val]
 		queryOption.value.school_list = queryOptionOrigin.value.school_list[val]
-		console.log(queryOption.value)
 	}
 	const onSubmit = () => {
 		formRef.value.validate((valid) => {
@@ -304,6 +309,17 @@
 			}
 
 		})
+	}
+	//重置搜索表单
+	const resetForm = ()=>{
+		queryForm.name = ''
+		queryForm.plan_number = ''
+		queryForm.status = ''
+		queryForm.date = ''
+		queryForm.school_type = ''
+		queryForm.project_id = ''
+		queryForm.grade_id = ''
+		queryForm.school_name = ''
 	}
 	const handleSizeChange = (number) => {
 		pageSize.value = number

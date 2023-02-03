@@ -62,7 +62,7 @@
 			</div>
 		</div>
 		<!-- 关联 -->
-		<el-dialog class="ty-dialog" style="min-height: 500px;" v-model="dialogFormVisible" title="关联老师"
+		<el-dialog class="ty-dialog" v-model="dialogFormVisible" title="关联老师"
 			destroy-on-close>
 			<el-form :model="form" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
 				<!-- <template #default>
@@ -73,20 +73,18 @@
 						<el-form-item label="学级">
 							<el-input v-model="form.year" disabled placeholder="" />
 						</el-form-item>
-						<el-form-item label="关联老师" style="position: relative;">
-							<el-select v-model="form.region" popper-class="selTea" @click="selTeacher"
-								placeholder="请选择">
-								<div style="height: 500px;width: 800px;">
-									<el-option style="font-size: 16px;color: #666;font-weight: bold;"  disabled label="选择老师" value="1" />
-									<el-checkbox v-model="checkAll" :indeterminate="isIndeterminate"
-										@change="handleCheckAllChange">全选</el-checkbox>
-									<el-checkbox-group v-model="checkedTea" @change="handleCheckedCitiesChange">
-										<el-checkbox v-for="tea in teaList" :key="tea.id" :label="tea.name">
-											{{tea.name}}
-										</el-checkbox>
-									</el-checkbox-group>
-								</div>
-							</el-select>
+						<el-form-item label="关联老师" style="font-weight: bold;">
+							<el-popover placement="right" :width="400" trigger="click">
+								<template #reference>
+									<el-button link type="info">{{checkTeaText}}</el-button>
+								</template>
+								<el-checkbox v-model="checkAll" :indeterminate="isIndeterminate"
+								 @change="handleCheckAllChange">全选</el-checkbox>
+								<el-checkbox-group v-model="form.teacher_ids" @change="handleCheckedTeaChange">
+									<el-checkbox v-for="item in teaList" :key="item.id" :label="item.id">
+										{{item.name}}</el-checkbox>
+								</el-checkbox-group>
+							</el-popover>
 						</el-form-item>
 					</div>
 					<div style="">
@@ -94,15 +92,15 @@
 							<el-input v-model="form.name" disabled placeholder="" />
 						</el-form-item>
 						<el-form-item label="状态">
-							<el-radio-group v-model="form.resource">
-								<el-radio label="启用" />
-								<el-radio label="禁用" />
+							<el-radio-group v-model="form.status">
+								<el-radio label="1">启用</el-radio>
+								<el-radio label="0">禁用</el-radio>
 							</el-radio-group>
 						</el-form-item>
 					</div>
 				</div>
 				<div style="display: flex;justify-content: center;">
-					<el-button>取消</el-button>
+					<el-button @click="dialogFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
 				</div>
 			</el-form>
@@ -116,7 +114,7 @@
 		addGrade,
 		updateGrade,
 		getGradeOptions,
-		getTeaList
+		getTeaList,jointeacher
 	} from '@/api/base'
 	import AddForm from './AddForm.vue'
 	const page = ref(1)
@@ -130,6 +128,7 @@
 	const dialogEditFormVisible = ref(false)
 	//选择
 	const teaList  = reactive([])
+	const checkTeaText = ref('请选择')
 	const checkedTea = ref([])
 	const checkAll = ref(false)
 	const isIndeterminate = ref(true)
@@ -175,7 +174,18 @@
 		dialogEditFormVisible.value = true
 	}
 	const onSubmit = () => {
-		console.log('submit!')
+		let params = {
+			grade_id:form.value.id,
+			status: form.value.status || 1,
+			teacher_ids : ''
+		}
+		if(form.value.teacher_ids){
+			params.teacher_ids = form.value.teacher_ids.toString()
+		}
+		jointeacher(params).then(res=>{
+			ElMessage.success('关联成功')
+			dialogFormVisible.value = false
+		})
 	}
 	const handleCurrentChange = (number) => {
 		page.value = number
@@ -186,8 +196,19 @@
 		getListData(page.value)
 	}
 	const handleCheckAllChange = (val) => {
-		checkedCities.value = val ? cities : []
+		console.log(val)
+		let ids = teaList.map(item=>{return item.id})
+		let names = teaList.map(item=>{return item.name})
+		form.value.teacher_ids = val ? ids :[],
+		checkTeaText.value = names.toString()
+		if(!val){
+			checkTeaText.value = '请选择'
+		}
 		isIndeterminate.value = false
+	}
+	const handleCheckedTeaChange = (val) =>{
+		// checkTeaText.value = val.toString()
+		console.log(val)
 	}
 	const handleCheckedCitiesChange = (value) => {
 		console.log(value)

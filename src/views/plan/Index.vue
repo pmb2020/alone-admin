@@ -105,7 +105,7 @@
 				<el-table-column prop="grades" label="体测对象" align="center">
 					<template #default="scope">
 						<span v-for="(item,index) in scope.row.grades">
-							{{item.name}}<span v-if="index < scope.row.projects.length-1">，</span>
+							{{item.name}}<span v-if="index < scope.row.grades.length-1">，</span>
 						</span>
 					</template>
 				</el-table-column>
@@ -266,11 +266,11 @@
 		})
 	}
 	const handleEdit = (row) => {
-		console.log(queryOptionOrigin.value)
-		console.log(row)
+		// console.log(row)
 		form.value = {
 			...row
 		}
+		//对象年级
 		if(row.grades[0].id===0){
 			form.value.grade_ids = queryOptionOrigin.value.grades[row.school_type].map(v=>{return v.id})
 			var gradeName = queryOptionOrigin.value.grades[row.school_type].map(v=>{return v.name})
@@ -279,7 +279,16 @@
 			var gradeName = row.grades.map(v=>{return v.name}) || []
 		}
 		checkTextGrade.value = gradeName.toString()
-		form.value.project_ids = row.projects.map(item=>{return item.id})
+		// 体测项目checkTextProject
+		if(row.projects[0].id===0){
+			form.value.project_ids = queryOptionOrigin.value.projects[row.school_type].map(v=>{return v.id})
+			var projectName = queryOptionOrigin.value.projects[row.school_type].map(v=>{return v.name})
+		}else{
+			form.value.project_ids = row.projects.map(item=>{return item.id})
+			var projectName = row.projects.map(v=>{return v.name}) || []
+		}
+		checkTextProject.value = projectName.toString()
+		
 		isFromAdd.value = false
 		dialogFormVisible.value = true
 		if(row.school_type){
@@ -306,6 +315,10 @@
 		queryOption.value.grades = queryOptionOrigin.value.grades[val]
 		queryOption.value.projects = queryOptionOrigin.value.projects[val]
 		queryOption.value.school_list = queryOptionOrigin.value.school_list[val]
+		checkTextGrade.value = '请选择'
+		checkTextProject.value = '请选择'
+		form.value.grade_ids = []
+		form.value.project_ids = []
 	}
 	const onSubmit = () => {
 		formRef.value.validate((valid) => {
@@ -316,10 +329,10 @@
 			if (isFromAdd.value) {
 				addPlan(form.value).then(res => {
 					dialogFormVisible.value = false
+					getListData()
 					ElMessage.success('操作成功')
 				})
 			} else {
-				console.log(form.value,'更新')
 				updatePlan(form.value).then(res => {
 					getListData(page.value)
 					dialogFormVisible.value = false

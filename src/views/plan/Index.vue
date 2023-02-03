@@ -74,7 +74,7 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">体测计划列表</h3>
 				<div>
-					<button @click="isFromAdd=true;form={};dialogFormVisible=true" class="ty-btn">
+					<button @click="addPlanFun" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
 							<CirclePlusFilled />
 						</el-icon>
@@ -267,14 +267,18 @@
 	}
 	const handleEdit = (row) => {
 		console.log(queryOptionOrigin.value)
+		console.log(row)
 		form.value = {
 			...row
 		}
 		if(row.grades[0].id===0){
 			form.value.grade_ids = queryOptionOrigin.value.grades[row.school_type].map(v=>{return v.id})
+			var gradeName = queryOptionOrigin.value.grades[row.school_type].map(v=>{return v.name})
 		}else{
 			form.value.grade_ids = row.grades.map(item=>{return item.id})
+			var gradeName = row.grades.map(v=>{return v.name}) || []
 		}
+		checkTextGrade.value = gradeName.toString()
 		form.value.project_ids = row.projects.map(item=>{return item.id})
 		isFromAdd.value = false
 		dialogFormVisible.value = true
@@ -284,6 +288,14 @@
 			queryOption.value.projects = queryOptionOrigin.value.projects[val]
 			queryOption.value.school_list = queryOptionOrigin.value.school_list[val]
 		}
+	}
+	
+	const addPlanFun = () =>{
+		isFromAdd.value=true;
+		form.value={};
+		checkTextGrade.value = '请选择'
+		checkTextProject.value = '请选择'
+		dialogFormVisible.value=true
 	}
 	//联动-选择学段
 	const selSchType = (val)=>{

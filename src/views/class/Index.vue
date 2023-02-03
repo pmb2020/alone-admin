@@ -7,7 +7,7 @@
 						<el-row>
 							<el-col :span="6">
 								<el-form-item label="班级">
-									<el-select v-model="queryForm.class_name" placeholder="请选择">
+									<el-select v-model="queryForm.name" placeholder="请选择">
 										<el-option v-for="(item,index) in queryOption.classes" :label="item.name"
 											:value="item.name" />
 									</el-select>
@@ -38,6 +38,7 @@
 					</el-col>
 					<el-col :span="4">
 						<div style="display: flex;justify-content: center;">
+							<el-button @click="resetForm">重置</el-button>
 							<el-button style="float: right;" type="primary" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
@@ -64,9 +65,11 @@
 				</el-table-column>
 				<el-table-column prop="grade_name" label="年级" align="center" />
 				<el-table-column prop="name" label="班级" align="center" />
-				<el-table-column prop="teachers" label="所属老师" align="center">
+				<el-table-column prop="teachers" label="所属老师" align="center" width="180">
 					<template #default="scope">
-						<span v-for="tea in scope.row.teachers" :key="tea.id">{{tea.name}}，</span>
+						<span v-for="(item,index) in scope.row.teachers">
+							{{item.name}}<span v-if="index < scope.row.teachers.length-1">，</span>
+						</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="student_num" label="班级人数" align="center" />
@@ -255,6 +258,13 @@
 		checkTextTea.value=teaName.toString()
 		form.value.teacher_id = val ? teas : [],
 		isIndeterminateTea.value = false
+	}
+	//重置表单
+	const resetForm = ()=>{
+		queryForm.name = ''
+		queryForm.grade_id = ''
+		queryForm.teacher_name = ''
+		queryForm.year = ''
 	}
 </script>
 

@@ -9,7 +9,7 @@
 					</div>
 					<div class="text-lr">
 						<span>学校</span>
-						<span class="value"></span>
+						<span class="value">{{classInfo.class_detail.school_name}}</span>
 					</div>
 				</el-col>
 				<el-col :span="6">
@@ -19,13 +19,13 @@
 					</div>
 					<div class="text-lr">
 						<span>片区</span>
-						<span class="value"></span>
+						<span class="value">{{classInfo.class_detail.area}}</span>
 					</div>
 				</el-col>
 				<el-col :span="6">
 					<div class="text-lr">
 						<span>年级</span>
-						<span class="value"></span>
+						<span class="value">{{classInfo.class_detail.grade_name}}</span>
 					</div>
 					<div class="text-lr">
 						<span>集团</span>
@@ -41,7 +41,7 @@
 					</div>
 					<div class="text-lr">
 						<span>教委</span>
-						<span class="value"></span>
+						<span class="value">{{classInfo.class_detail.edu_commission}}</span>
 					</div>
 				</el-col>
 			</el-row>

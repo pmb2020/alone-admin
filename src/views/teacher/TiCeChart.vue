@@ -24,7 +24,7 @@
 
 <script setup>
 	import echarts from '@/utils/echarts.js'
-	import {getProjectChat,getGradeChart,getProjectChatEdu,getGradeChartEdu} from '@/api/home'
+	import {getProjectChat,getGradeChart} from '@/api/home'
 	const props = defineProps(['homeData','userType'])
 	const projects = ref([])
 	const homeData = ref({})
@@ -107,9 +107,7 @@
 					color: "#baf"
 				}
 			},
-			tooltip: {
-				trigger: 'axis'
-			},
+			tooltip: {},
 			legend: {
 				data: ['体重指数', '肺活量', '50米跑']
 			},

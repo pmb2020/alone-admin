@@ -81,7 +81,7 @@
 						<el-table-column type="index" label="序号" align="center" width="80" />
 						<el-table-column prop="name" label="姓名" align="center" />
 						<el-table-column prop="gender" label="性别" align="center" />
-						<el-table-column prop="class" label="班级" align="center" />
+						<el-table-column prop="class_name" label="班级" align="center" />
 						<el-table-column prop="总分" label="总分(权重)" align="center" />
 						<el-table-column label="体重指数(BMI)" align="center">
 							<el-table-column prop="体重指数（BMI）成绩" label="成绩" />

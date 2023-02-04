@@ -53,36 +53,37 @@
 				<el-table-column prop="name" label="老师姓名" align="center" />
 				<el-table-column prop="working_years" label="工龄" align="center" />
 				<el-table-column prop="job_title" label="职务" align="center" />
-				<el-table-column label="目前所带学级" align="center" width="80">
+				<el-table-column label="目前所带学级" align="center">
 					<template #default="scope">
 						<p v-for="item in scope.row.years">
 							{{item.year}}级
 						</p>
 					</template>
 				</el-table-column>
-				<el-table-column label="目前所带年级" align="center" width="80">
+				<el-table-column label="目前所带年级" align="center">
 					<template #default="scope">
 						<p v-for="item in scope.row.grades">
 							{{item.name}}
 						</p>
 					</template>
 				</el-table-column>
-				<el-table-column label="目前所带班级" align="center" width="80">
+				<el-table-column label="目前所带班级" align="center">
 					<template #default="scope">
-						<p v-for="item in scope.row.grades">
-							{{item.name}}
-						</p>
+						<div v-for="item in scope.row.grades" :key="item.id">
+							<p v-for="it in item.classes">
+								{{it.name}}
+							</p>
+						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="详细信息" align="center" width="80">
+				<el-table-column label="详细信息" align="center">
 					<template #default="scope">
-						<!-- <router-link to="#">查看</router-link> -->
 						<router-link :to="'/base/teacher/info?id='+scope.row.id">查看</router-link>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" align="center" width="120">
+				<el-table-column label="操作" align="center" width="100">
 					<template #default="scope">
-						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
+						<el-button size="default" @click="guanlian(scope.row)"
 							style="border: none;background-color: transparent;">
 							关联班级
 						</el-button>
@@ -101,48 +102,43 @@
 					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
 			</div>
 		</div>
-		<!-- 新增弹出 -->
-		<el-dialog class="" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
-		</el-dialog>
-		<!-- 编辑 -->
-		<el-dialog class="ty-dialog" width="600px" v-model="dialogEditFormVisible" title="编辑学生信息" destroy-on-close>
-			<el-form :inline="false" :model="formInline" class="demo-form-inline" label-width="80" size="default"
-				:scroll-to-error="true">
-				<div class="al-flex" style="">
-					<div class="" style="margin-right: 30px;position: relative;left: -20px;">
-						<el-form-item label="姓名">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+		<!-- 关联 -->
+		<el-dialog class="ty-dialog" width="1000" v-model="dialogFormVisible" title="关联班级" destroy-on-close>
+			<el-form :model="form" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
+				<el-row>
+					<el-col :span="6">
+						<el-form-item label="老师姓名">
+							<el-input v-model="form.name" disabled placeholder="" />
 						</el-form-item>
-						<el-form-item label="性别">
-							<el-select v-model="formInline.region" placeholder="请选择">
-								<el-option label="男" value="1" />
-								<el-option label="女" value="2" />
-							</el-select>
+						<el-form-item label="所带班级">
+							<el-popover placement="right" :width="400" trigger="click">
+								<template #reference>
+									<el-button link type="info">请选择</el-button>
+								</template>
+								<div>
+									sdasd
+								</div>
+							</el-popover>
 						</el-form-item>
-						<el-form-item label="年龄">
-							<el-input v-model="formInline.user" placeholder="请输入" />
+					</el-col>
+					<el-col :span="6">
+						<el-form-item label="工龄">
+							<el-input v-model="form.working_years" disabled placeholder="" />
 						</el-form-item>
-					</div>
-					<div style="">
-						<el-form-item label="归属学校">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
-							</el-select>
+					</el-col>
+					<el-col :span="6">
+						<el-form-item label="职务">
+							<el-input v-model="form.job_title" disabled placeholder="" />
 						</el-form-item>
-						<el-form-item label="归属片区">
-							<el-select v-model="formInline.region" placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
-							</el-select>
+					</el-col>
+					<el-col :span="6">
+						<el-form-item label="教师ID">
+							<el-input v-model="form.id" disabled placeholder="" />
 						</el-form-item>
-						<el-form-item label="身份证号">
-							<el-input v-model="formInline.user" placeholder="请输入" />
-						</el-form-item>
-					</div>
-				</div>
+					</el-col>
+				</el-row>
 				<div style="display: flex;justify-content: center;">
-					<el-button>取消</el-button>
+					<el-button @click="dialogFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
 				</div>
 			</el-form>
@@ -160,7 +156,7 @@
 	const total = ref(0)
 	const queryOption = ref({})
 	const queryForm = reactive({})
-	const formInline = reactive({})
+	const form = ref({})
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
@@ -193,6 +189,12 @@
 	}
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true
+	}
+	//关联班级
+	const guanlian = (row) => {
+		dialogFormVisible.value = true
+		console.log(row)
+		form.value = {...row}
 	}
 	//状态，禁用/启用
 	const statusClick = (id,status)=>{

@@ -30,26 +30,42 @@
 					<div class="text-lr">
 						<span>所带班级</span>
 						<span class="value">
-							<span v-for="item in teaInfo.grades">{{item.year}}级{{item.name}}，</span>
+							<span v-for="item in teaInfo.joined_classes">{{item.name}}，</span>
 						</span>
 					</div>
 				</el-col>
 			</el-row>
 		</div>
-		<div class="ty-box">
+		<div class="ty-box" style="position: relative;margin-top: 80px;">
 			<!-- <h3 class="title">学生体测数据展示</h3> -->
+			<div class="ty-tabs">
+				<div class="tab-item" :class="{'active':tabIndex==index}" v-for="(item,index) in teaInfo.joined_classes"  
+				@click="tabIndex=index">
+					{{item.name}}
+				</div>
+			</div>
 			<div class="al-flex-between" style="margin-bottom: 20px;">
 				<h3 class="title" style="margin-bottom: 0;">各项体测指标均值分析</h3>
 				<div class="al-flex" style="align-items: center;">
 					<p style="color: #222426;">体测计划</p>
-					<el-select v-model="queryParams" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+					<el-select v-model="queryParams.start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
 						<!-- <el-option label="2021年7期" value="item.value" />
 						<el-option label="2021年8期" value="item.value" /> -->
 					</el-select>
 					<span style="width: 25px;height: 1px;background: #979797;"></span>
-					<el-select v-model="queryParams" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
+					<el-select v-model="queryParams.end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
 						<!-- <el-option label="2021年7期" value="item.value" />
 						<el-option label="2021年8期" value="item.value" /> -->
+					</el-select>
+					<p style="color: #222426;margin-left: 15px;">学级</p>
+					<el-select v-model="queryParams.gender" class="m-2" style="width: 100px;margin: 0 10px;"
+						placeholder="请选择">
+						<!-- <el-option label="全部" value="全部" /> -->
+					</el-select>
+					<p style="color: #222426;margin-left: 15px;">年级</p>
+					<el-select v-model="queryParams.gender" class="m-2" style="width: 100px;margin: 0 10px;"
+						placeholder="请选择">
+						<!-- <el-option label="全部" value="全部" /> -->
 					</el-select>
 					<el-button type="primary">查询</el-button>
 				</div>
@@ -66,6 +82,7 @@
 	const route = useRoute()
 	const teaInfo = ref({})
 	const id = ref('')
+	const tabIndex = ref(0)
 	const queryParams = ref({})
 	onMounted(()=>{
 		id.value = route.query.id

@@ -108,7 +108,7 @@
 							<el-table-column prop="一分钟跳绳得分" label="得分" />
 							<el-table-column prop="一分钟跳绳等级" label="等级" />
 						</el-table-column>
-						<el-table-column fixed="right" prop="date" label="班级" width="150" />
+						<!-- <el-table-column fixed="right" prop="date" label="班级" width="150" /> -->
 					</el-table>
 					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
 				</div>

@@ -112,9 +112,7 @@
 					color: "#baf"
 				}
 			},
-			tooltip: {
-				trigger: 'axis'
-			},
+			tooltip: {},
 			legend: {
 				data: ['体重指数']
 			},

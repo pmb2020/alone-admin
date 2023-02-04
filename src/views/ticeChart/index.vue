@@ -250,6 +250,7 @@
 		getBaseOpt().then(res=>{
 			projectId.value = res.projects[0].id
 			queryOption.value = res
+			getListData()
 		})
 	}
 	const getListData = ()=>{

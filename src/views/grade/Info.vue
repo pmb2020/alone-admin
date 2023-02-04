@@ -114,6 +114,8 @@
 				</div>
 				<TiCeChart :class-id="gradeId" :grade-id="gradeId" :plan-query="planQuery" :projects="projects">
 				</TiCeChart>
+				<!-- 本年级各班总体等级对比分析 -->
+				<TiCeChart3 />
 			</div>
 			<div v-else>
 				<TiCeChart2 :class-id="classId" :grade-id="gradeId" :plan-query="planQuery" :ticePlanOption="ticePlanOption" :projects="projects"></TiCeChart2>
@@ -132,6 +134,7 @@
 	} from 'vue-router';
 	import TiCeChart from './TiCeChart.vue'
 	import TiCeChart2 from './TiCeChart2.vue'
+	import TiCeChart3 from './TiCeChart3.vue'
 	const route = useRoute()
 	const gradeId = ref('')
 	const gradeInfo = ref({

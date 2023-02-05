@@ -1,16 +1,4 @@
 <template>
-	<div class="al-flex-between">
-		<!-- <h3 v-if="userType=='edu'" class="title" style="margin-bottom: 0;">全区各项体测指标记录</h3>
-		<h3 v-else class="title" style="margin-bottom: 0;">本校各项体测指标记录</h3> -->
-		<!-- <ul class="ty-tab">
-			<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">小学</li>
-			<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">初中</li>
-			<li :class="{'active':gTabIndex==2}" @click="gTabClick(2)">高中</li>
-		</ul> -->
-	</div>
-	<!-- <div>
-		<p>体测计划</p>
-	</div> -->
 	<div style="margin: 30px 0;">
 		<ul class="ty-tab">
 			<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index,tab.id)">{{tab.name}}</li>

@@ -116,7 +116,9 @@
 									<el-button link type="info">请选择</el-button>
 								</template>
 								<div>
-									sdasd
+									<p>选择班级</p>
+									<el-tree ref="treeRef" :data="gradeList" :default-checked-keys="[]" show-checkbox node-key="id"
+										highlight-current :props="defaultProps" />
 								</div>
 							</el-popover>
 						</el-form-item>
@@ -148,8 +150,8 @@
 
 <script setup>
 	import {
-		getTeacher,
-		getTeacherOptions,updateTeaStatus
+		getTeacher,joinClass,
+		getTeacherOptions,updateTeaStatus,getTeaInfo
 	} from '@/api/base'
 	const page = ref(1)
 	const pageSize = ref(20)
@@ -157,6 +159,12 @@
 	const queryOption = ref({})
 	const queryForm = reactive({})
 	const form = ref({})
+	const treeRef = ref(null)
+	const defaultProps = ref({
+		children: 'classes',
+		label: 'label',
+	})
+	const gradeList = ref([])
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
@@ -192,6 +200,15 @@
 	}
 	//关联班级
 	const guanlian = (row) => {
+		getTeaInfo({teacher_id:row.id}).then(res=>{
+			res[0].grades.forEach(item=>{
+				item.label = item.year+'级'+item.name
+				item.classes.forEach(child=>{
+					child.label = child.name
+				})
+			})
+			gradeList.value = res[0].grades
+		})
 		dialogFormVisible.value = true
 		console.log(row)
 		form.value = {...row}
@@ -203,7 +220,15 @@
 		})
 	}
 	const onSubmit = () => {
-		console.log('submit!')
+		let class_ids = treeRef.value.getCheckedKeys().join()
+		console.log(class_ids,'所选班级!')
+		joinClass({
+			teacher_id:form.value.id,
+			class_ids:class_ids
+		}).then(res=>{
+			ElMessage.success('关联成功')
+			dialogFormVisible.value = false
+		})
 	}
 </script>
 

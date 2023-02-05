@@ -184,3 +184,9 @@ html,body,#app{
 		color: #005EFF;
 	}
 }
+
+.check-btn{
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

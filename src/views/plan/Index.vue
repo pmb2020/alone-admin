@@ -152,7 +152,7 @@
 						<el-form-item label="体测对象" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button link type="info">{{checkTextGrade}}</el-button>
+									<el-button class="check-btn" link type="info">{{checkTextGrade}}</el-button>
 								</template>
 								<el-checkbox v-model="checkAllGrade" :indeterminate="isIndeterminateGrade"
 								 @change="handleCheckAllGrade">全选</el-checkbox>
@@ -165,7 +165,7 @@
 						<el-form-item label="体测项目" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button link type="info">{{checkTextProject}}</el-button>
+									<el-button class="check-btn" link type="info">{{checkTextProject}}</el-button>
 								</template>
 								<el-checkbox v-model="checkAllProject" :indeterminate="isIndeterminateProject"
 								 @change="handleCheckAllProject">全选</el-checkbox>

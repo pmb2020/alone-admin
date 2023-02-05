@@ -12,6 +12,9 @@
 											:value="item.name" />
 									</el-select>
 								</el-form-item>
+								<el-form-item label="别称">
+									<el-input v-model="queryForm.another_name" placeholder="请输入" />
+								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="年级">
@@ -36,14 +39,13 @@
 							</el-col>
 						</el-row>
 					</el-col>
-					<el-col :span="4">
-						<div style="display: flex;justify-content: center;">
+					<el-col :span="4" style="padding: 0px 0 24px 0;">
+						<div class="query-btn">
 							<el-button @click="resetForm">重置</el-button>
-							<el-button style="float: right;" type="primary" @click="getListData">查询</el-button>
+							<el-button type="primary" style="margin-left: 0;" @click="getListData">查询</el-button>
 						</div>
 					</el-col>
 				</el-row>
-				
 			</el-form>
 		</div>
 		<div class="ty-box">
@@ -65,6 +67,7 @@
 				</el-table-column>
 				<el-table-column prop="grade_name" label="年级" align="center" />
 				<el-table-column prop="name" label="班级" align="center" />
+				<el-table-column prop="another_name" label="别称" align="center" />
 				<el-table-column prop="teachers" label="所属老师" align="center" width="180">
 					<template #default="scope">
 						<span v-for="(item,index) in scope.row.teachers">
@@ -164,11 +167,11 @@
 				<el-table-column prop="gender" label="性别" align="center" />
 				<el-table-column prop="age" label="年龄" align="center" />
 				<el-table-column prop="id_card" label="身份证号" align="center" width="180" />
-				<el-table-column label="操作" align="center">
+				<!-- <el-table-column label="操作" align="center">
 					<template #default="scope">
 						<el-button link size="default" @click="">迁出</el-button>
 					</template>
-				</el-table-column>
+				</el-table-column> -->
 			</el-table>
 		</el-dialog>
 	</div>

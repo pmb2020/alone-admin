@@ -11,7 +11,7 @@
 				<el-col :span="6">
 					<div class="text-lr">
 						<span>工龄</span>
-						<span class="value">{{teaInfo.name}}</span>
+						<span class="value">{{teaInfo.working_years}}</span>
 					</div>
 				</el-col>
 				<el-col :span="6">
@@ -56,16 +56,6 @@
 					<el-select v-model="queryParams.end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
 						<!-- <el-option label="2021年7期" value="item.value" />
 						<el-option label="2021年8期" value="item.value" /> -->
-					</el-select>
-					<p style="color: #222426;margin-left: 15px;">学级</p>
-					<el-select v-model="queryParams.gender" class="m-2" style="width: 100px;margin: 0 10px;"
-						placeholder="请选择">
-						<!-- <el-option label="全部" value="全部" /> -->
-					</el-select>
-					<p style="color: #222426;margin-left: 15px;">年级</p>
-					<el-select v-model="queryParams.gender" class="m-2" style="width: 100px;margin: 0 10px;"
-						placeholder="请选择">
-						<!-- <el-option label="全部" value="全部" /> -->
 					</el-select>
 					<el-button type="primary">查询</el-button>
 				</div>

@@ -93,8 +93,8 @@
 						</el-form-item>
 						<el-form-item label="状态">
 							<el-radio-group v-model="form.status">
-								<el-radio label="1">启用</el-radio>
-								<el-radio label="0">禁用</el-radio>
+								<el-radio :label="1">启用</el-radio>
+								<el-radio :label="0">禁用</el-radio>
 							</el-radio-group>
 						</el-form-item>
 					</div>
@@ -168,7 +168,10 @@
 		form.value = {
 			...row
 		}
-		console.log(row)
+		let ids = row.teachers.map(item=>{return item.id})
+		let names = row.teachers.map(item=>{return item.name})
+		checkTeaText.value = names.toString() || '请选择'
+		form.value.teacher_ids = ids || []
 	}
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true

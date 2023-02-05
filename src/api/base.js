@@ -135,7 +135,10 @@ export const getTeacherOptions = (params)=>{
 export const updateTeaStatus = (data)=>{
 	return post('/teacher/status/',data)
 }
-
+//关联班级
+export const joinClass = (data)=>{
+	return post('/teacher/joinclass/',data)
+}
 // 学校管理
 export const getSchool = (params)=>{
 	return get('/school/list/',params)

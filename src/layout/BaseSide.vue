@@ -87,7 +87,7 @@
 				// console.log(item.children)
 				return true
 			})
-			console.log(menuItems.value)
+			// console.log(menuItems.value)
 		})
 		// menuItems.value = router.options.routes.filter((item) => {
 			// if (item.path == '/') {

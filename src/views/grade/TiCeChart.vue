@@ -39,6 +39,7 @@
 <script setup>
 	import {getGradeTCAvg,getGradeProjectD} from '@/api/base'
 	import echarts from '@/utils/echarts.js'
+import { shallowRef } from 'vue';
 	const props = defineProps(['gradeId','planQuery','projects','gradeId'])
 	const avgData = ref({})
 	const gradeId = ref('')
@@ -48,6 +49,8 @@
 	const projectId = ref('')
 	const option = ref({})
 	const myChart = ref(null)
+	const gradeChat = shallowRef(null)
+	const gradeChatOption = ref({})
 	const boyChart = ref(null)
 	const girlChart = ref(null)
 	//饼图
@@ -70,11 +73,11 @@
 		initData()
 	})
 	onMounted(() => {
-		let gradeChat = echarts.init(document.getElementById("gradeChat"));
+		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
 		myChart.value = echarts.init(document.getElementById("pieChart"));
 		boyChart.value = echarts.init(document.getElementById("boyChart"));
 		girlChart.value = echarts.init(document.getElementById("girlChart"));
-		const gradeChatOption = {
+		gradeChatOption.value = {
 			title: {
 				subtext: '得分',
 				left: 70, // 距离左边位置
@@ -142,24 +145,6 @@
 				]
 			}]
 		};
-		
-		setTimeout(()=>{
-			gradeChatOption.xAxis.data = avgData.value.xAxis
-			gradeChatOption.series[0].data = avgData.value.data
-			gradeChat.setOption(gradeChatOption);
-			// //饼图
-			// option.value.series[0].data = data.chart.data
-			// myChart.value.setOption(option.value);
-			// delete(option.value.legend)
-			// option.value.series[0].data = data.boyChart.data
-			// boyChart.value.setOption(option.value);
-			// option.value.series[0].data = data.girlChart.data
-			// girlChart.value.setOption(option.value);
-		},1000)
-		
-		window.onresize = function() {
-			gradeChat.resize();
-		};
 	})
 	const initData = ()=>{
 		let params = {
@@ -168,6 +153,9 @@
 		getGradeTCAvg({...params,...planQuery.value}).then(res=>{
 			avgData.value.xAxis = res.map(v=>{return v.name})
 			avgData.value.data = res.map(v=>{return v.value})
+			gradeChatOption.value.xAxis.data = avgData.value.xAxis
+			gradeChatOption.value.series[0].data = avgData.value.data
+			gradeChat.value.setOption(gradeChatOption.value);
 		})
 		adClassProjectD()
 	}

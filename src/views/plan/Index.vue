@@ -118,10 +118,12 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="180">
 					<template #default="scope">
-						<el-button v-if="scope.row.status==0 || scope.row.status==1" link @click="handleEdit(scope.row)">编辑</el-button>
-						<el-button v-if="scope.row.status==0" link @click="updatePlanStatus(scope.row.id,1)">发布任务</el-button>
-						<el-button v-if="scope.row.status==1 || scope.row.status==2" link @click="updatePlanStatus(scope.row.id,-1)">取消任务</el-button>
-						<el-button v-if="scope.row.status==3" link>不可编辑</el-button>
+						<div v-if="scope.row.plan_type=='edu_commission'">
+							<el-button v-if="scope.row.status==0 || scope.row.status==1" link @click="handleEdit(scope.row)">编辑</el-button>
+							<el-button v-if="scope.row.status==0" link @click="updatePlanStatus(scope.row.id,1)">发布任务</el-button>
+							<el-button v-if="scope.row.status==1 || scope.row.status==2" link @click="updatePlanStatus(scope.row.id,-1)">取消任务</el-button>
+							<el-button v-if="scope.row.status==3" link>不可编辑</el-button>
+						</div>
 					</template>
 				</el-table-column>
 			</el-table>

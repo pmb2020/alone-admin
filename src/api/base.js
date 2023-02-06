@@ -116,7 +116,7 @@ export const getGradePeriodAvg = (params)=>{
 }
 
 export const getGradePeriod = (params)=>{
-	return get('/score/class_period_grade/',params)
+	return get('/score/grade_period_grade/',params)
 }
 
 // 老师管理

@@ -13,21 +13,21 @@
 				<el-col :span="10">
 					<div id='pieChart' style="height: 220px;"></div>
 					<div class="chart-bottom">
-						<h4>全区学生总体占比</h4>
-						<p>全区应测人数{{data.chart.student_num}}人，实测人数{{data.chart.test_student_num}}人</p>
+						<h4>全班学生总体占比</h4>
+						<p>全班应测人数{{data.chart.student_num}}人，实测人数{{data.chart.test_student_num}}人</p>
 					</div>
 				</el-col>
 				<el-col :span="7">
 					<div id='boyChart' style="height: 220px;"></div>
 					<div class="chart-bottom">
-						<h4>全区男生占比</h4>
+						<h4>全班男生占比</h4>
 						<p>应测男生人数{{data.boyChart.student_num}}人，实测人数{{data.boyChart.test_student_num}}人</p>
 					</div>
 				</el-col>
 				<el-col :span="7">
 					<div id='girlChart' style="height: 220px;"></div>
 					<div class="chart-bottom">
-						<h4>全区女生占比</h4>
+						<h4>全班女生占比</h4>
 						<p>应测女生人数{{data.girlChart.student_num}}人，实测人数{{data.girlChart.test_student_num}}人</p>
 					</div>
 				</el-col>

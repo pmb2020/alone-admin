@@ -50,8 +50,8 @@
 	const tabIndex = ref(0)
 	const barData = ref(null)
 	const gradeData = ref(null)
-	const barChat = ref(null)
-	const gradeChat = ref(null)
+	const barChat = shallowRef(null)
+	const gradeChat = shallowRef(null)
 	const option = ref({})
 	const gradeChatOption = ref({})
 	watch(props,(n,o)=>{

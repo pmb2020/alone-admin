@@ -13,21 +13,21 @@
 				<el-col :span="10">
 					<div id='pieChart' style="height: 220px;"></div>
 					<div class="chart-bottom">
-						<h4>全区学生总体占比</h4>
-						<p>全区应测人数{{data.chart.student_num}}人，实测人数{{data.chart.test_student_num}}人</p>
+						<h4>全年级学生总体占比</h4>
+						<p>全年级应测人数{{data.chart.student_num}}人，实测人数{{data.chart.test_student_num}}人</p>
 					</div>
 				</el-col>
 				<el-col :span="7">
 					<div id='boyChart' style="height: 220px;"></div>
 					<div class="chart-bottom">
-						<h4>全区男生占比</h4>
+						<h4>全年级男生占比</h4>
 						<p>应测男生人数{{data.boyChart.student_num}}人，实测人数{{data.boyChart.test_student_num}}人</p>
 					</div>
 				</el-col>
 				<el-col :span="7">
 					<div id='girlChart' style="height: 220px;"></div>
 					<div class="chart-bottom">
-						<h4>全区女生占比</h4>
+						<h4>全年级女生占比</h4>
 						<p>应测女生人数{{data.girlChart.student_num}}人，实测人数{{data.girlChart.test_student_num}}人</p>
 					</div>
 				</el-col>
@@ -48,11 +48,11 @@ import { shallowRef } from 'vue';
 	const tabIndex = ref(0)
 	const projectId = ref('')
 	const option = ref({})
-	const myChart = ref(null)
+	const myChart = shallowRef(null)
 	const gradeChat = shallowRef(null)
 	const gradeChatOption = ref({})
-	const boyChart = ref(null)
-	const girlChart = ref(null)
+	const boyChart = shallowRef(null)
+	const girlChart = shallowRef(null)
 	//饼图
 	const data = reactive({
 		chart:[],
@@ -118,7 +118,7 @@ import { shallowRef } from 'vue';
 				left: '0'
 			},
 			series: [{
-				name: '全区学生总体占比',
+				name: '全年级学生总体占比',
 				type: 'pie',
 				radius: [20, 80],
 				center: ['50%', '50%'],

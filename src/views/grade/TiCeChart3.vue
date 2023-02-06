@@ -45,11 +45,12 @@
 			series: [{
 					name: '正常',
 					type: 'bar',
+					barWidth: 15,
 					stack: 'total',
 					label: {
 						show: true
 					},
-					data: [320, 302, 301]
+					data: [0, 0, 0]
 				},
 				{
 					name: '低体重',
@@ -58,7 +59,7 @@
 					label: {
 						show: true
 					},
-					data: [120, 132, 101]
+					data: [0, 0, 0]
 				},
 				{
 					name: '超重',
@@ -67,7 +68,7 @@
 					label: {
 						show: true
 					},
-					data: [40, 82, 92]
+					data: [0, 0, 0]
 				},
 				{
 					name: '肥胖',
@@ -76,7 +77,7 @@
 					label: {
 						show: true
 					},
-					data: [100, 32, 101]
+					data: [0, 0, 0]
 				},
 			]
 		};
@@ -85,13 +86,8 @@
 	//调整表格
 	const adjustChart = ()=>{
 		option.value.xAxis.data = chartData.value.title
-		// let series=chartData.value.series.map(item=>{
-		// 	item.type='bar'
-		// 	item.stack:'total'
-		// 	item.label = {show: true}
-		// })
-		// option.value.series = series
-		console.log(chartData.value,'调整')
+		option.value.series = chartData.value.series
+		// console.log(chartData.value,'调整')
 		myChart.value.setOption(option.value);
 	}
 </script>

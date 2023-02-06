@@ -248,8 +248,16 @@
 	onMounted(() => {
 		getListData()
 		getPlanOption().then(res => {
-			console.log(res)
+			// console.log(res)
 			queryOptionOrigin.value = res
+			if(userType.value=='school'){
+				for(let key in res.grades){
+					queryOption.value.grades = res.grades[key]
+				}
+				for(let key in res.projects){
+					queryOption.value.projects = res.projects[key]
+				}
+			}
 		})
 	})
 	const getListData = () => {
@@ -317,6 +325,8 @@
 		queryOption.value.grades = queryOptionOrigin.value.grades[val]
 		queryOption.value.projects = queryOptionOrigin.value.projects[val]
 		queryOption.value.school_list = queryOptionOrigin.value.school_list[val]
+		checkAllProject.value = false
+		checkAllGrade.value = false
 		checkTextGrade.value = '请选择'
 		checkTextProject.value = '请选择'
 		form.value.grade_ids = []

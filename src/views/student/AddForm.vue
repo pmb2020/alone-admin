@@ -54,7 +54,9 @@
 						</el-select>
 					</div>
 					<div v-else>
-						<p>{{scope.row.gender}}</p>
+						<el-select v-model="scope.row.grade_id" disabled placeholder="请选择">
+							<el-option v-for="item in selOption.grades" :label="item.name" :value="item.id" />
+						</el-select>
 					</div>
 				</template>
 			</el-table-column>
@@ -66,7 +68,9 @@
 						</el-select>
 					</div>
 					<div v-else>
-						<p>{{scope.row.class_id}}</p>
+						<el-select v-model="scope.row.class_id" disabled placeholder="请选择">
+							<el-option v-for="item in classOp" :label="item.name" :value="item.id" />
+						</el-select>
 					</div>
 				</template>
 			</el-table-column>

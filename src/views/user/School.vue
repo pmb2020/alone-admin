@@ -156,6 +156,7 @@
 				addSchool(form.value).then(res => {
 					dialogFormVisible.value = false
 					ElMessage.success('操作成功')
+					getListData()
 				})
 			} else {
 				updateSchool(form.value).then(res => {
@@ -170,7 +171,8 @@
 	//文件上传成功
 	const uploadFileSuccess = (val)=>{
 		if(val.responseCode==0){
-			ElMessage.success('修改成功')
+			ElMessage.success('导入成功')
+			getListData()
 		}else{
 			ElMessage.error(val.responseMsg)
 		}

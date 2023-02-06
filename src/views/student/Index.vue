@@ -159,45 +159,31 @@
 							<el-input v-model="form.student_ID" placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="班级">
-							<el-select v-model="form.class_id" disabled placeholder="请选择">
-								<el-option label="男" value="1" />
-								<el-option label="女" value="2" />
-							</el-select>
+							<el-input v-model="form.class_name" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="年级">
-							<el-select v-model="form.grade_id" disabled placeholder="请选择">
-								<el-option label="男" :value="1" />
-								<el-option label="女" :value="2" />
-							</el-select>
+							<el-input v-model="form.grade_name" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="学级">
-							<el-select v-model="form.school_id" disabled placeholder="请选择">
-								<el-option label="男" value="1" />
-								<el-option label="女" value="2" />
-							</el-select>
+							<el-input v-model="form.year" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="老师">
-							<el-select v-model="form.region" disabled placeholder="请选择">
-								<el-option label="男" value="1" />
-								<el-option label="女" value="2" />
+							<el-select v-if="form.teachers[0]" v-model="form.teachers[0].name" disabled placeholder="请选择">
 							</el-select>
 						</el-form-item>
 					</el-col>
 				    <el-col :span="12" style="padding-right: 50px;">
 						<el-form-item label="归属学校">
-							<el-select v-model="form.region" disabled placeholder="请输入">
-								<el-option label="Zone one" value="shanghai" />
-								<el-option label="Zone two" value="beijing" />
-							</el-select>
+							<el-input v-model="form.school_name" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="归属片区">
-							<el-input v-model="form.user" disabled placeholder="请输入" />
+							<el-input v-model="form.area" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="归属集团">
-							<el-input v-model="form.user" disabled placeholder="请输入" />
+							<el-input v-model="form.edu_group" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="归属教委">
-							<el-input v-model="form.user" disabled placeholder="请输入" />
+							<el-input v-model="form.edu_commission" disabled placeholder="请输入" />
 						</el-form-item>
 						<el-form-item label="身份证号">
 							<el-input v-model="form.id_card" disabled placeholder="请输入" />

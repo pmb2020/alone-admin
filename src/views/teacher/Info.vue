@@ -40,33 +40,17 @@
 			<!-- <h3 class="title">学生体测数据展示</h3> -->
 			<div class="ty-tabs">
 				<div class="tab-item" :class="{'active':tabIndex==index}" v-for="(item,index) in teaInfo.joined_classes"  
-				@click="tabIndex=index">
+				@click="daTabClick(index,item.id)">
 					{{item.name}}
 				</div>
 			</div>
-			<div class="al-flex-between" style="margin-bottom: 20px;">
-				<h3 class="title" style="margin-bottom: 0;">各项体测指标均值分析</h3>
-				<div class="al-flex" style="align-items: center;">
-					<p style="color: #222426;">体测计划</p>
-					<el-select v-model="queryParams.start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
-						<!-- <el-option label="2021年7期" value="item.value" />
-						<el-option label="2021年8期" value="item.value" /> -->
-					</el-select>
-					<span style="width: 25px;height: 1px;background: #979797;"></span>
-					<el-select v-model="queryParams.end_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
-						<!-- <el-option label="2021年7期" value="item.value" />
-						<el-option label="2021年8期" value="item.value" /> -->
-					</el-select>
-					<el-button type="primary">查询</el-button>
-				</div>
-			</div>
-			<TiCeChart></TiCeChart>
+			<TiCeChart :class-id="classId" :ticePlanOption="ticePlanOption" :projects="projects" />
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import {getTeaInfo} from '@/api/base'
+	import {getTeaInfo,getClassData,getClassTCPlan} from '@/api/base'
 	import TiCeChart from './TiCeChart.vue'
 	import { useRoute } from 'vue-router';
 	const route = useRoute()
@@ -74,14 +58,49 @@
 	const id = ref('')
 	const tabIndex = ref(0)
 	const queryParams = ref({})
+	const classId = ref('')
+	const ticePlanOption = ref([])
+	const projects = ref([])
+	const planQuery = ref({
+		plan_start_id: '',
+		plan_end_id: ''
+	})
+	const daTabClick = (index,id)=>{
+		tabIndex.value=index;
+		classId.value=id
+		getPlanList()
+	}
 	onMounted(()=>{
 		id.value = route.query.id
 		if(!id.value) return
 		getTeaInfo({teacher_id:id.value}).then(res=>{
-			console.log(res[0])
 			teaInfo.value=res[0]
+			if(res[0].joined_classes.length >0){
+				classId.value = res[0].joined_classes[0].id
+				getPlanList()
+				getTiceData()
+			}
 		})
 	})
+	const getTiceData = ()=>{
+		let params = {
+			class_id: classId.value
+		}
+		getClassData({
+			...params,
+			...planQuery.value
+		}).then(res=>{
+			projects.value = res.projects
+		})
+	}
+	//查体测计划期数
+	const getPlanList = () => {
+		getClassTCPlan({
+			class_id: classId.value
+		}).then(res => {
+			ticePlanOption.value = res
+		})
+	}
 </script>
 
 <style lang="scss">

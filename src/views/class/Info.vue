@@ -80,11 +80,6 @@
 						<el-table-column prop="name" label="姓名" align="center" />
 						<el-table-column prop="gender" label="性别" align="center" />
 						<el-table-column prop="总分" label="总分(权重)" align="center" />
-						<!-- <el-table-column label="体测计划" width="180" align="center">
-						<template #default="scope">
-							<span style="margin-left: 10px">2021年第8期</span>
-						</template>
-					</el-table-column> -->
 						<el-table-column label="体重指数(BMI)" align="center">
 							<el-table-column prop="体重指数（BMI）成绩" label="成绩" />
 							<el-table-column prop="体重指数（BMI）得分" label="得分" />

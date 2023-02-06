@@ -116,6 +116,7 @@
 				</TiCeChart>
 				<!-- 本年级各班总体等级对比分析 -->
 				<TiCeChart3 :data="bingData.all_class_grade" />
+				<a class="download-a" :href="downloadUrl" download target="_blank">下载</a>
 			</div>
 			<div v-else>
 				<TiCeChart2 :class-id="classId" :grade-id="gradeId" :plan-query="planQuery" :ticePlanOption="ticePlanOption" :projects="projects"></TiCeChart2>
@@ -135,6 +136,8 @@
 	import TiCeChart from './TiCeChart.vue'
 	import TiCeChart2 from './TiCeChart2.vue'
 	import TiCeChart3 from './TiCeChart3.vue'
+	import qs from 'qs'
+	const downloadUrl = ref('')
 	const route = useRoute()
 	const gradeId = ref('')
 	const gradeInfo = ref({
@@ -171,6 +174,8 @@
 			projects.value = res.projects
 			tableData.value = res.score_list
 		})
+		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/grade_project_grade/?'+qs.stringify(planQuery.value)
+		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
 		//饼图数据
 		getGradeProjectD(planQuery.value).then(res=>{
 			console.log(res)

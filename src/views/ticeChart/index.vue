@@ -104,6 +104,7 @@
 
 <script setup>
 	import {getBaseOpt,getBaseChart} from '@/api/ticeChart'
+	import qs from 'qs'
 	import TiCeChart2 from "./TiCeChart2.vue"
 	const queryOption = ref({
 		school:[],
@@ -255,7 +256,7 @@
 	}
 	const getListData = ()=>{
 		queryForm.project_id = projectId.value
-		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/project_analysis_chart/?'+objToUrl(queryForm)
+		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/project_analysis_chart/?'+qs.stringify(queryForm)
 		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
 		getBaseChart(queryForm).then(res=>{
 			console.log(res)
@@ -283,13 +284,7 @@
 			barChat.value.setOption(option.value);
 		})
 	}
-	const download = ()=>{
-		queryForm.project_id = projectId.value
-		queryForm.download = 1
-		getBaseChart(queryForm).then(res=>{
-			
-		})
-	}
+	
 	//序列化
 	const objToUrl = obj => {
 	    let arr = [];
@@ -303,14 +298,4 @@
 </script>
 
 <style>
-	.download-a{
-		color: #fff;
-		float: right;
-		background-color: #005EFF;
-		font-size: 14px;
-		border-radius: 4px;
-		position: relative;
-		padding: 5px 10px;
-		top: -30px;
-	}
 </style>

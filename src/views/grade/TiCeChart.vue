@@ -4,6 +4,7 @@
 			<h3 class="title" style="margin-bottom: 0;">各项体测指标均值分析</h3>
 		</div>
 		<div id='gradeChat' style="height: 300px;"></div>
+		<a class="download-a" :href="downloadUrl" download target="_blank">下载</a>
 		<div class="">
 			<h3 class="title" style="">各项体测指标等级分析</h3>
 			<ul class="ty-tab" style="margin-bottom: 30px;">
@@ -32,6 +33,7 @@
 					</div>
 				</el-col>
 			</el-row>
+			<a style="top: 10px;" class="download-a" :href="downloadUrl1" download target="_blank">下载</a>
 		</div>
 	</div>
 </template>
@@ -41,6 +43,9 @@
 	import echarts from '@/utils/echarts.js'
 import { shallowRef } from 'vue';
 	const props = defineProps(['gradeId','planQuery','projects','gradeId'])
+	import qs from 'qs'
+	const downloadUrl = ref('')
+	const downloadUrl1 = ref('')
 	const avgData = ref({})
 	const gradeId = ref('')
 	const planQuery = ref({})
@@ -150,6 +155,8 @@ import { shallowRef } from 'vue';
 		let params = {
 			grade_id:gradeId.value,
 		}
+		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/grade_test_avg/?'+qs.stringify({...params,...planQuery.value})
+		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
 		getGradeTCAvg({...params,...planQuery.value}).then(res=>{
 			avgData.value.xAxis = res.map(v=>{return v.name})
 			avgData.value.data = res.map(v=>{return v.value})
@@ -164,9 +171,11 @@ import { shallowRef } from 'vue';
 			grade_id:gradeId.value,
 			project_id:projectId.value || 3
 		}
+		downloadUrl1.value = import.meta.env.VITE_API_HOST+'/score/grade_project_grade/?'+qs.stringify({...params,...planQuery.value})
+		downloadUrl1.value += '&download=1&token='+localStorage.getItem('token')
 		//获取饼图数据
 		getGradeProjectD({...params,...planQuery.value}).then(res=>{
-			console.log(res)
+			// console.log(res)
 			data.chart = res.score_grade_chart
 			data.boyChart = res.score_grade_chart_boy
 			data.girlChart = res.score_grade_chart_girl

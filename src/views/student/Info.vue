@@ -143,15 +143,19 @@
 				<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
 			</div>
 			<TiCeChart :student-id="studentId" :chart-data="chartData"></TiCeChart>
+			<p style="margin-bottom: 40px;"></p>
+			<a class="download-a" :href="downloadUrl" download target="_blank">下载</a>
 		</div>
 	</div>
 </template>
 
 <script setup>
 	import {getStudentInfo,getStudentData,getStuPlanOpt} from '@/api/base'
+	import qs from 'qs'
 	import { useRoute } from 'vue-router';
 	import TiCeChart from './TiCeChart.vue'
 	const route = useRoute()
+	const downloadUrl = ref('')
 	const studentId = ref('')
 	const studentInfo = ref({})
 	const planParams = ref({
@@ -182,6 +186,8 @@
 			params.plan_start_id=planParams.value.plan_start_id
 			params.plan_end_id=planParams.value.plan_end_id
 		}
+		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/student_score/?'+qs.stringify(params)
+		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
 		getStudentData(params).then(res=>{
 			// console.log(res)
 			tableData.value = res.score_list

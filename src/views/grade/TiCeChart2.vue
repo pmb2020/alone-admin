@@ -21,7 +21,8 @@
 				<el-button type="primary" @click="getTiCeData">查询</el-button>
 			</div>
 		</div>
-		<div id='gradeChat' style="height: 300px;"></div>
+		<div id='gradeChat' style="height: 300px;margin-bottom: 40px;"></div>
+		<a class="download-a" :href="downloadUrl" download target="_blank">下载</a>
 		<h3 class="title">各项体测指标等级分析</h3>
 		<div style="margin: 30px 0;">
 			<ul class="ty-tab">
@@ -30,6 +31,7 @@
 			</ul>
 		</div>
 		<div id='barChat' style="height: 300px;"></div>
+		<a class="download-a" :href="downloadUrl1" download target="_blank">下载</a>
 	</div>
 </template>
 
@@ -37,6 +39,9 @@
 	import {getGradePeriodAvg,getGradePeriod} from '@/api/base'
 	import echarts from '@/utils/echarts.js'
 	const props = defineProps(['classId','gradeId','planQuery','projects','ticePlanOption'])
+	import qs from 'qs'
+	const downloadUrl = ref('')
+	const downloadUrl1 = ref('')
 	const planParams = ref({
 		plan_start_id:'',
 		plan_end_id:'',
@@ -160,6 +165,8 @@
 	}
 	const getTiCeData = ()=>{
 		planParams.value.grade_id = props.gradeId
+		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/grade_period_avg/?'+qs.stringify(planParams.value)
+		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
 		//均值折线
 		getGradePeriodAvg(planParams.value).then(res=>{
 			// console.log(res)
@@ -177,6 +184,8 @@
 		if(!planParams.value.project_id){
 			planParams.value.project_id = props.projects[0].id
 		}
+		downloadUrl1.value = import.meta.env.VITE_API_HOST+'/score/grade_period_grade/?'+qs.stringify(planParams.value)
+		downloadUrl1.value += '&download=1&token='+localStorage.getItem('token')
 		// console.log(planParams.value)
 		getGradePeriod(planParams.value).then(res=>{
 			let series = [{

@@ -7,8 +7,15 @@
 
 <script setup>
 	import echarts from '@/utils/echarts.js'
+	const props = defineProps(['data'])
 	const myChart = shallowRef(null)
 	const option = ref({})
+	const chartData = ref()
+	watch(props,(n,o)=>{
+		console.log(n.data,'tice3')
+		chartData.value = n.data
+		adjustChart()
+	})
 	onMounted(() => {
 		myChart.value = echarts.init(document.getElementById("myChart"));
 		option.value = {
@@ -75,7 +82,18 @@
 		};
 		myChart.value.setOption(option.value);
 	})
-	
+	//调整表格
+	const adjustChart = ()=>{
+		option.value.xAxis.data = chartData.value.title
+		// let series=chartData.value.series.map(item=>{
+		// 	item.type='bar'
+		// 	item.stack:'total'
+		// 	item.label = {show: true}
+		// })
+		// option.value.series = series
+		console.log(chartData.value,'调整')
+		myChart.value.setOption(option.value);
+	}
 </script>
 
 <style>

@@ -115,7 +115,7 @@
 				<TiCeChart :class-id="gradeId" :grade-id="gradeId" :plan-query="planQuery" :projects="projects">
 				</TiCeChart>
 				<!-- 本年级各班总体等级对比分析 -->
-				<TiCeChart3 />
+				<TiCeChart3 :data="bingData.all_class_grade" />
 			</div>
 			<div v-else>
 				<TiCeChart2 :class-id="classId" :grade-id="gradeId" :plan-query="planQuery" :ticePlanOption="ticePlanOption" :projects="projects"></TiCeChart2>
@@ -127,7 +127,7 @@
 <script setup>
 	import {
 		getGradeInfo,
-		getGradeTable
+		getGradeTable,getGradeProjectD
 	} from '@/api/base'
 	import {
 		useRoute
@@ -139,6 +139,12 @@
 	const gradeId = ref('')
 	const gradeInfo = ref({
 		grade_info: {}
+	})
+	const bingData = ref({
+		all_class_grade:{},
+		score_grade_chart:{},
+		score_grade_chart_boy:{},
+		score_grade_chart_girl:{}
 	})
 	const tabIndex = ref(0)
 	const projects = ref([])
@@ -164,6 +170,11 @@
 			console.log(res.score_list)
 			projects.value = res.projects
 			tableData.value = res.score_list
+		})
+		//饼图数据
+		getGradeProjectD(planQuery.value).then(res=>{
+			console.log(res)
+			bingData.value = res
 		})
 	}
 </script>

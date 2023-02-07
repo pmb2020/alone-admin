@@ -37,15 +37,15 @@
 						<li :class="{'active':tabIndex==1}" @click="tabClick(1)">女生</li>
 					</ul>
 				</div>
-				<el-table :data="tableData" stripe border size="large" style="width: 100%">
-					<el-table-column v-if="!isBonus" prop="score_grade" label="等级" width="80" />
-					<el-table-column prop="score" label="单项得分" align="center" />
+				<el-table class="ticet" :data="tableData" stripe border size="large" style="width: 100%">
+					<el-table-column v-if="!isBonus" prop="score_grade" label="等级" align="center" />
+					<el-table-column class-name="tity-bg" prop="score" label="单项得分" align="center" />
 					<el-table-column prop="一年级" label="一年级" align="center" />
-					<el-table-column prop="二年级" label="二年级" align="center" />
+					<el-table-column class-name="tity-bg" prop="二年级" label="二年级" align="center" />
 					<el-table-column prop="三年级" label="三年级" align="center" />
-					<el-table-column prop="四年级" label="四年级" align="center" />
+					<el-table-column class-name="tity-bg" prop="四年级" label="四年级" align="center" />
 					<el-table-column prop="五年级" label="五年级" align="center" />
-					<el-table-column prop="六年级" label="六年级" align="center" />
+					<el-table-column class-name="tity-bg" prop="六年级" label="六年级" align="center" />
 				</el-table>
 			</div>
 		</el-col>

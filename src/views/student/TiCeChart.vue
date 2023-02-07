@@ -12,18 +12,21 @@
 	const studentId = ref('')
 	const chartData = ref({})
 	const xAxisData = ref([])
+	const gradeChat=shallowRef(null)
+	const gradeChatOption = ref({})
 	watch(props,(n,o)=>{
 		chartData.value = props.chartData
 		if(n.chartData.yAxisData){
 			xAxisData.value = Object.values(n.chartData.yAxisData)
 		}
-		console.log(n.chartData.yAxisData)
+		adjustChart()
+		console.log(n.chartData)
 	})
 	onMounted(() => {
 		console.log(chartData.value)
 		// if(!studentId.value) return
-		let gradeChat = echarts.init(document.getElementById("gradeChat"));
-		const gradeChatOption = {
+		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
+		gradeChatOption.value = {
 			title: {
 				subtext: '得分',
 				left: 30, // 距离左边位置
@@ -80,17 +83,17 @@
 				}
 			]
 		};
-		setTimeout(()=>{
-			gradeChatOption.xAxis.data = xAxisData.value
-			gradeChatOption.series = chartData.value.series
-			gradeChatOption.legend.data = chartData.value.legendData
-			gradeChat.setOption(gradeChatOption);
-		},1000)
-		// gradeChat.setOption(gradeChatOption);
 		window.onresize = function() {
-			gradeChat.resize();
+			gradeChat.value.resize();
 		};
 	})
+	
+	const adjustChart = ()=>{
+		gradeChatOption.value.xAxis.data = xAxisData.value
+		gradeChatOption.value.series = chartData.value.series
+		gradeChatOption.value.legend.data = chartData.value.legendData
+		gradeChat.value.setOption(gradeChatOption.value);
+	}
 </script>
 
 <style lang="scss">

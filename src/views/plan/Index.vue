@@ -335,12 +335,9 @@
 	const onSubmit = () => {
 		formRef.value.validate((valid) => {
 			if (!valid) return
-			console.log(form.value)
 			form.value.grade_ids = form.value.grade_ids ? form.value.grade_ids.toString() :''
 			form.value.project_ids = form.value.project_ids ? form.value.project_ids.toString() :''
 			form.value.school_ids = form.value.school_ids ? form.value.school_ids.toString() :''
-			
-			return
 			if (isFromAdd.value) {
 				addPlan(form.value).then(res => {
 					dialogFormVisible.value = false

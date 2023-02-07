@@ -23,9 +23,9 @@
 			<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index,tab.id)">{{tab.name}}</li>
 		</ul>
 	</div>
-	<h3 class="title">各项体测指标均值分析</h3>
-	<div id='barChat' style="height: 300px;"></div>
 	<h3 class="title">各项体测指标等级分析</h3>
+	<div id='barChat' style="height: 300px;"></div>
+	<h3 class="title">各项体测指标均值分析</h3>
 	<div id='gradeChat' style="height: 300px;"></div>
 </template>
 
@@ -45,7 +45,10 @@
 	watch(props,(n,o)=>{
 		homeData.value = n.homeData
 		projects.value =n.homeData.projects
-		console.log(n.homeData,'监听')
+		if(n.homeData.projects[0].id){
+			project_id.value = n.homeData.projects[0].id
+		}
+		// console.log(n.homeData,'监听')
 	})
 	// const tabs = ref(props.homeData.projects.小学)
 	const tabIndex = ref(0)
@@ -155,8 +158,8 @@
 	const getTiCeData = ()=>{
 		let params = {
 			project_id:project_id.value || 3,
-			plan_start_id:planParams.value.plan_start_id || 3,
-			plan_end_id:planParams.value.plan_end_id || 6
+			plan_start_id:planParams.value.plan_start_id,
+			plan_end_id:planParams.value.plan_end_id
 		}
 		getProjectChat(params).then(res=>{
 			let series = [{

@@ -10,7 +10,7 @@
 			<el-menu :default-active="menuRoute" class="el-menu-vertical-demo" :collapse="isCollapse" router
 				@open="handleOpen" @close="handleClose">
 				<template v-for="(items,index) in menuItems" :key="index">
-					<el-menu-item v-if="items.children && items.children.length == 1"
+					<el-menu-item @click="menuClick1(items)" v-if="items.children && items.children.length == 1"
 						:index="items.path+'/'+items.children[0].path">
 						<!-- <el-icon>
 							<component :is="items.children[0].meta.icon"></component>
@@ -29,7 +29,7 @@
 						<!-- 二级菜单 -->
 						<el-menu-item-group>
 							<template v-for="(subItem,subIndex) in items.children" :key="subIndex">
-								<el-menu-item v-if="!subItem.hidden" :index="items.path+'/'+subItem.path">
+								<el-menu-item @click="menuClick(subItem)" v-if="!subItem.hidden" :index="items.path+'/'+subItem.path">
 									{{subItem.meta.title}}
 								</el-menu-item>
 							</template>
@@ -45,6 +45,8 @@
 	import { watch } from 'vue';
 	import {useRoute,useRouter} from 'vue-router';
 	import {getMenu} from '@/api/auth'
+	import { useTabStore } from '@/store/tab'
+	const tabStore = useTabStore()
 	const route = useRoute()
 	const router = useRouter()
 	const isCollapse = ref(false)
@@ -103,7 +105,20 @@
 			return item.name === val
 		})
 	}
-	
+	const menuClick = (items)=>{
+		tabStore.addTabData({
+			name:items.name,
+			title:items.meta.title
+		})
+	}
+	const menuClick1 = (items)=>{
+		if(items.name !='SportsHome'){
+			tabStore.addTabData({
+				name:items.name,
+				title:items.children[0].meta.title
+			})
+		}
+	}
 	const handleOpen = ()=>{
 		
 	}

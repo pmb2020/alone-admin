@@ -44,10 +44,10 @@
 		</div>
 		<div class="ty-box" style="position: relative;margin-top: 80px;">
 			<div class="ty-tabs">
-				<div class="tab-item" :class="{'active':tabIndex==0}" @click="tabIndex=0">
+				<div class="tab-item" :class="{'active':tabIndex==0}" @click="daTabCLick(0)">
 					年级体测数据展示及分析
 				</div>
-				<div class="tab-item" :class="{'active':tabIndex==1}" @click="tabIndex=1">
+				<div class="tab-item" :class="{'active':tabIndex==1}" @click="daTabCLick(1)">
 					年级体测数据阶段分析
 				</div>
 			</div>
@@ -161,7 +161,12 @@
 		if (!gradeId.value) return
 		getTiCeData()
 	})
-
+	const daTabCLick = (index)=>{
+		tabIndex.value = index
+		if(index==0){
+			getTiCeData()
+		}
+	}
 	const getTiCeData = () => {
 		planQuery.value.grade_id = gradeId.value
 		console.log(planQuery.value)

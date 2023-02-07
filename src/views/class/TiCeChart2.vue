@@ -38,7 +38,7 @@
 <script setup>
 	import {getClassPeriodAvg,getClassPeriod} from '@/api/base'
 	import echarts from '@/utils/echarts.js'
-	const props = defineProps(['classId','planQuery','projects','ticePlanOption'])
+	const props = defineProps(['classId','planQuery','projects','ticePlanOption','tabIndex'])
 	import qs from 'qs'
 	const downloadUrl = ref('')
 	const downloadUrl1 = ref('')

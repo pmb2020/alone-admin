@@ -43,7 +43,7 @@
 	import {getClassTCAvg,getClassProjectD} from '@/api/base'
 	import echarts from '@/utils/echarts.js'
 	import qs from 'qs'
-	const props = defineProps(['classId','planQuery','projects'])
+	const props = defineProps(['classId','planQuery','projects','tabIndex'])
 	const downloadUrl = ref('')
 	const downloadUrl1 = ref('')
 	const avgData = ref({})
@@ -52,9 +52,11 @@
 	const tabs = ref([{id:1,name:'体重指数'},])
 	const tabIndex = ref(0)
 	const option = ref({})
-	const myChart = ref(null)
-	const boyChart = ref(null)
-	const girlChart = ref(null)
+	const gradeChatOption = ref({})
+	const myChart = shallowRef(null)
+	const gradeChat = shallowRef(null)
+	const boyChart = shallowRef(null)
+	const girlChart = shallowRef(null)
 	const projectId = ref('')
 	//饼图
 	const data = reactive({
@@ -76,11 +78,11 @@
 		initData()
 	})
 	onMounted(() => {
-		let gradeChat = echarts.init(document.getElementById("gradeChat"));
+		gradeChat.value = echarts.init(document.getElementById("gradeChat"));
 		myChart.value = echarts.init(document.getElementById("pieChart"));
 		boyChart.value = echarts.init(document.getElementById("boyChart"));
 		girlChart.value = echarts.init(document.getElementById("girlChart"));
-		const gradeChatOption = {
+		gradeChatOption.value = {
 			title: {
 				subtext: '得分',
 				left: 70, // 距离左边位置
@@ -148,23 +150,9 @@
 				]
 			}]
 		};
-		
-		setTimeout(()=>{
-			gradeChatOption.xAxis.data = avgData.value.xAxis
-			gradeChatOption.series[0].data = avgData.value.data
-			gradeChat.setOption(gradeChatOption);
-			//饼图
-			// option.value.series[0].data = data.chart.data
-			// myChart.value.setOption(option.value);
-			// delete(option.value.legend)
-			// option.value.series[0].data = data.boyChart.data
-			// boyChart.value.setOption(option.value);
-			// option.value.series[0].data = data.girlChart.data
-			// girlChart.value.setOption(option.value);
-		},1000)
-		
+				
 		window.onresize = function() {
-			gradeChat.resize();
+			gradeChat.value.resize();
 		};
 	})
 	const initData = ()=>{
@@ -174,6 +162,9 @@
 		getClassTCAvg(planQuery.value).then(res=>{
 			avgData.value.xAxis = res.map(v=>{return v.name})
 			avgData.value.data = res.map(v=>{return v.value})
+			gradeChatOption.value.xAxis.data = avgData.value.xAxis
+			gradeChatOption.value.series[0].data = avgData.value.data
+			gradeChat.value.setOption(gradeChatOption.value);
 		})
 		adClassProjectD()
 	}

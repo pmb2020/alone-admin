@@ -48,10 +48,10 @@
 		</div>
 		<div class="ty-box" style="position: relative;margin-top: 80px;">
 			<div class="ty-tabs">
-				<div class="tab-item" :class="{'active':tabIndex==0}" @click="tabIndex=0">
+				<div class="tab-item" :class="{'active':tabIndex==0}" @click="daTabCLick(0)">
 					班级体测数据展示及分析
 				</div>
-				<div class="tab-item" :class="{'active':tabIndex==1}" @click="tabIndex=1">
+				<div class="tab-item" :class="{'active':tabIndex==1}" @click="daTabCLick(1)">
 					{{classInfo.class_detail.year}}级{{classInfo.class_detail.name}}体测数据阶段分析
 				</div>
 			</div>
@@ -114,10 +114,10 @@
 					</el-table>
 					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
 				</div>
-				<TiCeChart :class-id="classId" :plan-query="planQuery" :projects="projects"></TiCeChart>
+				<TiCeChart :tab-index="tabIndex" :class-id="classId" :plan-query="planQuery" :projects="projects"></TiCeChart>
 			</div>
 			<div v-else>
-				<TiCeChart2 :class-id="classId" :plan-query="planQuery" :ticePlanOption="ticePlanOption" :projects="projects"></TiCeChart2>
+				<TiCeChart2 :tab-index="tabIndex" :class-id="classId" :plan-query="planQuery" :ticePlanOption="ticePlanOption" :projects="projects"></TiCeChart2>
 			</div>
 		</div>
 	</div>
@@ -172,6 +172,12 @@
 			projects.value = res.projects
 			tableData.value = res.score_list
 		})
+	}
+	const daTabCLick = (index)=>{
+		tabIndex.value = index
+		if(index==0){
+			getPlanData()
+		}
 	}
 	//查体测计划期数
 	const getPlanList = () => {

@@ -122,7 +122,7 @@
 					</el-col>
 					<el-col :span="6">
 						<el-form-item label="年级">
-							<el-select v-model="form.grade_id" placeholder="请选择">
+							<el-select v-model="form.base_grade_id" placeholder="请选择">
 								<el-option v-for="(item,index) in addOption.grades" :label="item.name"
 									:value="item.id" />
 							</el-select>

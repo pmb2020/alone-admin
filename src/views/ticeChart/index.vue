@@ -63,7 +63,7 @@
 		</div>
 		<div class="ty-box">
 			<div class="al-flex-between" style="margin-bottom: 20px;">
-				<h3 class="title" style="margin-bottom: 0;">班级数据分析</h3>
+				<h3 class="title" style="margin-bottom: 0;">{{tabTitle}}班级数据分析</h3>
 				<div class="al-flex" style="align-items: center;">
 					<!-- <p style="color: #222426;">体测计划</p> -->
 					<p style="color: #222426;">体测计划</p>
@@ -114,6 +114,7 @@
 	const classInfo = ref({
 		class_detail: {}
 	})
+	const tabTitle = ref('')
 	const projects = ref([{id:1,name:'体重指数'}])
 	const ticePlanOption = ref([])
 	const planQuery = ref({
@@ -255,6 +256,7 @@
 		})
 	}
 	const getListData = ()=>{
+		handleTabTitle()
 		queryForm.project_id = projectId.value
 		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/project_analysis_chart/?'+qs.stringify(queryForm)
 		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
@@ -284,16 +286,29 @@
 			barChat.value.setOption(option.value);
 		})
 	}
-	
-	//序列化
-	const objToUrl = obj => {
-	    let arr = [];
-	    for(let i in obj){
-	        if (obj.hasOwnProperty(i)) {
-	            arr.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
-	        }
-	    }
-	    return arr.join("&");
+	//处理tab标题
+	const handleTabTitle = ()=>{
+		tabTitle.value = ''
+		if(queryForm.school_id){
+			queryOption.value.schools.filter(item=>{
+				if(item.id==queryForm.school_id){
+					tabTitle.value = item.name
+				}
+			})
+		}
+		if(queryForm.year){
+			tabTitle.value = tabTitle.value + queryForm.year +'级'
+		}
+		if(queryForm.grade_id){
+			queryOption.value.grades.filter(item=>{
+				if(item.id == queryForm.grade_id){
+					tabTitle.value =tabTitle.value + item.name
+				}
+			})
+		}
+		if(queryForm.class_id){
+			tabTitle.value = tabTitle.value + queryForm.class_id + '-'
+		}
 	}
 </script>
 

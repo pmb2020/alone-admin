@@ -19,7 +19,7 @@
 							<div style="padding: 0 30px;color: #222426;font-size: 15px;">加分项指标评分表</div>
 						</template>
 						<ul class="single-ul">
-							<li :class="{'active':index==singleIndex}" v-for="(item,index) in items.bonus" :key="index"
+							<li :class="{'active':index==bonusIndex}" v-for="(item,index) in items.bonus" :key="index"
 								@click="bonusClick(index)">
 								{{item.project_name}}
 							</li>
@@ -61,7 +61,7 @@
 	const gradeType = ref('小学')
 	const activeNames = ref(['1'])
 	const singleIndex = ref(0)
-	const bonusIndex = ref(0)
+	const bonusIndex = ref(-1)
 	const tabIndex = ref(0)
 	const isBonus = ref(false)
 	const singleItems = ref([])
@@ -138,12 +138,14 @@
 		})
 	}
 	const bonusClick = (index) => {
+		singleIndex.value = -1
 		isBonus.value = true
 		tabIndex.value = 0
 		bonusIndex.value = index
 		getBonusData(items.value.bonus[index].project_id)
 	}
 	const singleClick = (index) => {
+		bonusIndex.value = -1
 		isBonus.value = false
 		tabIndex.value = 0
 		singleIndex.value = index

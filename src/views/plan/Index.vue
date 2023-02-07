@@ -158,7 +158,7 @@
 								</template>
 								<el-checkbox v-model="checkAllGrade" :indeterminate="isIndeterminateGrade"
 								 @change="handleCheckAllGrade">全选</el-checkbox>
-								<el-checkbox-group v-model="form.grade_ids">
+								<el-checkbox-group v-model="form.grade_ids" @change="CheckedGradeChange">
 									<el-checkbox v-for="item in queryOption.grades" :key="item.id" :label="item.id">
 										{{item.name}}</el-checkbox>
 								</el-checkbox-group>
@@ -335,9 +335,12 @@
 	const onSubmit = () => {
 		formRef.value.validate((valid) => {
 			if (!valid) return
+			console.log(form.value)
 			form.value.grade_ids = form.value.grade_ids ? form.value.grade_ids.toString() :''
 			form.value.project_ids = form.value.project_ids ? form.value.project_ids.toString() :''
 			form.value.school_ids = form.value.school_ids ? form.value.school_ids.toString() :''
+			
+			return
 			if (isFromAdd.value) {
 				addPlan(form.value).then(res => {
 					dialogFormVisible.value = false
@@ -389,7 +392,9 @@
 	const isIndeterminateGrade = ref(false)
 	const handleCheckAllGrade = (val)=>{
 		let grades = queryOption.value.grades.map(v=>{return v.id})
+		let gradeName = queryOption.value.grades.map(v=>{return v.name})
 		form.value.grade_ids = val ? grades : [],
+		checkTextGrade.value = gradeName.toString()
 		isIndeterminateGrade.value = false
 	}
 	const checkTextProject = ref('请选择')
@@ -397,11 +402,28 @@
 	const isIndeterminateProject = ref(false)
 	const handleCheckAllProject = (val)=>{
 		let projects = queryOption.value.projects.map(v=>{return v.id})
+		let names = queryOption.value.projects.map(v=>{return v.name})
 		form.value.project_ids = val ? projects : [],
+		checkTextProject.value = names.toString()
 		isIndeterminateProject.value = false
 	}
+	const CheckedGradeChange = (val)=>{
+		if(val.length < 1) return
+		checkTextGrade.value = ''
+		queryOption.value.grades.map(v=>{
+			if(val.indexOf(v.id) != -1){
+				checkTextGrade.value = v.name+','+checkTextGrade.value 
+			}
+		})
+	}
 	const CheckedProjectChange = (val)=>{
-		console.log(val)
+		if(val.length < 1) return
+		checkTextProject.value = ''
+		queryOption.value.projects.map(v=>{
+			if(val.indexOf(v.id) != -1){
+				checkTextProject.value = v.name+','+checkTextProject.value 
+			}
+		})
 	}
 	const checkAllSchool = ref(false)
 	const isIndeterminateSchool = ref(false)

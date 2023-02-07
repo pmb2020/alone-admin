@@ -282,6 +282,7 @@
 	//文件上传成功
 	const uploadFileSuccess = (val)=>{
 		if(val.responseCode==0){
+			getListData()
 			ElMessage.success(val.responseMsg)
 		}else{
 			ElMessage.error(val.responseMsg)

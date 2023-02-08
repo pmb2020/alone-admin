@@ -41,7 +41,7 @@
 		getMssageNum()
 		setInterval(()=>{
 			getMssageNum()
-		},1000*30)
+		},1000*10)
 	})
 	const getMssageNum = ()=>{
 		getMsgNum().then(res=>{

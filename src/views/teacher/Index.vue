@@ -113,11 +113,11 @@
 						<el-form-item label="所带班级">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button link type="info">请选择</el-button>
+									<el-button link type="info">{{checkedGradeText || '请选择'}}</el-button>
 								</template>
 								<div>
 									<p>选择班级</p>
-									<el-tree ref="treeRef" :data="gradeList" :default-checked-keys="[]" show-checkbox node-key="id"
+									<el-tree ref="treeRef" :data="gradeList" :default-checked-keys="[]" @check-change="checkedgradeChage" show-checkbox node-key="id"
 										highlight-current :props="defaultProps" />
 								</div>
 							</el-popover>
@@ -165,6 +165,7 @@
 		label: 'label',
 	})
 	const gradeList = ref([])
+	const checkedGradeText = ref('请选择')
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
@@ -198,6 +199,10 @@
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true
 	}
+	const checkedgradeChage = (row,ele)=>{
+		console.log(row)
+		console.log(ele)
+	}
 	//关联班级
 	const guanlian = (row) => {
 		getTeaInfo({teacher_id:row.id}).then(res=>{
@@ -227,6 +232,7 @@
 			class_ids:class_ids
 		}).then(res=>{
 			ElMessage.success('关联成功')
+			getListData()
 			dialogFormVisible.value = false
 		})
 	}

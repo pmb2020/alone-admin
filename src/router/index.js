@@ -125,6 +125,7 @@ const routes = [
 		children:[
 			{
 				path:'index',
+				name:'ticeChartIndex',
 				component: () => import('../views/ticeChart/Index.vue'),
 				meta:{
 					title:'体测项目数据分析',
@@ -185,6 +186,7 @@ const routes = [
 		children:[
 			{
 				path:'index',
+				name:'planIndex',
 				component: () => import('../views/plan/Index.vue'),
 				meta:{
 					title:'体测计划管理',
@@ -201,6 +203,7 @@ const routes = [
 		children:[
 			{
 				path:'index',
+				name:'deviceIndex',
 				component: () => import('../views/device/Index.vue'),
 				meta:{
 					title:'设备信息管理',
@@ -255,6 +258,7 @@ const routes = [
 		children:[
 			{
 				path:'index',
+				name:'personIndex',
 				component: () => import('../views/person/Index.vue'),
 				meta:{
 					title:'个人中心',

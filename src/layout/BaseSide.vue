@@ -114,7 +114,7 @@
 	const menuClick1 = (items)=>{
 		if(items.name !='SportsHome'){
 			tabStore.addTabData({
-				name:items.name,
+				name:items.children[0].name,
 				title:items.children[0].meta.title
 			})
 		}

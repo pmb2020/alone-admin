@@ -6,7 +6,7 @@
 			<!-- <p style="margin-left: 80px;font-weight: 500;">{{platform_name}}</p> -->
 		</div>
 		<div class="al-flex" style="align-items: center;margin: 0 10px;">
-			<el-badge :value="0" type="warning" class="item" style="margin: 0 25px;">
+			<el-badge :value="msgNum" type="warning" class="item" style="margin: 0 25px;">
 				<img @click="msgClick" class="al-avatar" style="cursor: pointer;" src="@/assets/images/message.png" alt="">
 			</el-badge>
 			<img class="al-avatar" style="margin-right: 5px;" src="@/assets/images/avatar.png" alt="">
@@ -32,10 +32,22 @@
 	import {
 		useRouter
 	} from 'vue-router'
-	import {loginOut} from '@/api/auth.js'
+	import {loginOut,getMsgNum} from '@/api/auth.js'
 	const router = useRouter()
 	const name = ref(localStorage.getItem('name'))
 	const platform_name = ref(localStorage.getItem('platform_name'))
+	const msgNum = ref(0)
+	onMounted(()=>{
+		getMssageNum()
+		setInterval(()=>{
+			getMssageNum()
+		},1000*30)
+	})
+	const getMssageNum = ()=>{
+		getMsgNum().then(res=>{
+			msgNum.value = res
+		})
+	}
 	const loginOutFun = () => {
 		loginOut().then(res=>{
 			localStorage.removeItem('token')

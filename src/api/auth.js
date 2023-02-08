@@ -11,3 +11,7 @@ export const loginOut = (params) =>{
 export const getMenu = (params) =>{
 	return get('/role/menu/',params)
 }
+
+export const getMsgNum = (params) =>{
+	return get('/user/msg_num/',params)
+}

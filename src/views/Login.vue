@@ -31,9 +31,9 @@
 import { ElMessage } from 'element-plus';
 	const router = useRouter()
 	const store = useStore()
-	console.log(store.count)
-	console.log(
-		import.meta.env)
+	// console.log(store.count)
+	// console.log(
+	// 	import.meta.env)
 	store.count++
 	const loginForm = reactive({
 		username: '丰台区教委',

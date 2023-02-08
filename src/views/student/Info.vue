@@ -99,37 +99,72 @@
 						<el-table-column prop="总分" label="权重" align="center" />
 					</el-table-column>
 					<el-table-column label="体重指数(BMI)" align="center">
-						<el-table-column prop="体重指数（BMI）成绩" label="成绩" />
-						<el-table-column prop="体重指数（BMI）得分" label="得分" />
-						<el-table-column prop="体重指数（BMI）等级" label="等级" />
+						<el-table-column label="成绩" prop="体重指数（BMI）成绩" align="center">
+							<template #default="scope">
+								<p v-if="scope.row['体重指数（BMI）得分'] < 60" style="color: red;">{{scope.row['体重指数（BMI）得分']}}</p>
+								<p v-else>{{scope.row['体重指数（BMI）成绩']}}</p>
+							</template>
+						</el-table-column>
+						<el-table-column prop="体重指数（BMI）得分" label="得分" align="center" />
+						<el-table-column prop="体重指数（BMI）等级" label="等级" align="center" />
 					</el-table-column>
 					<el-table-column label="肺活量" align="center">
-						<el-table-column prop="肺活量成绩" label="成绩" />
-						<el-table-column prop="肺活量得分" label="得分" />
-						<el-table-column prop="肺活量等级" label="等级" />
+						<el-table-column label="成绩" prop="肺活量成绩" align="center">
+							<template #default="scope">
+								<p v-if="scope.row['肺活量得分'] < 60" style="color: red;">{{scope.row['肺活量成绩']}}</p>
+								<p v-else>{{scope.row['肺活量成绩']}}</p>
+							</template>
+						</el-table-column>
+						<el-table-column prop="肺活量得分" label="得分" align="center" />
+						<el-table-column prop="肺活量等级" label="等级" align="center" />
 					</el-table-column>
 					<el-table-column label="50m跑" align="center">
-						<el-table-column prop="50米跑成绩" label="成绩" />
-						<el-table-column prop="50米跑得分" label="得分" />
-						<el-table-column prop="50米跑等级" label="等级" />
+						<el-table-column label="成绩" prop="50米跑成绩" align="center">
+							<template #default="scope">
+								<p v-if="scope.row['50米跑得分'] < 60" style="color: red;">{{scope.row['50米跑成绩']}}</p>
+								<p v-else>{{scope.row['50米跑成绩']}}</p>
+							</template>
+						</el-table-column>
+						<el-table-column prop="50米跑得分" label="得分" align="center" />
+						<el-table-column prop="50米跑等级" label="等级" align="center" />
 					</el-table-column>
 					<el-table-column label="坐位体前屈" align="center">
-						<el-table-column prop="坐位体前屈成绩" label="成绩" />
-						<el-table-column prop="坐位体前屈得分" label="得分" />
-						<el-table-column prop="坐位体前屈等级" label="等级" />
+						<el-table-column label="成绩" prop="坐位体前屈成绩" align="center">
+							<template #default="scope">
+								<p v-if="scope.row['坐位体前屈得分'] < 60" style="color: red;">{{scope.row['坐位体前屈成绩']}}</p>
+								<p v-else>{{scope.row['坐位体前屈成绩']}}</p>
+							</template>
+						</el-table-column>
+						<el-table-column prop="坐位体前屈得分" label="得分" align="center" />
+						<el-table-column prop="坐位体前屈等级" label="等级" align="center" />
 					</el-table-column>
 					<el-table-column label="1分钟跳绳" align="center">
-						<el-table-column prop="一分钟跳绳成绩" label="成绩" />
-						<el-table-column prop="一分钟跳绳得分" label="得分" />
-						<el-table-column prop="一分钟跳绳等级" label="等级" />
+						<el-table-column label="成绩" prop="一分钟跳绳成绩" align="center">
+							<template #default="scope">
+								<p v-if="scope.row['一分钟跳绳得分'] < 60" style="color: red;">{{scope.row['一分钟跳绳成绩']}}</p>
+								<p v-else>{{scope.row['一分钟跳绳成绩']}}</p>
+							</template>
+						</el-table-column>
+						<el-table-column prop="一分钟跳绳得分" label="得分" align="center" />
+						<el-table-column prop="一分钟跳绳等级" label="等级" align="center" />
 					</el-table-column>
-					<el-table-column label="1一分钟仰卧起坐" align="center">
-						<el-table-column prop="一分钟仰卧起坐成绩" label="成绩" />
+					<el-table-column label="一分钟仰卧起坐" align="center">
+						<el-table-column label="成绩" prop="一分钟仰卧起坐成绩" align="center">
+							<template #default="scope">
+								<p v-if="scope.row['一分钟仰卧起坐得分'] < 60" style="color: red;">{{scope.row['一分钟仰卧起坐成绩']}}</p>
+								<p v-else>{{scope.row['一分钟仰卧起坐成绩']}}</p>
+							</template>
+						</el-table-column>
 						<el-table-column prop="一分钟仰卧起坐得分" label="得分" />
 						<el-table-column prop="一分钟仰卧起坐等级" label="等级" />
 					</el-table-column>
 					<el-table-column label="50*8往返跑" align="center">
-						<el-table-column prop="50*8往返跑成绩" label="成绩" />
+						<el-table-column label="成绩" prop="50*8往返跑成绩" align="center">
+							<template #default="scope">
+								<p v-if="scope.row['50*8往返跑得分'] < 60" style="color: red;">{{scope.row['50*8往返跑成绩']}}</p>
+								<p v-else>{{scope.row['50*8往返跑成绩']}}</p>
+							</template>
+						</el-table-column>
 						<el-table-column prop="50*8往返跑得分" label="得分" />
 						<el-table-column prop="50*8往返跑等级" label="等级" />
 					</el-table-column>

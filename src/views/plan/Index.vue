@@ -221,7 +221,7 @@
 				<div style="display: flex;justify-content: center;">
 					<el-button type="primary" @click="dialogFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit">保存</el-button>
-					<el-button type="primary" size="default" @click="onSubmit">发布</el-button>
+					<el-button type="primary" size="default" @click="onSubmit(1)">发布</el-button>
 				</div>
 			</el-form>
 		</el-dialog>
@@ -338,9 +338,12 @@
 		form.value.grade_ids = []
 		form.value.project_ids = []
 	}
-	const onSubmit = () => {
+	const onSubmit = (status = 0) => {
 		formRef.value.validate((valid) => {
 			if (!valid) return
+			if(status==1){
+				form.value.status = 1
+			}
 			form.value.grade_ids = form.value.grade_ids ? form.value.grade_ids.toString() :''
 			form.value.project_ids = form.value.project_ids ? form.value.project_ids.toString() :''
 			form.value.school_ids = form.value.school_ids ? form.value.school_ids.toString() :''
@@ -352,7 +355,7 @@
 				})
 			} else {
 				updatePlan(form.value).then(res => {
-					getListData(page.value)
+					getListData()
 					dialogFormVisible.value = false
 					ElMessage.success('更新成功')
 				})

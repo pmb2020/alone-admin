@@ -76,7 +76,7 @@
 						<el-form-item label="关联老师" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button link type="info">{{checkTeaText}}</el-button>
+									<el-button link type="info">{{checkTeaText || '请选择'}}</el-button>
 								</template>
 								<el-checkbox v-model="checkAll" :indeterminate="isIndeterminate"
 								 @change="handleCheckAllChange">全选</el-checkbox>

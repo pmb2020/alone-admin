@@ -99,7 +99,7 @@
 			</div>
 		</div>
 		<!-- 新增弹出 -->
-		<el-dialog class="ty-dialog" width="1000px" v-model="dialogFormVisible" title="新增班级信息" destroy-on-close>
+		<el-dialog class="ty-dialog" width="1000px" v-model="dialogFormVisible" :before-close="dialogClose" title="新增班级信息" destroy-on-close>
 			<AddForm :query-option="queryOption"></AddForm>
 		</el-dialog>
 		<!-- 编辑 -->
@@ -242,6 +242,10 @@
 		})
 		// form.value.teacher_id = form.value.teacher_id ? form.value.teacher_id :''
 		// console.log(form.value.teacher_id.toString(),'submit!')
+	}
+	const dialogClose = (done)=>{
+		getListData()
+		done()
 	}
 	const handleCurrentChange = (number) => {
 		page.value = number

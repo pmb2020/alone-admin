@@ -6,9 +6,9 @@
 			<!-- <p style="margin-left: 80px;font-weight: 500;">{{platform_name}}</p> -->
 		</div>
 		<div class="al-flex" style="align-items: center;margin: 0 10px;">
-			<!-- <el-badge :value="0" type="warning" class="item" style="margin: 0 30px;">
-				<img class="al-avatar" style="" src="@/assets/images/message.png" alt="">
-			</el-badge> -->
+			<el-badge :value="0" type="warning" class="item" style="margin: 0 25px;">
+				<img @click="msgClick" class="al-avatar" style="cursor: pointer;" src="@/assets/images/message.png" alt="">
+			</el-badge>
 			<img class="al-avatar" style="margin-right: 5px;" src="@/assets/images/avatar.png" alt="">
 			<el-dropdown style="cursor: pointer;">
 				<span class="el-dropdown-link">
@@ -42,6 +42,9 @@
 			router.push('/login')
 		})
 		
+	}
+	const msgClick = ()=>{
+		router.push('/plan/index')
 	}
 </script>
 

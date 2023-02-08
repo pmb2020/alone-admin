@@ -12,7 +12,11 @@
 	--el-table-row-hover-bg-color:rgba(10,57,255,0.16)!important;
 }
 .el-checkbox{
-	--el-checkbox-bg-color:#ddd;
+	--el-checkbox-bg-color:#ddd!important;
+	// --el-checkbox-input-border:red!important;
+}
+.el-popover{
+	// --el-popover-bg-color:#f5f5f5!important;
 }
 .el-input{
 	--el-input-bg-color:#F5F5F5;

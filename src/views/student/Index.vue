@@ -135,7 +135,7 @@
 			</div>
 		</div>
 		<!-- 新增弹出 -->
-		<el-dialog class="ty-dialog" width="1200px" v-model="dialogFormVisible" title="新增学生信息" destroy-on-close>
+		<el-dialog class="ty-dialog" width="1200px" v-model="dialogFormVisible" :before-close="dialogClose" title="新增学生信息" destroy-on-close>
 			<AddForm></AddForm>
 		</el-dialog>
 		<!-- 编辑 -->
@@ -270,6 +270,10 @@
 	const resetForm = (formEl)=>{
 		if (!formEl) return
 		formEl.resetFields()
+	}
+	const dialogClose = (done)=>{
+		getListData()
+		done()
 	}
 	const handleCurrentChange = (number) => {
 		page.value = number

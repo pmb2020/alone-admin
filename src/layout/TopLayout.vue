@@ -35,8 +35,7 @@
 	const tabList = ref([])
 	onMounted(()=>{
 		tabList.value = tabStore.tabList
-		console.log(tabStore.count)
-		console.log(route.name)
+		// console.log(tabStore.count)
 	})
 	const removeTab = (name)=>{
 		tabList.value=tabStore.removeTabData(name)

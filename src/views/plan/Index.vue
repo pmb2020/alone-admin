@@ -160,7 +160,7 @@
 						<el-form-item label="体测对象" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button class="check-btn" link type="info">{{checkTextGrade}}</el-button>
+									<el-button class="check-btn" link type="info">{{checkTextGrade || '请选择'}}</el-button>
 								</template>
 								<el-checkbox v-model="checkAllGrade" :indeterminate="isIndeterminateGrade"
 								 @change="handleCheckAllGrade">全选</el-checkbox>
@@ -173,7 +173,7 @@
 						<el-form-item label="体测项目" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" trigger="click">
 								<template #reference>
-									<el-button class="check-btn" link type="info">{{checkTextProject}}</el-button>
+									<el-button class="check-btn" link type="info">{{checkTextProject || '请选择'}}</el-button>
 								</template>
 								<el-checkbox v-model="checkAllProject" :indeterminate="isIndeterminateProject"
 								 @change="handleCheckAllProject">全选</el-checkbox>
@@ -397,7 +397,10 @@
 		let grades = queryOption.value.grades.map(v=>{return v.id})
 		let gradeName = queryOption.value.grades.map(v=>{return v.name})
 		form.value.grade_ids = val ? grades : [],
-		checkTextGrade.value = gradeName.toString()
+		checkTextGrade.value = '请选择'
+		if(val){
+			checkTextGrade.value = gradeName.toString()
+		}
 		isIndeterminateGrade.value = false
 	}
 	const checkTextProject = ref('请选择')
@@ -407,11 +410,14 @@
 		let projects = queryOption.value.projects.map(v=>{return v.id})
 		let names = queryOption.value.projects.map(v=>{return v.name})
 		form.value.project_ids = val ? projects : [],
-		checkTextProject.value = names.toString()
+		checkTextProject.value = '请选择'
+		if(val){
+			checkTextProject.value = names.toString()
+		}
 		isIndeterminateProject.value = false
 	}
 	const CheckedGradeChange = (val)=>{
-		if(val.length < 1) return
+		if(val.length < 0) return
 		checkTextGrade.value = ''
 		queryOption.value.grades.map(v=>{
 			if(val.indexOf(v.id) != -1){
@@ -420,7 +426,7 @@
 		})
 	}
 	const CheckedProjectChange = (val)=>{
-		if(val.length < 1) return
+		if(val.length < 0) return
 		checkTextProject.value = ''
 		queryOption.value.projects.map(v=>{
 			if(val.indexOf(v.id) != -1){

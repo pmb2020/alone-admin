@@ -59,7 +59,7 @@
 						<span v-else-if="scope.row.status==0">禁用</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="name" label="账号" align="center" />
+				<el-table-column prop="username" label="账号" align="center" />
 				<!-- <el-table-column prop="id_card" label="身份证号" align="center" width="150" /> -->
 				<el-table-column label="操作" align="center" width="150">
 					<template #default="scope">

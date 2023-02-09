@@ -177,7 +177,7 @@
 		downloadUrl1.value += '&download=1&token='+localStorage.getItem('token')
 		//获取饼图数据
 		getClassProjectD({...params,...planQuery.value}).then(res=>{
-			console.log(res)
+			// console.log(res)
 			data.chart = res.score_grade_chart
 			data.boyChart = res.score_grade_chart_boy
 			data.girlChart = res.score_grade_chart_girl

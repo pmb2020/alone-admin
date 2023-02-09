@@ -137,7 +137,15 @@
 						</el-table-column>
 						<!-- <el-table-column fixed="right" prop="date" label="班级" width="150" /> -->
 					</el-table>
-					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
+					<div style="display:flex;justify-content: space-between;align-items: center;margin-top: 20px;">
+						<p class="tip-text" style="margin: 0;">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
+						<div style="display: flex;justify-content: end;">
+							<el-pagination small :current-page="page" :page-size="pageSize" :background="true"
+								:page-sizes="[20,50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+								@size-change="handleSizeChange" @current-change="handleCurrentChange" />
+						</div>
+					</div>
+					
 				</div>
 				<TiCeChart :tab-index="tabIndex" :class-id="classId" :plan-query="planQuery" :projects="projects"></TiCeChart>
 			</div>
@@ -160,6 +168,9 @@
 	import TiCeChart from './TiCeChart.vue'
 	import TiCeChart2 from './TiCeChart2.vue'
 	const route = useRoute()
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
 	const value = ref(null)
 	const classId = ref('')
 	const tabIndex = ref(0)
@@ -193,9 +204,10 @@
 			...params,
 			...planQuery.value
 		}).then(res => {
-			// console.log(res.projects)
+			// console.log(res)
 			projects.value = res.projects
 			tableData.value = res.score_list
+			total.value = res.total
 		})
 	}
 	const daTabCLick = (index)=>{
@@ -211,6 +223,14 @@
 		}).then(res => {
 			ticePlanOption.value = res
 		})
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		getListData()
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		getListData()
 	}
 </script>
 

@@ -34,7 +34,7 @@
 					<el-button class="ty-btn" type="primary" size="default" @click="getListData()">查询</el-button>
 				</div>
 				<div>
-					<button @click="isFromEdit=false;form={};dialogFormVisible=true" class="ty-btn">
+					<button @click="addClick" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
 							<CirclePlusFilled />
 						</el-icon>
@@ -164,16 +164,23 @@
 	onMounted(() => {
 		getListData()
 		getDeviceOption().then(res => {
-			console.log(res)
 			queryOptionSchool.value = res
 		})
 		if(userType.value=='edu'){
 			getOrgan().then(res=>{
-				console.log(res)
 				organ.value = res
 			})
 		}
 	})
+	const addClick = ()=>{
+		isFromEdit.value=false;
+		form.value={};
+		dialogFormVisible.value=true
+		if(userType.value == 'school' && queryOptionSchool.value.length > 0){
+			form.value.school_id = queryOptionSchool.value[0].id
+			changeSchool(4)
+		}
+	}
 	const singleClick = (index,id)=>{
 		singleIndex.value = index
 		schoolId.value = id

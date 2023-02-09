@@ -86,11 +86,6 @@
 		<div class="ty-box">
 			<div class="al-flex-between" style="margin-bottom: 20px;">
 				<h3 class="title" style="margin-bottom: 0;">学校各项体测指标最优记录</h3>
-				<!-- <ul class="ty-tab">
-					<li :class="{'active':gTabIndex==0}" @click="gTabClick(0)">小学</li>
-					<li :class="{'active':gTabIndex==1}" @click="gTabClick(1)">初中</li>
-					<li :class="{'active':gTabIndex==2}" @click="gTabClick(2)">高中</li>
-				</ul> -->
 			</div>
 			<div>
 				<el-table :data="ticeTable" stripe style="width: 100%">

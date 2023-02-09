@@ -60,11 +60,10 @@
 					</template>
 				</el-table-column>
 				<el-table-column prop="username" label="账号" align="center" />
-				<!-- <el-table-column prop="id_card" label="身份证号" align="center" width="150" /> -->
 				<el-table-column label="操作" align="center" width="150">
 					<template #default="scope">
-						<el-button link @click="handleEdit(scope.row)">编辑</el-button>
-						<el-button link @click="handleDelete(scope.row.id)">删除</el-button>
+						<el-button :disabled="scope.row.id==userId" link @click="handleEdit(scope.row)">编辑</el-button>
+						<el-button :disabled="scope.row.id==userId" link @click="handleDelete(scope.row.id)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -146,6 +145,7 @@
 	} from '@/api/user'
 	const userType = ref(localStorage.getItem('usertype'))
 	const token = ref(localStorage.getItem('token'))
+	const userId = ref(localStorage.getItem('userId'))
 	const pageSize = ref(20)
 	const page = ref(1)
 	const total = ref(0)
@@ -156,6 +156,7 @@
 	const schoolId = ref('')
 	const selectOption = ref({})
 	onMounted(() => {
+		console.log(userId.value)
 		getListData()
 		getSelectOption().then(res=>{
 			// console.log(res)

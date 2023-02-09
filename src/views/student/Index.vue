@@ -82,15 +82,15 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">学生信息列表</h3>
 				<div>
-					<button @click="dialogFormVisible=true" class="ty-btn">
+					<button :disabled="userType=='edu'" @click="dialogFormVisible=true" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18"><CirclePlusFilled /></el-icon>
 						新增学生信息
 					</button>
-					<el-upload class="upload-demo" style="display: inline-block;" :show-file-list="false" name="File"
+					<el-upload :disabled="userType=='edu'" class="upload-demo" style="display: inline-block;" :show-file-list="false" name="File"
 						:action="'https://tiyuapi.nkjwx.com/api/student/fileupload/?token='+token" :on-success="uploadFileSuccess">
 						<button class="ty-btn">导入学生信息</button>
 					</el-upload>
-					<button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学生导入模板.xlsx">下载模版</a></button>
+					<button :disabled="userType=='edu'" class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学生导入模板.xlsx">下载模版</a></button>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">
@@ -206,6 +206,7 @@
 	import {getStudent,updateStudent,getStuOptions} from '@/api/base'
 	import AddForm from './AddForm.vue'
 	const token = ref(localStorage.getItem('token'))
+	const userType = ref(localStorage.getItem('usertype'))
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)

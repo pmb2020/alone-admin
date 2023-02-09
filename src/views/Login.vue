@@ -57,6 +57,7 @@ import { ElMessage } from 'element-plus';
 			if (valid) {
 				login(loginForm).then(res => {
 					localStorage.setItem('token', res.token)
+					localStorage.setItem('userId', res.id)
 					localStorage.setItem('name', res.name)
 					localStorage.setItem('platform_name', res.platform_name)
 					localStorage.setItem('usertype', res.usertype)

@@ -65,105 +65,144 @@
 				</el-col>
 			</el-row>
 		</div>
-		<div v-if="userType=='school'" class="ty-box">
-			<h3 class="title">参与班级列表</h3>
-			<el-table :data="tableData">
-				<el-table-column type="index" label="序号" align="center" width="80" />
-				<el-table-column prop="year" label="学级" align="center" />
-				<el-table-column prop="grade_name" label="年级" align="center" />
-				<el-table-column prop="class_name" label="班级" align="center" />
-				<el-table-column label="主管老师" align="center">
-					<template #default="scope">
-						<span v-for="tea in scope.row.teachers">{{tea.name}}，</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="查收情况" align="center">
-					<template #default="scope">
-						<span v-if="scope.row.is_read==0">未查看</span>
-						<span v-else-if="scope.row.is_read==1">已查看</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="执行情况" align="center">
-					<template #default="scope">
-						<span v-if="scope.row.perform_status==0">待执行</span>
-						<span v-else-if="scope.row.perform_status==1">已执行</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="操作" align="center" width="180">
-					<template #default="scope">
-						<el-button link @click="againNotice(scope.row.id)">再次通知</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
+		<div class="ty-box">
+
+
+			<div v-if="userType=='school'">
+				<h3 class="title">参与班级列表</h3>
+				<el-table :data="tableData">
+					<el-table-column type="index" label="序号" align="center" width="80" />
+					<el-table-column prop="year" label="学级" align="center" />
+					<el-table-column prop="grade_name" label="年级" align="center" />
+					<el-table-column prop="class_name" label="班级" align="center" />
+					<el-table-column label="主管老师" align="center">
+						<template #default="scope">
+							<span v-for="tea in scope.row.teachers">{{tea.name}}，</span>
+						</template>
+					</el-table-column>
+					<el-table-column label="查收情况" align="center">
+						<template #default="scope">
+							<span v-if="scope.row.is_read==0">未查看</span>
+							<span v-else-if="scope.row.is_read==1">已查看</span>
+						</template>
+					</el-table-column>
+					<el-table-column label="执行情况" align="center">
+						<template #default="scope">
+							<span v-if="scope.row.perform_status==0">待执行</span>
+							<span v-else-if="scope.row.perform_status==1">已执行</span>
+						</template>
+					</el-table-column>
+					<el-table-column label="操作" align="center" width="180">
+						<template #default="scope">
+							<el-button :disabled="scope.row.perform_status==-1" link @click="againNotice(scope.row.id)">再次通知</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+			</div>
+			<div v-if="userType=='edu'">
+				<h3 class="title">学校信息列表</h3>
+				<el-table :data="tableData">
+					<el-table-column type="index" label="序号" align="center" width="80" />
+					<el-table-column prop="school_name" label="学校名称" align="center" />
+					<el-table-column prop="period" label="学段类别" align="center" />
+					<el-table-column prop="area" label="所属片区" align="center" />
+					<el-table-column prop="edu_group" label="所属集团" align="center" />
+					<el-table-column label="查收情况" align="center">
+						<template #default="scope">
+							<span v-if="scope.row.is_read==0">未查看</span>
+							<span v-else-if="scope.row.is_read==1">已查看</span>
+						</template>
+					</el-table-column>
+					<el-table-column label="执行情况" align="center">
+						<template #default="scope">
+							<span v-if="scope.row.perform_status==0">待执行</span>
+							<span v-else-if="scope.row.perform_status==1">已执行</span>
+						</template>
+					</el-table-column>
+					<el-table-column label="操作" align="center" width="180">
+						<template #default="scope">
+							<el-button :disabled="scope.row.perform_status==-1" link @click="againNotice(scope.row.id)">再次通知</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+			</div>
+			<div style="margin-top: 30px;display: flex;justify-content: end;">
+				<el-pagination :current-page="page" :page-size="pageSize" :background="true"
+					:page-sizes="[20,50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+					@size-change="handleSizeChange" @current-change="handleCurrentChange" />
+			</div>
 		</div>
-		<div v-if="userType=='edu'" class="ty-box">
-			<h3 class="title">学校信息列表</h3>
-			<el-table :data="tableData">
-				<el-table-column type="index" label="序号" align="center" width="80" />
-				<el-table-column prop="school_name" label="学校名称" align="center" />
-				<el-table-column prop="period" label="学段类别" align="center" />
-				<el-table-column prop="area" label="所属片区" align="center" />
-				<el-table-column prop="edu_group" label="所属集团" align="center" />
-				<el-table-column label="查收情况" align="center">
-					<template #default="scope">
-						<span v-if="scope.row.is_read==0">未查看</span>
-						<span v-else-if="scope.row.is_read==1">已查看</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="执行情况" align="center">
-					<template #default="scope">
-						<span v-if="scope.row.perform_status==0">待执行</span>
-						<span v-else-if="scope.row.perform_status==1">已执行</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="操作" align="center" width="180">
-					<template #default="scope">
-						<el-button link @click="againNotice(scope.row.id)">再次通知</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
-		</div>
+
 	</div>
 </template>
 
 <script setup>
-	import {getPlanInfo,getPlanClass,getPlanSchool,planNotice} from '@/api/plan'
-	import {useRoute} from 'vue-router';
+	import {
+		getPlanInfo,
+		getPlanClass,
+		getPlanSchool,
+		planNotice
+	} from '@/api/plan'
+	import {
+		useRoute
+	} from 'vue-router';
 	const route = useRoute()
 	const userType = ref(localStorage.getItem('usertype'))
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
 	const id = ref('')
 	const infoData = ref({})
 	const tableData = ref([])
-	onMounted(()=>{
+	onMounted(() => {
 		id.value = route.query.id
-		if(!id.value) return 
+		if (!id.value) return
 		initData()
 	})
-	const initData = ()=>{
-		let params = {id:id.value} 
-		getPlanInfo(params).then(res=>{
+	const initData = () => {
+		let params = {
+			id: id.value
+		}
+		getPlanInfo(params).then(res => {
 			infoData.value = res
 		})
-		if(userType.value=='school'){
-			getPlanClass(params).then(res=>{
+		getListData()
+	}
+	const getListData = () => {
+		let params = {
+			id: id.value,
+			page: page.value,
+			page_size: pageSize.value
+		}
+		if (userType.value == 'school') {
+			getPlanClass(params).then(res => {
 				tableData.value = res.list
+				total.value = res.total
 			})
-		}else if(userType.value=='edu'){
-			getPlanSchool(params).then(res=>{
+		} else if (userType.value == 'edu') {
+			getPlanSchool(params).then(res => {
 				tableData.value = res.list
+				total.value = res.total
 			})
 		}
-		
 	}
 	//再次通知
-	const againNotice = (id)=>{
+	const againNotice = (id) => {
 		let params = {
-			id:id,
-			usertype: userType.value=='edu' ? 'class' :'school'
+			id: id,
+			usertype: userType.value == 'edu' ? 'class' : 'school'
 		}
-		planNotice(params).then(res=>{
+		planNotice(params).then(res => {
 			ElMessage.success('通知成功')
 		})
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		getListData()
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		getListData(number)
 	}
 </script>
 

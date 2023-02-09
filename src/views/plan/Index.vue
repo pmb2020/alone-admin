@@ -6,28 +6,14 @@
 					<el-col :span="20">
 						<el-row>
 							<el-col :span="6">
-								<el-form-item label="计划名称">
-									<el-input v-model="queryForm.name" placeholder="请输入" />
+								<el-form-item label="学校学段">
+									<el-select v-model="queryForm.school_type" @change="selSchType" placeholder="请选择">
+										<el-option v-for="item in queryOptionOrigin.school_type" :label="item"
+											:value="item" />
+									</el-select>
 								</el-form-item>
 								<el-form-item label="计划编号">
 									<el-input v-model="queryForm.plan_number" placeholder="请输入" />
-								</el-form-item>
-							</el-col>
-							<el-col :span="6">
-								<el-form-item label="计划状态">
-									<el-select v-model="queryForm.status" placeholder="请选择">
-										<el-option label="已取消" :value="-1" />
-										<el-option label="待发布" :value="0" />
-										<el-option label="已发布" :value="1" />
-										<el-option label="执行中" :value="2" />
-										<el-option label="已完成" :value="3" />
-									</el-select>
-								</el-form-item>
-								<el-form-item label="体测对象">
-									<el-select v-model="queryForm.grade_id" placeholder="请选择">
-										<el-option v-for="item in queryOption.grades" :label="item.name"
-											:value="item.id" />
-									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
@@ -37,10 +23,27 @@
 											:value="item.id" />
 									</el-select>
 								</el-form-item>
+								<el-form-item label="计划状态">
+									<el-select v-model="queryForm.status" placeholder="请选择">
+										<el-option label="已取消" :value="-1" />
+										<el-option label="待发布" :value="0" />
+										<el-option label="已发布" :value="1" />
+										<el-option label="执行中" :value="2" />
+										<el-option label="已完成" :value="3" />
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
 								<el-form-item label="学校名称">
 									<el-select v-model="queryForm.school_name" placeholder="请选择">
 										<el-option v-for="item in queryOption.school_list" :label="item.name"
 											:value="item.name" />
+									</el-select>
+								</el-form-item>
+								<el-form-item label="体测对象">
+									<el-select v-model="queryForm.grade_id" placeholder="请选择">
+										<el-option v-for="item in queryOption.grades" :label="item.name"
+											:value="item.id" />
 									</el-select>
 								</el-form-item>
 								<!-- <el-form-item label="学校名称">
@@ -48,11 +51,8 @@
 								</el-form-item> -->
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="学校学段">
-									<el-select v-model="queryForm.school_type" @change="selSchType" placeholder="请选择">
-										<el-option v-for="item in queryOptionOrigin.school_type" :label="item"
-											:value="item" />
-									</el-select>
+								<el-form-item label="计划名称">
+									<el-input v-model="queryForm.name" placeholder="请输入" />
 								</el-form-item>
 								<el-form-item label="计划执行时间">
 									<el-date-picker v-model="queryForm.date" type="date" value-format="YYYY-MM-DD"

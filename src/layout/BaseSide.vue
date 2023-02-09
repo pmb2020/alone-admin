@@ -77,13 +77,12 @@
 				}
 				//处理二级菜单
 				if(item.children.length>1){
-					item.children.forEach(it=>{
-						// console.log(it)
-						// console.log(childrens)
-						// console.log(test(childrens,it.name),'是否存在')
+					item.children=item.children.filter(it=>{
 						if(test(childrens,it.name) == -1){
-							it.hidden = true
+							// it.hidden = true
+							return false
 						}
+						return true
 					})
 				}
 				// console.log(item.children)

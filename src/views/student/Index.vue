@@ -119,7 +119,7 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" width="80">
 					<template #default="scope">
-						<el-button size="default" @click="handleEdit(scope.$index, scope.row)"
+						<el-button :disabled="userType=='edu'" size="default" @click="handleEdit(scope.$index, scope.row)"
 							style="border: none;background-color: transparent;">
 							<el-icon>
 								<EditPen />

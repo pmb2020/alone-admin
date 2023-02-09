@@ -135,7 +135,7 @@
 								<el-checkbox v-model="checkAllTea" :indeterminate="isIndeterminateTea"
 								 @change="handleCheckAllTea">全选</el-checkbox>
 								<el-checkbox-group v-model="form.teacher_id">
-									<el-checkbox v-for="tea in addOption.teachers[0].teachers" :key="tea.id" :label="tea.id">
+									<el-checkbox v-if="addOption.teachers[0]" v-for="tea in addOption.teachers[0].teachers" :key="tea.id" :label="tea.id">
 										{{tea.name}}
 									</el-checkbox>
 								</el-checkbox-group>

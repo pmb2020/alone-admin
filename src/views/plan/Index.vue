@@ -17,11 +17,24 @@
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="体测项目">
+								<!-- <el-form-item label="体测项目">
 									<el-select v-model="queryForm.project_id" placeholder="请选择">
 										<el-option v-for="item in queryOption.projects" :label="item.name"
 											:value="item.id" />
 									</el-select>
+								</el-form-item> -->
+								<el-form-item label="体测项目" style="font-weight: bold;">
+									<el-popover placement="right" :width="400" trigger="click" @show="popoverShowPro">
+										<template #reference>
+											<el-button class="check-btn" link type="info">{{checkTextProject1 || '请选择'}}</el-button>
+										</template>
+										<el-checkbox v-model="checkAllProject1" :indeterminate="isIndeterminateProject1"
+										 @change="handleCheckAllProject1">全部</el-checkbox>
+										<el-checkbox-group v-model="queryForm.project_id" @change="CheckedProjectChange1">
+											<el-checkbox v-for="item in queryOption.projects" :key="item.id" :label="item.id">
+												{{item.name}}</el-checkbox>
+										</el-checkbox-group>
+									</el-popover>
 								</el-form-item>
 								<el-form-item label="计划状态">
 									<el-select v-model="queryForm.status" placeholder="请选择">
@@ -40,15 +53,25 @@
 											:value="item.name" />
 									</el-select>
 								</el-form-item>
-								<el-form-item label="体测对象">
+								<!-- <el-form-item label="体测对象">
 									<el-select v-model="queryForm.grade_id" placeholder="请选择">
 										<el-option v-for="item in queryOption.grades" :label="item.name"
 											:value="item.id" />
 									</el-select>
-								</el-form-item>
-								<!-- <el-form-item label="学校名称">
-									<el-input v-model="queryForm.school_name" placeholder="请输入" />
 								</el-form-item> -->
+								<el-form-item label="体测对象" style="font-weight: bold;">
+									<el-popover placement="right" :width="400" trigger="click" @show="popoverShowGrade">
+										<template #reference>
+											<el-button class="check-btn" link type="info">{{checkTextGrade1 || '请选择'}}</el-button>
+										</template>
+										<el-checkbox v-model="checkAllGrade1" :indeterminate="isIndeterminateGrade1"
+										 @change="handleCheckAllGrade1">全部</el-checkbox>
+										<el-checkbox-group v-model="queryForm.grade_id" @change="CheckedGradeChange1">
+											<el-checkbox v-for="item in queryOption.grades" :key="item.id" :label="item.id">
+												{{item.name}}</el-checkbox>
+										</el-checkbox-group>
+									</el-popover>
+								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="计划名称">
@@ -271,6 +294,14 @@
 			page: page.value,
 			page_size: pageSize.value
 		}
+		if(queryForm.grade_id){
+			queryForm.grade_id = queryForm.grade_id.toString()
+		}
+		if(queryForm.project_id){
+			queryForm.project_id = queryForm.project_id.toString()
+		}
+		console.log(queryForm.grade_id)
+		
 		getPlan({
 			...params,
 			...queryForm
@@ -333,6 +364,8 @@
 		queryOption.value.school_list = queryOptionOrigin.value.school_list[val]
 		checkAllProject.value = false
 		checkAllGrade.value = false
+		checkTextGrade1.value = '请选择'
+		checkTextProject1.value = '请选择'
 		checkTextGrade.value = '请选择'
 		checkTextProject.value = '请选择'
 		form.value.grade_ids = []
@@ -392,6 +425,70 @@
 			ElMessage.success('操作成功')
 		})
 	}
+	// 搜索选项全选
+	const checkTextGrade1 = ref('请选择')
+	const checkAllGrade1 = ref(false)
+	const isIndeterminateGrade1 = ref(false)
+	const popoverShowGrade = ()=>{
+		if(typeof(queryForm.grade_id)=='string'){
+			queryForm.grade_id = queryForm.grade_id.split(',')
+			queryForm.grade_id=queryForm.grade_id.map(item=>{
+				return parseInt(item)
+			})
+		}
+		console.log(queryForm.grade_id,'当前queryForm.project_id')
+	}
+	const handleCheckAllGrade1 = (val)=>{
+		let grades = queryOption.value.grades.map(v=>{return v.id})
+		let gradeName = queryOption.value.grades.map(v=>{return v.name})
+		queryForm.grade_id = val ? grades : [],
+		checkTextGrade1.value = '请选择'
+		if(val){
+			checkTextGrade1.value = gradeName.toString()
+		}
+		isIndeterminateGrade1.value = false
+	}
+	const CheckedGradeChange1 = (val)=>{
+		if(val.length < 0) return
+		checkTextGrade1.value = ''
+		queryOption.value.grades.map(v=>{
+			if(val.indexOf(v.id) != -1){
+				checkTextGrade1.value = v.name+','+checkTextGrade1.value 
+			}
+		})
+	}
+	const checkTextProject1 = ref('请选择')
+	const checkAllProject1 = ref(false)
+	const isIndeterminateProject1 = ref(false)
+	const popoverShowPro = ()=>{
+		if(typeof(queryForm.project_id)=='string'){
+			queryForm.project_id = queryForm.project_id.split(',')
+			queryForm.project_id=queryForm.project_id.map(item=>{
+				return parseInt(item)
+			})
+		}
+	}
+	const handleCheckAllProject1 = (val)=>{
+		let projects = queryOption.value.projects.map(v=>{return v.id})
+		let names = queryOption.value.projects.map(v=>{return v.name})
+		queryForm.project_id = val ? projects : [],
+		checkTextProject1.value = '请选择'
+		if(val){
+			checkTextProject1.value = names.toString()
+		}
+		isIndeterminateProject1.value = false
+	}
+	const CheckedProjectChange1 = (val)=>{
+		if(val.length < 0) return
+		checkTextProject1.value = ''
+		queryOption.value.projects.map(v=>{
+			if(val.indexOf(v.id) != -1){
+				checkTextProject1.value = v.name+','+checkTextProject1.value 
+			}
+		})
+	}
+	
+	
 	//全选
 	const checkTextGrade = ref('请选择')
 	const checkAllGrade = ref(false)

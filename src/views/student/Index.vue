@@ -94,7 +94,12 @@
 						:action="'https://tiyuapi.nkjwx.com/api/student/fileupload/?token='+token" :on-success="uploadFileSuccess">
 						<el-button :disabled="userType=='edu'" class="ty-btn">导入学生信息</el-button>
 					</el-upload>
-					<el-button :disabled="userType=='edu'" class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学生导入模板.xlsx">下载模版</a></el-button>
+					<template v-if="userType=='edu'">
+						<el-button disabled class="ty-btn">下载模版</el-button>
+					</template>
+					<template v-else>
+						<el-button class="ty-btn"><a href="https://tiyuapi.nkjwx.com/static/学生导入模板.xlsx">下载模版</a></el-button>
+					</template>
 				</div>
 			</div>
 			<el-table :data="tableData" stripe style="width: 100%;margin-top: 20px;">

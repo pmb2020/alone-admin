@@ -75,7 +75,7 @@
 					</div>
 				</div>
 				<div style="margin-bottom: 50px;">
-					<el-table :data="tableData" style="width: 100%" :border="true">
+					<el-table :data="tableData" style="width: 100%;" :border="true">
 						<el-table-column type="index" label="序号" align="center" width="80" />
 						<el-table-column prop="name" label="姓名" align="center" />
 						<el-table-column prop="gender" label="性别" align="center" />
@@ -198,7 +198,9 @@
 	})
 	const getPlanData = () => {
 		let params = {
-			class_id: classId.value
+			class_id: classId.value,
+			page: page.value,
+			page_size: pageSize.value
 		}
 		getClassData({
 			...params,
@@ -226,11 +228,11 @@
 	}
 	const handleCurrentChange = (number) => {
 		page.value = number
-		getListData()
+		getPlanData()
 	}
 	const handleSizeChange = (number) => {
 		pageSize.value = number
-		getListData()
+		getPlanData()
 	}
 </script>
 

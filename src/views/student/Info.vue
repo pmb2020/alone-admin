@@ -82,7 +82,7 @@
 				</div>
 			</div>
 			<div style="margin-bottom: 50px;">
-				<el-table :data="tableData" style="width: 100%" :border="true">
+				<el-table :data="tableData" style="width: 100%" :border="true" :height="tableData.length > 10 ? '500px' : '100%'">
 					<!-- <el-table-column label="体测计划" width="180" align="center">
 						<template #default="scope">
 							<span style="margin-left: 10px">2021年第8期</span>

@@ -110,15 +110,20 @@
 						<el-form-item label="老师姓名">
 							<el-input v-model="form.name" disabled placeholder="" />
 						</el-form-item>
-						<el-form-item label="所带班级">
-							<el-popover placement="right" :width="400" trigger="click">
+						<el-form-item label="所带班级" style="font-weight: bold;">
+							<el-popover placement="right" :width="400" :visible="popoverVisible" trigger="click">
 								<template #reference>
-									<el-button link type="info">{{checkedGradeText || '请选择'}}</el-button>
+									<el-button link type="info" @click="popoverVisible=true">{{checkedGradeText || '请选择'}}</el-button>
 								</template>
 								<div>
-									<p>选择班级</p>
+									<p style="font-weight: bold;font-size: 15px;">选择班级</p>
+									<el-checkbox v-model="checkedAll" @change="checkedAllChange" label="全选" size="large" />
 									<el-tree ref="treeRef" :data="gradeList" :default-checked-keys="[]" @check-change="checkedgradeChage" show-checkbox node-key="id"
 										highlight-current :props="defaultProps" />
+									<div style="display: flex;justify-content: center;margin-top: 20px;">
+										<el-button @click="popoverVisible=false">取消</el-button>
+										<el-button type="primary" size="default" @click="guanlianSubmit">确认</el-button>
+									</div>
 								</div>
 							</el-popover>
 						</el-form-item>
@@ -139,7 +144,7 @@
 						</el-form-item>
 					</el-col>
 				</el-row>
-				<div style="display: flex;justify-content: center;">
+				<div style="display: flex;justify-content: end;">
 					<el-button @click="dialogFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>
 				</div>
@@ -149,10 +154,7 @@
 </template>
 
 <script setup>
-	import {
-		getTeacher,joinClass,
-		getTeacherOptions,updateTeaStatus,getTeaInfo
-	} from '@/api/base'
+	import {getTeacher,joinClass,getTeacherOptions,updateTeaStatus,getTeaInfo} from '@/api/base'
 	const page = ref(1)
 	const pageSize = ref(20)
 	const total = ref(0)
@@ -166,9 +168,11 @@
 	})
 	const gradeList = ref([])
 	const checkedGradeText = ref('请选择')
+	const checkedAll = ref(null)
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
+	const popoverVisible = ref(false)
 	onMounted(() => {
 		getListData()
 		getTeacherOptions().then(res => {
@@ -197,11 +201,12 @@
 		getListData(page.value)
 	}
 	const handleEdit = () => {
+		checkedAll.value = false
 		dialogEditFormVisible.value = true
 	}
 	const checkedgradeChage = (row,ele)=>{
-		console.log(row)
-		console.log(ele)
+		// console.log(row)
+		// console.log(ele)
 	}
 	//关联班级
 	const guanlian = (row) => {
@@ -214,9 +219,35 @@
 			})
 			gradeList.value = res[0].grades
 		})
+		popoverVisible.value = false
 		dialogFormVisible.value = true
 		console.log(row)
 		form.value = {...row}
+	}
+	//关联班级提交
+	const guanlianSubmit = ()=>{
+		checkedGradeText.value = ''
+		treeRef.value.getCheckedNodes().map(item=>{
+			if(item.year){
+				checkedGradeText.value += item.label
+				item.classes.map(child=>{
+					checkedGradeText.value += child.label
+				})
+				checkedGradeText.value += '，'
+			}
+		})
+		// console.log(checkedGradeText.value)
+		// console.log(treeRef.value.getCheckedNodes())
+		popoverVisible.value = false
+	}
+	//全选
+	const checkedAllChange = (val)=>{
+		// console.log(gradeList.value)
+		if(val && gradeList.value.length >0){
+			treeRef.value.setCheckedNodes(gradeList.value)
+		}else{
+			treeRef.value.setCheckedKeys([])
+		}
 	}
 	//状态，禁用/启用
 	const statusClick = (id,status)=>{
@@ -225,8 +256,7 @@
 		})
 	}
 	const onSubmit = () => {
-		let class_ids = treeRef.value.getCheckedKeys().join()
-		console.log(class_ids,'所选班级!')
+		let class_ids = treeRef.value.getCheckedKeys(true).join()
 		joinClass({
 			teacher_id:form.value.id,
 			class_ids:class_ids

@@ -144,7 +144,7 @@
 				<a class="download-a" :href="downloadUrl" download target="_blank">下载</a>
 			</div>
 			<div v-else>
-				<TiCeChart2 :class-id="classId" :grade-id="gradeId" :plan-query="planQuery" :ticePlanOption="ticePlanOption" :projects="projects"></TiCeChart2>
+				<TiCeChart2 :grade-id="gradeId" :plan-query="planQuery" :ticePlanOption="gradeInfo.plan_data" :projects="projects"></TiCeChart2>
 			</div>
 		</div>
 	</div>

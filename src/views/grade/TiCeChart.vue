@@ -41,9 +41,9 @@
 <script setup>
 	import {getGradeTCAvg,getGradeProjectD} from '@/api/base'
 	import echarts from '@/utils/echarts.js'
-import { shallowRef } from 'vue';
-	const props = defineProps(['gradeId','planQuery','projects','gradeId'])
 	import qs from 'qs'
+	const props = defineProps(['gradeId','planQuery','projects','gradeId'])
+	const emit = defineEmits(['projectChage'])
 	const downloadUrl = ref('')
 	const downloadUrl1 = ref('')
 	const avgData = ref({})
@@ -66,12 +66,13 @@ import { shallowRef } from 'vue';
 	})
 	const tabClick = (index,id)=>{
 		tabIndex.value = index
-		console.log(id)
+		emit('projectChage',id)
+		// console.log(id)
 		projectId.value=id
 		adClassProjectD()
 	}
 	watch(props,(n,o)=>{
-		console.log(n)
+		// console.log(n)
 		gradeId.value = n.gradeId
 		planQuery.value = n.planQuery
 		tabs.value = n.projects

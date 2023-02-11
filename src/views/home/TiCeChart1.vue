@@ -58,8 +58,8 @@
 		getTiCeData()
 	}
 	const project_id = ref('')
-	const gradeChat = ref(null)
-	const barChat = ref(null)
+	const gradeChat = shallowRef(null)
+	const barChat = shallowRef(null)
 	const gradeChatOption = ref(null)
 	const option = ref(null)
 	const gTabIndex = ref(0)

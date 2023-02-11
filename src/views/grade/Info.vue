@@ -137,7 +137,7 @@
 					</el-table>
 					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
 				</div>
-				<TiCeChart :class-id="gradeId" :grade-id="gradeId" :plan-query="planQuery" :projects="projects">
+				<TiCeChart @project-chage="projectChage" :class-id="gradeId" :grade-id="gradeId" :plan-query="planQuery" :projects="projects">
 				</TiCeChart>
 				<!-- 本年级各班总体等级对比分析 -->
 				<TiCeChart3 :data="bingData.all_class_grade" />
@@ -191,6 +191,15 @@
 		if(index==0){
 			getTiCeData()
 		}
+	}
+	const projectChage = (id)=>{
+		// console.log('我是一个测试'+id)
+		planQuery.value.grade_id = gradeId.value
+		planQuery.value.project_id = id
+		getGradeProjectD(planQuery.value).then(res=>{
+			// console.log(res)
+			bingData.value = res
+		})
 	}
 	const getTiCeData = () => {
 		planQuery.value.grade_id = gradeId.value

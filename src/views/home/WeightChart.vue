@@ -35,9 +35,9 @@
 		boyChart:[],
 		girlChart:[]
 	})
-	const girlChart = ref({})
-	const boyChart = ref({})
-	const myChart = ref({})
+	const girlChart = shallowRef({})
+	const boyChart = shallowRef({})
+	const myChart = shallowRef({})
 	const option = ref({})
 	watch(props,(n,o)=>{
 		// console.log(n.homeData)

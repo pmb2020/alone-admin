@@ -56,10 +56,8 @@
 		console.log('sss' + n)
 	})
 	onMounted(()=>{
-		// console.log(router.options.routes)
 		menuRoute.value = route.path
 		getMenu().then(res=>{
-			// console.log(res)
 			let childrens = []
 			res.filter(item=>{
 				if(item.children.length>1){
@@ -76,13 +74,16 @@
 				}
 				//处理二级菜单
 				if(item.children.length>1){
-					item.children=item.children.filter(it=>{
+					item.children.map(it=>{
 						delete it.component
-						if(test(childrens,it.name) == -1){
-							// it.hidden = true
-							return false
+						let res = childrens.filter((qq)=>{
+							return qq.name == it.name
+						})
+						if(res.length == 0){
+							it.hidden = true
+						}else{
+							it.hidden = false
 						}
-						return true
 					})
 				}
 				// console.log(item.children)

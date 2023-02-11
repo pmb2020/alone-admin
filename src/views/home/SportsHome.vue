@@ -138,7 +138,7 @@
 	const getInitData = async ()=>{
 		if(userType.value=='school'){
 			await getHomeData().then(res=>{
-				console.log(res)
+				// console.log(res)
 				homeData.value = res;
 				homeData.value.area_data = res.school_data
 				ticeTable.push(...res.highest_record)
@@ -146,7 +146,7 @@
 		}
 		if(userType.value=='edu'){
 			await getHomeDataEdu().then(res=>{
-				console.log(res)
+				// console.log(res)
 				homeData.value = res;
 				homeData.value.xiaoxue = res.highest_record[0].小学
 				homeData.value.chuzhong = res.highest_record[1].初中

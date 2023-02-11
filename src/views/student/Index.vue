@@ -203,7 +203,7 @@
 					</el-col>
 				  </el-row>
 				<div style="display: flex;justify-content: center;">
-					<el-button>取消</el-button>
+					<el-button @click="dialogEditFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit()">确认</el-button>
 				</div>
 			</el-form>

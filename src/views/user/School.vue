@@ -4,7 +4,7 @@
 			<div class="al-flex-between">
 				<h3 class="title" style="margin-bottom: 0;">学校列表</h3>
 				<div>
-					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">
+					<button @click="isFromEdit=false;form={};dialogFormVisible=true" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
 							<CirclePlusFilled />
 						</el-icon>
@@ -24,6 +24,12 @@
 				<el-table-column prop="period" label="学校学段" align="center" />
 				<el-table-column prop="area" label="片区" align="center" />
 				<el-table-column prop="edu_group" label="集团" align="center" />
+				<el-table-column label="状态" align="center">
+					<template #default="scope">
+						<p v-if="scope.row.status==0">禁用</p>
+						<p v-else-if="scope.row.status==1">启用</p>
+					</template>
+				</el-table-column>
 				<el-table-column prop="create_at" label="创建时间" align="center" width="180" />
 				<el-table-column label="操作" align="center" width="160">
 					<template #default="scope">

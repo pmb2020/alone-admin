@@ -81,12 +81,24 @@
 						<router-link :to="'/base/class/info?id='+scope.row.id">查看</router-link>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" align="center" width="80">
+				<el-table-column label="状态" align="center" prop="status">
+					<template #default="scope">
+						<p v-if="scope.row.status==0">禁用</p>
+						<p v-else-if="scope.row.status==1">启用</p>
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" align="center" width="125">
 					<template #default="scope">
 						<el-button size="default" @click="handleEdit(scope.row,scope.$index)"
 							style="border: none;background-color: transparent;">
 							<el-icon>
 								<EditPen />
+							</el-icon>
+						</el-button>
+						<el-button size="default" @click="handleDelete(scope.row)"
+							style="border: none;background-color: transparent;margin-left: 0;">
+							<el-icon>
+								<Delete />
 							</el-icon>
 						</el-button>
 					</template>
@@ -178,7 +190,7 @@
 </template>
 
 <script setup>
-	import {getClass,addClass,updateClass,getClassOptions,getClassAddOptions,getClassInfo} from '@/api/base'
+	import {getClass,addClass,updateClass,getClassOptions,getClassAddOptions,getClassInfo,deleteClass} from '@/api/base'
 	import AddForm from './AddForm.vue'
 	const page = ref(1)
 	const pageSize = ref(20)
@@ -247,9 +259,28 @@
 		getListData()
 		done()
 	}
+	const handleDelete = (row) => {
+		// console.log(row)
+		let text = '确认要删除吗？' 
+		if(row.student_num>0){
+			text += '班级内学生将同步删除'
+		}
+		ElMessageBox.confirm(text, '提示', {
+			confirmButtonText: '确定',
+			cancelButtonText: '取消',
+			type: 'warning'
+		}).then(() => {
+			deleteClass({
+				id: row.id
+			}).then(res => {
+				getListData()
+				ElMessage.success('删除成功')
+			})
+		})
+	}
 	const handleCurrentChange = (number) => {
 		page.value = number
-		getListData(page.value)
+		getListData()
 	}
 	const handleSizeChange = (number) => {
 		pageSize.value = number

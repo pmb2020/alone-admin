@@ -40,7 +40,9 @@ export const addClass = (data)=>{
 export const updateClass = (data)=>{
 	return post('/class/edit/',data)
 }
-
+export const deleteClass = (params)=>{
+	return get('/class/delete/',params)
+}
 export const getClassOptions = (params)=>{
 	return get('/class/options/',params)
 }

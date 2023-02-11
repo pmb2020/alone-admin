@@ -34,7 +34,7 @@
 					<el-button class="ty-btn" type="primary" size="default" @click="getListData()">查询</el-button>
 				</div>
 				<div>
-					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">
+					<button @click="isFromEdit=false;form={};dialogFormVisible=true" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
 							<CirclePlusFilled />
 						</el-icon>

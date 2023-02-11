@@ -8,7 +8,7 @@
 					<el-button class="ty-btn" type="primary" size="default" @click="getListData()">查询</el-button>
 				</div>
 				<div>
-					<button @click="isFromEdit=false;dialogFormVisible=true" class="ty-btn">
+					<button @click="isFromEdit=false;checkedAuthId=[];form={};dialogFormVisible=true" class="ty-btn">
 						<el-icon style="vertical-align: middle;margin-right: 3px;" :size="18">
 							<CirclePlusFilled />
 						</el-icon>
@@ -46,7 +46,7 @@
 					<el-input v-model="form.desc" :rows="3" type="textarea" placeholder="请输入" />
 				</el-form-item>
 				<el-form-item label="功能权限" prop="desc" style="width: 50%;font-weight: bold;">
-					<el-tree ref="treeRef" :data="authList" :default-checked-keys="checkedAuthId" show-checkbox node-key="id"
+					<el-tree ref="treeRef" :data="authList" check-strictly :default-checked-keys="checkedAuthId" show-checkbox node-key="id"
 						highlight-current :props="defaultProps" />
 				</el-form-item>
 				<div style="display: flex;justify-content: center;">

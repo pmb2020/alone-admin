@@ -140,6 +140,7 @@
 			queryOption.value = res
 		})
 		getTeaList().then(res => {
+			console.log(res)
 			res.forEach(item=>{
 				teaList.push(...item.teacher_list)
 			})
@@ -154,7 +155,7 @@
 			...params,
 			...queryForm
 		}).then(res => {
-			console.log(res)
+			// console.log(res)
 			tableData.length = 0
 			total.value = res.total
 			tableData.push(...res.list)

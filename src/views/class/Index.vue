@@ -142,7 +142,7 @@
 						<el-form-item label="所属老师" style="font-weight: bold;">
 							<el-popover placement="right" :width="450" :visible="popoverVisible" trigger="click">
 								<template #reference>
-									<el-button link type="info" @click="popoverVisible=true">{{checkTextTea || '请选择'}}</el-button>
+									<el-button style="overflow: hidden;" link type="info" @click="popoverVisible=true">{{checkTextTea || '请选择'}}</el-button>
 								</template>
 								<div style="padding:10px">
 									<p style="font-weight: bold;font-size: 15px;">选择老师</p>

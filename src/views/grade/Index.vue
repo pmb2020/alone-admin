@@ -65,18 +65,15 @@
 		<el-dialog class="ty-dialog" v-model="dialogFormVisible" title="关联老师"
 			destroy-on-close>
 			<el-form :model="form" class="demo-form-inline" label-width="80" size="default" :scroll-to-error="true">
-				<!-- <template #default>
-					<el-dialog v-model="innerVisible" width="30%" title="Inner Dialog" append-to-body />
-				</template> -->
-				<div class="al-flex" style="">
-					<div class="" style="margin-right: 30px;position: relative;left: -20px;">
+				<el-row>
+					<el-col :span="10">
 						<el-form-item label="学级">
 							<el-input v-model="form.year" disabled placeholder="" />
 						</el-form-item>
 						<el-form-item label="关联老师" style="font-weight: bold;">
 							<el-popover placement="right" :width="450" :visible="popoverVisible" trigger="click">
 								<template #reference>
-									<el-button link type="info" @click="popoverVisible=true">{{checkTeaText || '请选择'}}</el-button>
+									<el-button style="overflow: hidden;" link type="info" @click="popoverVisible=true">{{checkTeaText || '请选择'}}</el-button>
 								</template>
 								<div style="padding:10px">
 									<p style="font-weight: bold;font-size: 15px;">选择老师</p>
@@ -93,8 +90,8 @@
 								</div>
 							</el-popover>
 						</el-form-item>
-					</div>
-					<div style="">
+					</el-col>
+					<el-col :span="10" :offset="1">
 						<el-form-item label="年级">
 							<el-input v-model="form.name" disabled placeholder="" />
 						</el-form-item>
@@ -104,8 +101,8 @@
 								<el-radio :label="0">禁用</el-radio>
 							</el-radio-group>
 						</el-form-item>
-					</div>
-				</div>
+					</el-col>
+				</el-row>
 				<div style="display: flex;justify-content: center;">
 					<el-button @click="dialogFormVisible=false">取消</el-button>
 					<el-button type="primary" size="default" @click="onSubmit">确认</el-button>

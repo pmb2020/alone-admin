@@ -113,7 +113,7 @@
 						<el-form-item label="所带班级" style="font-weight: bold;">
 							<el-popover placement="right" :width="400" :visible="popoverVisible" trigger="click">
 								<template #reference>
-									<el-button link type="info" @click="popoverVisible=true">{{checkedGradeText || '请选择'}}</el-button>
+									<el-button style="overflow: hidden;" link type="info" @click="popoverVisible=true">{{checkedGradeText || '请选择'}}</el-button>
 								</template>
 								<div>
 									<p style="font-weight: bold;font-size: 15px;">选择班级</p>

@@ -140,17 +140,24 @@
 							</el-select>
 						</el-form-item>
 						<el-form-item label="所属老师" style="font-weight: bold;">
-							<el-popover placement="right" :width="400" trigger="click">
+							<el-popover placement="right" :width="450" :visible="popoverVisible" trigger="click">
 								<template #reference>
-									<el-button link type="info">{{checkTextTea}}</el-button>
+									<el-button link type="info" @click="popoverVisible=true">{{checkTextTea || '请选择'}}</el-button>
 								</template>
-								<el-checkbox v-model="checkAllTea" :indeterminate="isIndeterminateTea"
-								 @change="handleCheckAllTea">全选</el-checkbox>
-								<el-checkbox-group v-model="form.teacher_id">
-									<el-checkbox v-if="addOption.teachers[0]" v-for="tea in addOption.teachers[0].teachers" :key="tea.id" :label="tea.id">
-										{{tea.name}}
-									</el-checkbox>
-								</el-checkbox-group>
+								<div style="padding:10px">
+									<p style="font-weight: bold;font-size: 15px;">选择老师</p>
+									<el-checkbox v-model="checkAllTea" :indeterminate="isIndeterminateTea"
+									 @change="handleCheckAllTea">全选</el-checkbox>
+									<el-checkbox-group v-model="form.teacher_id" @change="handleCheckedTeaChange">
+										<el-checkbox v-if="addOption.teachers[0]" v-for="tea in addOption.teachers[0].teachers" :key="tea.id" :label="tea.id">
+											{{tea.name}}
+										</el-checkbox>
+									</el-checkbox-group>
+									<div style="display: flex;justify-content: end;margin-top: 20px;">
+										<el-button type="primary" size="default" @click="guanlianSubmit">{{checkedBtnText || '确认'}}</el-button>
+										<el-button @click="popoverVisible=false">取消</el-button>
+									</div>
+								</div>
 							</el-popover>
 						</el-form-item>
 					</el-col>
@@ -205,6 +212,7 @@
 	const studentData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
+	const popoverVisible = ref(false)
 	onMounted(()=>{
 		getListData()
 		getClassOptions().then(res => {
@@ -220,7 +228,7 @@
 			page_size: pageSize.value
 		}
 		getClass({...params,...queryForm}).then(res=>{
-			console.log(res)
+			// console.log(res)
 			tableData.length = 0
 			total.value = res.total
 			tableData.push(...res.list)
@@ -242,6 +250,20 @@
 		})
 		dialogEditFormVisible.value = true
 	}
+	//关联老师提交
+	const checkedBtnText = ref('确认')
+	const guanlianSubmit = ()=>{
+		checkTextTea.value = ''
+		if(form.value.teacher_id.length > 0){
+			addOption.value.teachers[0].teachers.map(item=>{
+				if(form.value.teacher_id.indexOf(item.id) != -1){
+					checkTextTea.value += item.name + '，'
+				}
+			})
+		}
+		console.log(checkTextTea.value)
+		popoverVisible.value = false
+	}
 	const toUpdate = () => {
 		if(!form.value.teacher_id){
 			form.value.teacher_id = []
@@ -249,6 +271,7 @@
 		form.value.teacher_id = form.value.teacher_id.toString()
 		updateClass(form.value).then(res=>{
 			// console.log(res)
+			getListData()
 			dialogEditFormVisible.value = false
 			ElMessage.success('操作成功')
 		})
@@ -290,12 +313,22 @@
 	const checkTextTea = ref('请选择')
 	const isIndeterminateTea = ref(false)
 	const handleCheckAllTea = (val)=>{
-		// console.log(addOption.value.teachers)
 		let teas = addOption.value.teachers[0].teachers.map(v=>{return v.id})
-		let teaName = addOption.value.teachers[0].teachers.map(v=>{return v.name})
-		checkTextTea.value=teaName.toString()
-		form.value.teacher_id = val ? teas : [],
+		form.value.teacher_id = val ? teas : []
+		let teaLength = form.value.teacher_id.length
+		if(teaLength > 0){
+			checkedBtnText.value = '确认（已选择' + teaLength + '个老师）'
+		}else {
+			checkedBtnText.value = ''
+		}
 		isIndeterminateTea.value = false
+	}
+	const handleCheckedTeaChange = (val) =>{
+		if(val.length > 0){
+			checkedBtnText.value = '确认（已选择' + val.length + '个老师）'
+		}else{
+			checkedBtnText.value = ''
+		}
 	}
 	//重置表单
 	const resetForm = ()=>{

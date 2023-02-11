@@ -74,16 +74,23 @@
 							<el-input v-model="form.year" disabled placeholder="" />
 						</el-form-item>
 						<el-form-item label="关联老师" style="font-weight: bold;">
-							<el-popover placement="right" :width="400" trigger="click">
+							<el-popover placement="right" :width="450" :visible="popoverVisible" trigger="click">
 								<template #reference>
-									<el-button link type="info">{{checkTeaText || '请选择'}}</el-button>
+									<el-button link type="info" @click="popoverVisible=true">{{checkTeaText || '请选择'}}</el-button>
 								</template>
-								<el-checkbox v-model="checkAll" :indeterminate="isIndeterminate"
-								 @change="handleCheckAllChange">全选</el-checkbox>
-								<el-checkbox-group v-model="form.teacher_ids" @change="handleCheckedTeaChange">
-									<el-checkbox v-for="item in teaList" :key="item.id" :label="item.id">
-										{{item.name}}</el-checkbox>
-								</el-checkbox-group>
+								<div style="padding:10px">
+									<p style="font-weight: bold;font-size: 15px;">选择老师</p>
+									<el-checkbox v-model="checkAll" :indeterminate="isIndeterminate"
+									 @change="handleCheckAllChange">全选</el-checkbox>
+									<el-checkbox-group v-model="form.teacher_ids" @change="handleCheckedTeaChange">
+										<el-checkbox v-for="item in teaList" :key="item.id" :label="item.id">
+											{{item.name}}</el-checkbox>
+									</el-checkbox-group>
+									<div style="display: flex;justify-content: end;margin-top: 20px;">
+										<el-button @click="popoverVisible=false">取消</el-button>
+										<el-button type="primary" size="default" @click="guanlianSubmit">{{checkedBtnText || '确认'}}</el-button>
+									</div>
+								</div>
 							</el-popover>
 						</el-form-item>
 					</div>
@@ -134,6 +141,8 @@
 	const isIndeterminate = ref(true)
 	const checkedCities = ref(['Shanghai', 'Beijing'])
 	const cities = ['Shanghai', 'Beijing', 'Guangzhou', 'Shenzhen']
+	const popoverVisible = ref(false)
+	const checkedBtnText = ref('确认')
 	onMounted(() => {
 		getListData()
 		getGradeOptions().then(res => {
@@ -174,6 +183,19 @@
 		checkTeaText.value = names.toString() || '请选择'
 		form.value.teacher_ids = ids || []
 	}
+	//关联老师提交
+	const guanlianSubmit = ()=>{
+		checkTeaText.value = ''
+		if(form.value.teacher_ids.length > 0){
+			teaList.map(item=>{
+				if(form.value.teacher_ids.indexOf(item.id) != -1){
+					checkTeaText.value += item.name + '，'
+				}
+			})
+		}
+		console.log(checkTeaText.value)
+		popoverVisible.value = false
+	}
 	const handleEdit = () => {
 		dialogEditFormVisible.value = true
 	}
@@ -188,37 +210,36 @@
 		}
 		jointeacher(params).then(res=>{
 			ElMessage.success('关联成功')
+			getListData()
 			dialogFormVisible.value = false
 		})
 	}
 	const handleCurrentChange = (number) => {
 		page.value = number
-		getListData(page.value)
+		getListData()
 	}
 	const handleSizeChange = (number) => {
 		pageSize.value = number
-		getListData(page.value)
+		getListData()
 	}
 	const handleCheckAllChange = (val) => {
-		console.log(val)
 		let ids = teaList.map(item=>{return item.id})
-		let names = teaList.map(item=>{return item.name})
-		form.value.teacher_ids = val ? ids :[],
-		checkTeaText.value = names.toString()
-		if(!val){
-			checkTeaText.value = '请选择'
+		form.value.teacher_ids = val ? ids :[]
+		let teaLength = form.value.teacher_ids.length
+		if(teaLength > 0){
+			checkedBtnText.value = '确认（已选择' + teaLength + '个老师）'
+		}else {
+			checkedBtnText.value = ''
 		}
 		isIndeterminate.value = false
 	}
 	const handleCheckedTeaChange = (val) =>{
 		// checkTeaText.value = val.toString()
-		console.log(val)
-	}
-	const handleCheckedCitiesChange = (value) => {
-		console.log(value)
-		// const checkedCount = value.length
-		// checkAll.value = checkedCount === cities.length
-		// isIndeterminate.value = checkedCount > 0 && checkedCount < cities.length
+		if(val.length > 0){
+			checkedBtnText.value = '确认（已选择' + val.length + '个老师）'
+		}else{
+			checkedBtnText.value = ''
+		}
 	}
 </script>
 

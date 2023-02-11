@@ -47,36 +47,24 @@
 					type: 'bar',
 					barWidth: 15,
 					stack: 'total',
-					label: {
-						show: true
-					},
 					data: [0, 0, 0]
 				},
 				{
 					name: '低体重',
 					type: 'bar',
 					stack: 'total',
-					label: {
-						show: true
-					},
 					data: [0, 0, 0]
 				},
 				{
 					name: '超重',
 					type: 'bar',
 					stack: 'total',
-					label: {
-						show: true
-					},
 					data: [0, 0, 0]
 				},
 				{
 					name: '肥胖',
 					type: 'bar',
 					stack: 'total',
-					label: {
-						show: true
-					},
 					data: [0, 0, 0]
 				},
 			]

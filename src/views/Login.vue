@@ -36,8 +36,8 @@ import { ElMessage } from 'element-plus';
 	// 	import.meta.env)
 	store.count++
 	const loginForm = reactive({
-		username: '丰台区教委',
-		password: '123456'
+		username: '',
+		password: ''
 	})
 	const rules = reactive({
 		username: [{

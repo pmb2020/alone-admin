@@ -135,7 +135,15 @@
 						</el-table-column>
 						<!-- <el-table-column fixed="right" prop="date" label="班级" width="150" /> -->
 					</el-table>
-					<p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
+					<div style="display:flex;justify-content: space-between;align-items: center;margin-top: 20px;">
+						<p class="tip-text" style="margin: 0;">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p>
+						<div style="display: flex;justify-content: end;">
+							<el-pagination small :current-page="page" :page-size="pageSize" :background="true"
+								:page-sizes="[20,50, 100, 300, 500]" layout="prev, pager, next,sizes, jumper" :total="total"
+								@size-change="handleSizeChange" @current-change="handleCurrentChange" />
+						</div>
+					</div>
+					<!-- <p class="tip-text">注：“——”代表暂无该项体测项目，“/”代表此项体测项目未参加测试。</p> -->
 				</div>
 				<TiCeChart @project-chage="projectChage" :class-id="gradeId" :grade-id="gradeId" :plan-query="planQuery" :projects="projects">
 				</TiCeChart>
@@ -163,6 +171,9 @@
 	import TiCeChart3 from './TiCeChart3.vue'
 	import qs from 'qs'
 	const downloadUrl = ref('')
+	const page = ref(1)
+	const pageSize = ref(20)
+	const total = ref(0)
 	const route = useRoute()
 	const gradeId = ref('')
 	const gradeInfo = ref({
@@ -208,10 +219,15 @@
 			// console.log(res)
 			gradeInfo.value = res
 		})
-		getGradeTable(planQuery.value).then(res => {
-			console.log(res.score_list)
+		let params = {
+			page: page.value,
+			page_size: pageSize.value
+		}
+		getGradeTable({...params,...planQuery.value}).then(res => {
+			// console.log(res)
 			projects.value = res.projects
 			tableData.value = res.score_list
+			total.value = res.total
 		})
 		downloadUrl.value = import.meta.env.VITE_API_HOST+'/score/grade_project_grade/?'+qs.stringify(planQuery.value)
 		downloadUrl.value += '&download=1&token='+localStorage.getItem('token')
@@ -219,6 +235,28 @@
 		getGradeProjectD(planQuery.value).then(res=>{
 			console.log(res)
 			bingData.value = res
+		})
+	}
+	const handleCurrentChange = (number) => {
+		page.value = number
+		let params = {
+			page: page.value,
+			page_size: pageSize.value
+		}
+		getGradeTable({...params,...planQuery.value}).then(res => {
+			tableData.value = res.score_list
+			total.value = res.total
+		})
+	}
+	const handleSizeChange = (number) => {
+		pageSize.value = number
+		let params = {
+			page: page.value,
+			page_size: pageSize.value
+		}
+		getGradeTable({...params,...planQuery.value}).then(res => {
+			tableData.value = res.score_list
+			total.value = res.total
 		})
 	}
 </script>

@@ -60,7 +60,7 @@
 			<template v-if="userType=='edu'">
 				<WeightChart :home-data="homeData" />
 			</template>
-			<template v-if="userType=='school'">
+			<template v-else>
 				<WeightChart1 :home-data="homeData" />
 			</template>
 		</div>
@@ -69,7 +69,7 @@
 			<template v-if="userType=='edu'">
 				<TiCeChart :home-data="homeData" :userType="userType" />
 			</template>
-			<template v-if="userType=='school'">
+			<template v-else>
 				<TiCeChart1 :home-data="homeData" :userType="userType" />
 			</template>
 		</div>
@@ -136,14 +136,6 @@
 		getInitData()
 	})
 	const getInitData = async ()=>{
-		if(userType.value=='school'){
-			await getHomeData().then(res=>{
-				// console.log(res)
-				homeData.value = res;
-				homeData.value.area_data = res.school_data
-				ticeTable.push(...res.highest_record)
-			})
-		}
 		if(userType.value=='edu'){
 			await getHomeDataEdu().then(res=>{
 				// console.log(res)
@@ -152,6 +144,13 @@
 				homeData.value.chuzhong = res.highest_record[1].初中
 				homeData.value.gaozhong = res.highest_record[2].高中
 				ticeTable.push(...homeData.value.xiaoxue)
+			})
+		}else{
+			await getHomeData().then(res=>{
+				// console.log(res)
+				homeData.value = res;
+				homeData.value.area_data = res.school_data
+				ticeTable.push(...res.highest_record)
 			})
 		}
 		

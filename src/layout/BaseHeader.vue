@@ -2,7 +2,7 @@
 	<el-header>
 		<div class="al-flex" style="color: #222426;font-weight: 600;align-items: center;">
 			<img style="width: 60px;margin-right: 5px;" src="@/assets/logo.png" alt="">
-			<p>{{platform_name}}智慧体测管理平台</p>
+			<p>智慧体测管理平台</p>
 			<p style="margin-left: 80px;font-weight: 500;">{{name}}</p>
 		</div>
 		<div class="al-flex" style="align-items: center;margin: 0 10px;">

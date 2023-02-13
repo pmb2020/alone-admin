@@ -77,6 +77,10 @@
 								</template>
 								<div style="padding:10px">
 									<p style="font-weight: bold;font-size: 15px;">选择老师</p>
+									<div class="al-flex" style="margin: 15px 0;">
+										<el-input style="width: 35%;" v-model="popKeyword" placeholder="老师查询" />
+										<el-button style="margin-left: 30px;" type="primary" @click="popSearch">查询</el-button>
+									</div>
 									<el-checkbox v-model="checkAll" :indeterminate="isIndeterminate"
 									 @change="handleCheckAllChange">全选</el-checkbox>
 									<el-checkbox-group v-model="form.teacher_ids" @change="handleCheckedTeaChange">
@@ -130,6 +134,19 @@
 	const tableData = reactive([])
 	const dialogFormVisible = ref(false)
 	const dialogEditFormVisible = ref(false)
+	const teaListOrigin = ref([])
+	const popKeyword = ref('')
+	const popSearch = ()=>{
+		if(!popKeyword.value) {
+			teaList.length = 0
+			return teaList.push(...teaListOrigin.value)
+		}
+		let res=teaListOrigin.value.filter(item=>{
+			return item.name.search(popKeyword.value) != -1
+		})
+		teaList.length = 0
+		teaList.push(...res)
+	}
 	//选择
 	const teaList  = reactive([])
 	const checkTeaText = ref('请选择')
@@ -149,7 +166,9 @@
 			console.log(res)
 			res.forEach(item=>{
 				teaList.push(...item.teacher_list)
+				teaListOrigin.value.push(...item.teacher_list)
 			})
+			console.log(teaListOrigin.value)
 		})
 	})
 	const getListData = () => {

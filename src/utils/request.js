@@ -5,7 +5,7 @@ import axios from 'axios'
 const http = axios.create({
 	baseURL:import.meta.env.VITE_API_HOST,
 	headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-	timeout: 5000,
+	timeout: 30000,
 })
 
 //请求拦截器

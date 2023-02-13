@@ -223,9 +223,13 @@
 								</template>
 								<div style="">
 									<p style="font-weight: bold;font-size: 15px;margin-bottom: 5px;">选择学校</p>
+									<div class="al-flex" style="margin: 15px 0;">
+										<el-input style="width: 35%;" v-model="popKeyword" placeholder="学校查询" />
+										<el-button style="margin-left: 30px;" type="primary" @click="popSearch">查询</el-button>
+									</div>
 									<el-checkbox v-model="checkAllSchool" :indeterminate="isIndeterminateSchool"
 									 @change="handleCheckAllSchool">全选</el-checkbox>
-									<el-checkbox-group v-model="form.school_ids">
+									<el-checkbox-group v-model="form.school_ids" @change="handleCheckedSchChange">
 										<el-checkbox v-for="item in queryOption.school_list" :key="item.id" :label="item.id">
 											{{item.name}}
 										</el-checkbox>
@@ -543,12 +547,39 @@
 			}
 		})
 	}
+	//学校弹框搜索
+	const popKeyword = ref('')
+	const popSearch = ()=>{
+		let oriSchoolList = queryOptionOrigin.value.school_list[form.value.school_type]
+		if(!popKeyword.value) {
+			queryOption.value.school_list = oriSchoolList
+			return
+		}
+		let res= oriSchoolList.filter(item=>{
+			return item.name.search(popKeyword.value) != -1
+		})
+		queryOption.value.school_list = res
+	}
 	const checkAllSchool = ref(false)
 	const isIndeterminateSchool = ref(false)
 	const handleCheckAllSchool = (val)=>{
 		let schools = queryOption.value.school_list.map(v=>{return v.id})
-		form.value.school_ids = val ? schools : [],
+		form.value.school_ids = val ? schools : []
+		let schLength = form.value.school_ids.length
+		if(schLength > 0){
+			checkedBtnText.value = '确认（已选择' + schLength + '个学校）'
+		}else {
+			checkedBtnText.value = ''
+		}
 		isIndeterminateSchool.value = false
+	}
+	const handleCheckedSchChange = (val)=>{
+		// console.log(val)
+		if(val.length > 0){
+			checkedBtnText.value = '确认（已选择' + val.length + '个学校）'
+		}else{
+			checkedBtnText.value = ''
+		}
 	}
 	// 选择学校
 	const checkTextSchool = ref('')

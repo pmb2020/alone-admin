@@ -16,14 +16,14 @@
 									<el-input v-model="queryForm.plan_number" placeholder="请输入" />
 								</el-form-item>
 							</el-col>
-							<el-col :span="6">
+							<el-col :span="6" style="overflow: hidden;">
 								<!-- <el-form-item label="体测项目">
 									<el-select v-model="queryForm.project_id" placeholder="请选择">
 										<el-option v-for="item in queryOption.projects" :label="item.name"
 											:value="item.id" />
 									</el-select>
 								</el-form-item> -->
-								<el-form-item label="体测项目" style="font-weight: bold;">
+								<el-form-item label="体测项目" style="font-weight: bold;width: 100%;">
 									<el-popover placement="right" :width="400" trigger="click" @show="popoverShowPro">
 										<template #reference>
 											<el-button class="check-btn" link type="info">{{checkTextProject1 || '请选择'}}</el-button>
@@ -217,23 +217,24 @@
 								placeholder="请选择" />
 						</el-form-item>
 						<el-form-item v-if="userType=='edu'" label="参与学校" style="font-weight: bold;">
-							<el-popover placement="right" :width="400" trigger="click">
+							<el-popover placement="right" :width="450" :visible="schPopoverVisible" trigger="click">
 								<template #reference>
-									<el-button link type="info">请选择</el-button>
+									<el-button style="overflow: hidden;" link type="info" @click="schPopoverVisible=true">{{checkTextSchool || '请选择'}}</el-button>
 								</template>
-								<el-checkbox v-model="checkAllSchool" :indeterminate="isIndeterminateSchool"
-								 @change="handleCheckAllSchool">全选</el-checkbox>
-								<el-checkbox-group v-model="form.school_ids">
-									<el-checkbox v-for="item in queryOption.school_list" :key="item.id" :label="item.id">
-										{{item.name}}
-									</el-checkbox>
-									<!-- <el-checkbox v-for="item in queryOption.school_list.初中" :key="item.id" :label="item.id">
-										{{item.name}}
-									</el-checkbox>
-									<el-checkbox v-for="item in queryOption.school_list.高中" :key="item.id" :label="item.id">
-										{{item.name}}
-									</el-checkbox> -->
-								</el-checkbox-group>
+								<div style="">
+									<p style="font-weight: bold;font-size: 15px;margin-bottom: 5px;">选择学校</p>
+									<el-checkbox v-model="checkAllSchool" :indeterminate="isIndeterminateSchool"
+									 @change="handleCheckAllSchool">全选</el-checkbox>
+									<el-checkbox-group v-model="form.school_ids">
+										<el-checkbox v-for="item in queryOption.school_list" :key="item.id" :label="item.id">
+											{{item.name}}
+										</el-checkbox>
+									</el-checkbox-group>
+									<div style="display: flex;justify-content: end;margin-top: 20px;">
+										<el-button @click="schPopoverVisible=false">取消</el-button>
+										<el-button type="primary" size="default" @click="checkSchSubmit">{{checkedBtnText || '确认'}}</el-button>
+									</div>
+								</div>
 							</el-popover>
 						</el-form-item>
 						<el-form-item label="备注" label-width="100">
@@ -295,12 +296,18 @@
 			page_size: pageSize.value
 		}
 		if(queryForm.grade_id){
+			if(!queryForm.grade_id[0]){
+				queryForm.grade_id.splice(0,1)
+			}
 			queryForm.grade_id = queryForm.grade_id.toString()
 		}
 		if(queryForm.project_id){
+			if(!queryForm.project_id[0]){
+				queryForm.project_id.splice(0,1)
+			}
 			queryForm.project_id = queryForm.project_id.toString()
 		}
-		console.log(queryForm.grade_id)
+		// console.log(queryForm)
 		
 		getPlan({
 			...params,
@@ -479,6 +486,8 @@
 		isIndeterminateProject1.value = false
 	}
 	const CheckedProjectChange1 = (val)=>{
+		console.log(val)
+		console.log(queryForm.project_id)
 		if(val.length < 0) return
 		checkTextProject1.value = ''
 		queryOption.value.projects.map(v=>{
@@ -540,6 +549,21 @@
 		let schools = queryOption.value.school_list.map(v=>{return v.id})
 		form.value.school_ids = val ? schools : [],
 		isIndeterminateSchool.value = false
+	}
+	// 选择学校
+	const checkTextSchool = ref('')
+	const checkedBtnText = ref('')
+	const schPopoverVisible = ref(false)
+	const checkSchSubmit = ()=>{
+		checkTextSchool.value = ''
+		if(form.value.school_ids.length > 0){
+			queryOption.value.school_list.map(item=>{
+				if(form.value.school_ids.indexOf(item.id) != -1){
+					checkTextSchool.value += item.name + '，'
+				}
+			})
+		}
+		schPopoverVisible.value = false
 	}
 	//老的
 	const handleCheckAllSchool1 = (val)=>{

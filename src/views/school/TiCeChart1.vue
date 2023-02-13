@@ -1,7 +1,7 @@
 <template>
 	<div class="al-flex-between">
 		<!-- <h3 class="title" style="margin-bottom: 0;">本校各项体测指标记录</h3> -->
-		<h3 class="title" style="margin-bottom: 0;">本校各项体测指标等级分析</h3>
+		<h3 class="title" style="margin-bottom: 0;">各项体测指标均值分析</h3>
 		<div class="al-flex" style="align-items: center;">
 			<p style="color: #222426;">体测计划</p>
 			<el-select v-model="planParams.plan_start_id" class="m-2" style="width: 100px;margin: 0 10px;" placeholder="请选择">
@@ -16,7 +16,7 @@
 	</div>
 	<!-- <h3 class="title">各项体测指标等级分析</h3> -->
 	<div id='gradeChat' style="height: 300px;margin: 30px 0;"></div>
-	<h3 class="title">各项体测指标均值分析</h3>
+	<h3 class="title">本校各项体测指标等级分析</h3>
 	<div style="margin: 30px 0;">
 		<ul class="ty-tab">
 			<li :class="{'active':tabIndex===index}" v-for="(tab,index) in projects" @click="tabClick(index,tab.id)">{{tab.name}}</li>

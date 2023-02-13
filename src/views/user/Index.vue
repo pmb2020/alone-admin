@@ -118,7 +118,12 @@
 								</el-form-item>
 								<el-form-item label="选择机构">
 									<el-select v-model="form.parent_id" placeholder="请选择">
-										<el-option v-for="jigou in selectOption.organizations" :label="jigou.name" :value="jigou.id" />
+										<template v-if="form.usertype=='edu'">
+											<el-option v-for="jigou in selectOption.edu_list" :label="jigou.name" :value="jigou.id" />
+										</template>
+										<template v-else>
+											<el-option v-for="jigou in selectOption.school_list" :label="jigou.name" :value="jigou.id" />
+										</template>
 									</el-select>
 								</el-form-item>
 							</el-col>
@@ -156,15 +161,13 @@
 	const schoolId = ref('')
 	const selectOption = ref({})
 	onMounted(() => {
-		console.log(userId.value)
 		getListData()
 		getSelectOption().then(res=>{
-			// console.log(res)
+			console.log(res)
 			selectOption.value = res
 		})
 		if(userType.value=='edu'){
 			getOrgan().then(res=>{
-				console.log(res)
 				organ.value = res
 			})
 		}

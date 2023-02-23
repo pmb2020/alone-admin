@@ -36,7 +36,7 @@ const routes = [{
 		component: Layout,
 		children: [{
 			path: 'index',
-			component: () => import('../views/Banner.vue'),
+			component: () => import('../views/banner/Index.vue'),
 			meta: {
 				title: '广告管理',
 				icon: 'Picture'
@@ -84,7 +84,7 @@ const routes = [{
 		component: Layout,
 		children: [{
 			path: 'index',
-			component: () => import('../views/User.vue'),
+			component: () => import('../views/user/Index.vue'),
 			meta: {
 				title: '用户管理',
 				icon: 'UserFilled'

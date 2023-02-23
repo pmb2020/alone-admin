@@ -22,7 +22,8 @@
 				<el-button size="default" type="primary" @click="handleAdd">+ 新增</el-button>
 			</div>
 		</div>
-		<div class="al-container banner">
+		<!-- 表格列表 -->
+		<div class="al-container">
 			<el-table :data="tableData" v-loading="loading" style="width: 100%;" size="large"
 				@selection-change="handleSelectionChange" table-layout="fixed" highlight-current-row>
 				<el-table-column type="selection" width="50" />
@@ -99,7 +100,7 @@
 </template>
 
 <script setup>
-	import {banner,updateBanner} from '@/api/banner.js'
+	import {banner,updateBanner,apiBanner} from '@/api/banner'
 	const uploadUrl=ref('http://127.0.0.1:188/admin/upload')
 	const tableData = ref([])
 	const dialogVisible = ref(false)
@@ -111,7 +112,7 @@
 		console.log(val)
 	}
 	const getList = () => {
-		banner(filterForm.value).then(res => {
+		apiBanner(filterForm.value).then(res => {
 			tableData.value = res.data
 			loading.value = false
 		})
@@ -123,7 +124,7 @@
 			cancelButtonText: '取消',
 			type: 'warning'
 		}).then(() => {
-			banner({
+			apiBanner({
 				id: row.id
 			}, 'delete').then(res => {
 				getList()
@@ -194,7 +195,7 @@
 		})
 		return
 		if (isFromAdd.value) {
-			banner(formData, 'post').then(res => {
+			apiBanner(formData, 'post').then(res => {
 				ElMessage.success('添加成功')
 				dialogVisible.value = false
 				getList()

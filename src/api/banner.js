@@ -16,3 +16,7 @@ export const updateBanner = (params)=>{
 export const banner = (params,method)=>{
 	return apiHttp('banners',params,method)
 }
+
+export const apiBanner = (params,method)=>{
+	return apiHttp('banners',params,method)
+}

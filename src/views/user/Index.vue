@@ -8,15 +8,15 @@
 				</el-form-item>
 				<el-form-item label="状态" prop="type">
 					<el-select v-model="queryForm.type" placeholder="请选择">
-						<el-option label="已完成" value="1" />
-						<el-option label="未支付" value="2" />
-						<el-option label="已取消" value="3" />
+						<el-option label="已完成" :value="1" />
+						<el-option label="未支付" :value="2" />
+						<el-option label="已取消" :value="3" />
 					</el-select>
 				</el-form-item>
 			</el-form>
 			<div class="al-flex-between">
 				<div>
-					<el-button size="default" type="primary" @click="getListData">搜索</el-button>
+					<el-button size="default" type="primary" @click="getListData()">搜索</el-button>
 					<el-button size="default" plain @click="resetQueryForm(queryFormRef)">重置</el-button>
 				</div>
 				<el-button size="default" type="primary" @click="handleAdd">+ 新增</el-button>
@@ -28,11 +28,6 @@
 				<el-table-column type="selection" width="50" />
 				<el-table-column type="index" label="#" />
 				<el-table-column prop="nickname" label="标题" align="center" />
-				<!-- <el-table-column label="图片" align="center" width="150">
-					<template #default="scope">
-						<el-image style="width: 120px; height: 80px" :src="scope.row.image" fit="fill" />
-					</template>
-				</el-table-column> -->
 				<el-table-column prop="username" align="center" label="用户名" />
 				<el-table-column label="启用" align="center">
 					<template #default="scope">
@@ -51,7 +46,7 @@
 			<al-pagination :total="total" @page-change="getListData" />
 			<!-- 弹框表单 -->
 			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromEdit ? '编辑' :'新增'" width="30%" @closed="form={}" :close-on-click-modal="false">
-				<el-form ref="formRef" :model="form" :rules="rules" label-width="60px">
+				<el-form ref="formRef" :model="form" :rules="rules" label-width="70px">
 					<el-form-item label="昵称" prop="nickname">
 						<el-input v-model="form.nickname" autocomplete />
 					</el-form-item>
@@ -92,7 +87,10 @@
 		getListData()
 	})
 	const handleSelectionChange = (val) => {
-		console.log(val)
+		let ids = val.map(item=>{
+			return item.id
+		})
+		console.log(ids)
 	}
 	const getListData = (page = 1,pageSize = 20) => {
 		queryForm.page = page
@@ -104,39 +102,16 @@
 		})
 	}
 
-	const handleDelete = (row) => {
-		ElMessageBox.confirm('确认要删除吗', '提示', {
-			confirmButtonText: '确定',
-			cancelButtonText: '取消',
-			type: 'warning'
-		}).then(() => {
-			apiUser({
-				id: row.id
-			}, 'delete').then(res => {
-				getListData()
-				ElMessage.success('删除成功')
-			})
-		})
-	}
-	
 	/**
 	 * 筛选搜索相关
 	 */
-	const queryForm = reactive({
-		title: '',
-		status: '',
-		type: '',
-		sort: '',
-		link: '',
-		image: '',
-		note: '',
-	})
+	const queryForm = reactive({})
 	const queryFormRef = ref({})
 	const formRef = ref({})
 	const rules = reactive({
-		title:[
+		username:[
 			{ required: true, message: '必填项' },
-		]
+		],
 	})
 	//重置搜索条件
 	const resetQueryForm = (formEl) => {
@@ -147,7 +122,6 @@
 	 * 弹框表单相关
 	 */
 	const form = ref({})
-	const isFromAdd = ref(false)
 	const isFromEdit = ref(false)
 	//新增
 	const handleAdd = () => {
@@ -182,10 +156,19 @@
 			
 		})
 	}
-	// 图片上传
-	const fileChange = (e) => {
-		form.value.image=URL.createObjectURL(e.raw)
-		form.value.file=e.raw
+	const handleDelete = (row) => {
+		ElMessageBox.confirm('确认要删除吗', '提示', {
+			confirmButtonText: '确定',
+			cancelButtonText: '取消',
+			type: 'warning'
+		}).then(() => {
+			apiUser({
+				id: row.id
+			}, 'delete').then(res => {
+				getListData()
+				ElMessage.success('删除成功')
+			})
+		})
 	}
 </script>
 

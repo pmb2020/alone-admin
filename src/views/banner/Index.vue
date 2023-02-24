@@ -2,12 +2,12 @@
 	<div class="banner">
 		<!-- 筛选 -->
 		<div class="al-container">
-			<el-form class="al-flex" inline :model="filterForm" ref="filterFormRef" size="large">
+			<el-form class="al-flex" inline :model="queryForm" ref="queryFormRef" size="large">
 				<el-form-item label="名称" prop="title">
-					<el-input v-model="filterForm.title" placeholder="要搜索的名称" />
+					<el-input v-model="queryForm.title" placeholder="要搜索的名称" />
 				</el-form-item>
 				<el-form-item label="类型" prop="type">
-					<el-select v-model="filterForm.type" placeholder="请选择">
+					<el-select v-model="queryForm.type" placeholder="请选择">
 						<el-option label="已完成" value="1" />
 						<el-option label="未支付" value="2" />
 						<el-option label="已取消" value="3" />
@@ -16,8 +16,8 @@
 			</el-form>
 			<div class="al-flex-between">
 				<div>
-					<el-button size="default" type="primary" @click="getList">搜索</el-button>
-					<el-button size="default" plain @click="resetFilterForm(filterFormRef)">重置</el-button>
+					<el-button size="default" type="primary" @click="getListData">搜索</el-button>
+					<el-button size="default" plain @click="resetQueryForm(queryFormRef)">重置</el-button>
 				</div>
 				<el-button size="default" type="primary" @click="handleAdd">+ 新增</el-button>
 			</div>
@@ -31,7 +31,7 @@
 				<el-table-column prop="title" label="标题" align="center" width="250" />
 				<el-table-column label="图片" align="center" width="150">
 					<template #default="scope">
-						<el-image style="width: 120px; height: 80px" :src="scope.row.image" fit="fill" />
+						<el-image style="width: 120px; height: 80px" :src="scope.row.image" :preview-src-list="[scope.row.image]"  preview-teleported fit="fill" />
 					</template>
 				</el-table-column>
 				<el-table-column prop="type" align="center" label="类型" />
@@ -53,8 +53,10 @@
 					</template>
 				</el-table-column>
 			</el-table>
+			<!-- 分页 -->
+			<al-pagination :total="total" @page-change="getListData" />
 			<!-- 弹框表单 -->
-			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromAdd ? '新增' :'编辑'" width="30%" @closed="form={}" :close-on-click-modal="false">
+			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromEdit ? '编辑' :'新增'" @closed="form={}" :close-on-click-modal="false">
 				<el-form ref="formRef" :model="form" :rules="rules" label-width="60px">
 					<el-form-item label="标题" prop="title">
 						<el-input v-model="form.title" autocomplete />
@@ -103,21 +105,74 @@
 	import {banner,updateBanner,apiBanner} from '@/api/banner'
 	const uploadUrl=ref('http://127.0.0.1:188/admin/upload')
 	const tableData = ref([])
+	const total = ref(0)
 	const dialogVisible = ref(false)
 	const loading = ref(true)
 	onMounted(() => {
-		getList()
+		getListData()
 	})
 	const handleSelectionChange = (val) => {
-		console.log(val)
+		let ids = val.map(item=>{
+			return item.id
+		})
+		console.log(ids)
 	}
-	const getList = () => {
-		apiBanner(filterForm.value).then(res => {
+	const getListData = (page = 1,pageSize = 20) => {
+		queryForm.page = page
+		queryForm.limit = pageSize
+		apiBanner(queryForm).then(res => {
+			total.value = res.total
 			tableData.value = res.data
 			loading.value = false
 		})
 	}
 
+	/**
+	 * 筛选搜索相关
+	 */
+	const queryForm = reactive({})
+	const queryFormRef = ref({})
+	const formRef = ref({})
+	const rules = reactive({
+		title:[
+			{ required: true, message: '必填项' },
+		]
+	})
+	
+	/**
+	 * 弹框表单相关
+	 */
+	const form = ref({})
+	const isFromEdit = ref(false)
+	
+	//提交表单
+	const submitForm = () => {
+		formRef.value.validate((valid)=>{
+			if(!valid) return
+			if (isFromEdit.value) {
+				apiBanner(form.value,'put').then(res => {
+					ElMessage.success('修改成功')
+					dialogVisible.value = false
+					getListData()
+				})
+			} else {
+				form.value.image='11'
+				apiBanner(form.value, 'post').then(res => {
+					ElMessage.success('添加成功')
+					dialogVisible.value = false
+					getListData()
+				})
+			}
+			
+		})
+	}
+	
+	// 图片上传
+	const fileChange = (e) => {
+		form.value.image=URL.createObjectURL(e.raw)
+		form.value.file=e.raw
+	}
+	
 	const handleDelete = (row) => {
 		ElMessageBox.confirm('确认要删除吗', '提示', {
 			confirmButtonText: '确定',
@@ -127,92 +182,27 @@
 			apiBanner({
 				id: row.id
 			}, 'delete').then(res => {
-				getList()
+				getListData()
 				ElMessage.success('删除成功')
 			})
 		})
 	}
-	
-	/**
-	 * 筛选搜索相关
-	 */
-	const filterForm = ref({
-		title: '',
-		status: '',
-		type: '',
-		sort: '',
-		link: '',
-		image: '',
-		note: '',
-	})
-	const filterFormRef = ref({})
-	const formRef = ref({})
-	const rules = reactive({
-		title:[
-			{ required: true, message: '必填项' },
-		]
-	})
-	//重置搜索条件
-	const resetFilterForm = (formEl) => {
-		if (!formEl) return
-		formEl.resetFields()
-	}
-	/**
-	 * 弹框表单相关
-	 */
-	const form = ref({
-		title: '',
-		image: '',
-		status: '',
-		type: '',
-		file: null,
-		sort: '',
-		link: '',
-		note: '',
-	})
-	const isFromAdd = ref(false)
 	//新增
 	const handleAdd = () => {
-		isFromAdd.value = true
+		form.value = {}
+		isFromEdit.value = false
 		dialogVisible.value = true
 	}
 	// 编辑
 	const handleEdit = (data)=>{
 		form.value={...data};
-		isFromAdd.value = false;
+		isFromEdit.value = true;
 		dialogVisible.value = true
 	}
-	//提交表单
-	const submitForm = () => {
-		let formData = new FormData()
-		for(let key in form.value){
-			if(form.value[key]){
-				formData.append(key,form.value[key])
-			}
-		}
-		formRef.value.validate((valid)=>{
-			console.log(valid)
-		})
-		return
-		if (isFromAdd.value) {
-			apiBanner(formData, 'post').then(res => {
-				ElMessage.success('添加成功')
-				dialogVisible.value = false
-				getList()
-			})
-		} else {
-			console.log(formData.getAll('title'))
-			updateBanner(formData).then(res => {
-				ElMessage.success('修改成功')
-				dialogVisible.value = false
-				getList()
-			})
-		}
-	}
-	// 图片上传
-	const fileChange = (e) => {
-		form.value.image=URL.createObjectURL(e.raw)
-		form.value.file=e.raw
+	//重置搜索条件
+	const resetQueryForm = (formEl) => {
+		if (!formEl) return
+		formEl.resetFields()
 	}
 </script>
 

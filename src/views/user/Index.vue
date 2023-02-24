@@ -113,33 +113,16 @@
 			{ required: true, message: '必填项' },
 		],
 	})
-	//重置搜索条件
-	const resetQueryForm = (formEl) => {
-		if (!formEl) return
-		formEl.resetFields()
-	}
+	
 	/**
 	 * 弹框表单相关
 	 */
 	const form = ref({})
 	const isFromEdit = ref(false)
-	//新增
-	const handleAdd = () => {
-		form.value = {}
-		isFromEdit.value = false
-		dialogVisible.value = true
-	}
-	// 编辑
-	const handleEdit = (data)=>{
-		form.value = { ...data }
-		isFromEdit.value = true
-		dialogVisible.value = true
-	}
 	//提交表单
 	const submitForm = () => {
 		formRef.value.validate((valid)=>{
 			if(!valid) return
-			console.log(form.value)
 			if (isFromEdit.value) {
 				apiUser(form.value,'put').then(res => {
 					ElMessage.success('修改成功')
@@ -156,6 +139,7 @@
 			
 		})
 	}
+	
 	const handleDelete = (row) => {
 		ElMessageBox.confirm('确认要删除吗', '提示', {
 			confirmButtonText: '确定',
@@ -169,6 +153,23 @@
 				ElMessage.success('删除成功')
 			})
 		})
+	}
+	//新增
+	const handleAdd = () => {
+		form.value = {}
+		isFromEdit.value = false
+		dialogVisible.value = true
+	}
+	// 编辑
+	const handleEdit = (data)=>{
+		form.value = { ...data }
+		isFromEdit.value = true
+		dialogVisible.value = true
+	}
+	//重置搜索条件
+	const resetQueryForm = (formEl) => {
+		if (!formEl) return
+		formEl.resetFields()
 	}
 </script>
 

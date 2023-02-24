@@ -56,7 +56,7 @@
 			<!-- 分页 -->
 			<al-pagination :total="total" @page-change="getListData" />
 			<!-- 弹框表单 -->
-			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromEdit ? '编辑' :'新增'" @closed="form={}" :close-on-click-modal="false">
+			<el-dialog v-if="dialogVisible" v-model="dialogVisible" :title="isFromEdit ? '编辑' :'新增'" :close-on-click-modal="false">
 				<el-form ref="formRef" :model="form" :rules="rules" label-width="60px">
 					<el-form-item label="标题" prop="title">
 						<el-input v-model="form.title" autocomplete />
@@ -71,8 +71,8 @@
 						<el-switch v-model="form.status" active-value="1" inactive-value="0" />
 					</el-form-item>
 					<el-form-item label="图片" style="font-weight: bold;">
-						<el-upload class="al-uploader" name="file" action="#"
-							:show-file-list="false" :on-change="fileChange" :auto-upload="false" >
+						<el-upload class="al-uploader" name="file" :action="uploadUrl"
+							:show-file-list="false" :headers="uploadHeader" :on-success="uploadSuccess" >
 							<el-image v-if="form.image"  style="width: 400px; height: 200px" :src="form.image" />
 							<el-icon v-else class="al-uploader-icon">
 								<Plus />
@@ -104,6 +104,9 @@
 <script setup>
 	import {banner,updateBanner,apiBanner} from '@/api/banner'
 	const uploadUrl=ref('http://127.0.0.1:188/admin/upload')
+	const uploadHeader = ref({
+		'Authorization':'Bearer '+localStorage.getItem('token')
+	})
 	const tableData = ref([])
 	const total = ref(0)
 	const dialogVisible = ref(false)
@@ -171,6 +174,15 @@
 	const fileChange = (e) => {
 		form.value.image=URL.createObjectURL(e.raw)
 		form.value.file=e.raw
+	}
+	
+	const uploadSuccess = (res)=>{
+		console.log(res,'文件上传成功')
+		if(res.code != 0){
+			ElMessage.error('上传失败')
+		}
+		form.value.image = res.data.path
+		form.value.file = res.data.path
 	}
 	
 	const handleDelete = (row) => {

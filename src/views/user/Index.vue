@@ -29,9 +29,9 @@
 				<el-table-column type="index" label="#" />
 				<el-table-column prop="nickname" label="标题" align="center" />
 				<el-table-column prop="username" align="center" label="用户名" />
-				<el-table-column label="启用" align="center">
+				<el-table-column label="状态" align="center">
 					<template #default="scope">
-						<el-switch v-model="scope.row.status" />
+						<el-switch v-model="scope.row.status" @change="statusChange" :active-value="1" :inactive-value="0" />
 					</template>
 				</el-table-column>
 				<el-table-column prop="created_at" align="center" label="创建时间" width="170" />
@@ -61,6 +61,9 @@
 					</el-form-item>
 					<el-form-item label="密码" prop="password">
 						<el-input v-model="form.password" />
+					</el-form-item>
+					<el-form-item label="状态" prop="password">
+						<el-switch v-model="form.status" :active-value="1" :inactive-value="0" />
 					</el-form-item>
 				</el-form>
 				<template #footer>
@@ -113,7 +116,9 @@
 			{ required: true, message: '必填项' },
 		],
 	})
-	
+	const statusChange = (val)=>{
+		console.log(val)
+	}
 	/**
 	 * 弹框表单相关
 	 */

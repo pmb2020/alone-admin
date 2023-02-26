@@ -1,44 +1,33 @@
 <template>
-	<div class="al-upload" @click="$refs.fileRef.click()">
-		<div v-if="!imgUrl">
-			+
-			<input class="al-upload-input" ref="fileRef" @change="getFile" type="file" name="file" accept>
-		</div>
-		<div v-else>
-			<img :src="imgUrl" alt="" srcset="">
-		</div>
+	<div>
+		<el-upload class="al-uploader" name="file" :action="uploadUrl"
+			:show-file-list="false" :headers="uploadHeader" :on-success="uploadSuccess" >
+			<el-image v-if="imgUrl"  style="width: 400px; height: 200px" :src="imgUrl" />
+			<el-icon v-else class="al-uploader-icon">
+				<Plus />
+			</el-icon>
+		</el-upload>
 	</div>
 </template>
 
 <script setup>
-	import {ref} from 'vue'
-	const imgUrl=ref('')
-	const getFile = (e)=>{
-		const files = e.target.files
-		console.log(e)
-		imgUrl=files[0]
-		console.log(files)
+	import { ref } from 'vue';
+	const props = defineProps(['imgUrl'])
+	const emit = defineEmits(['upload-success'])
+	const uploadUrl = ref('/admin/upload')
+	const uploadHeader = ref({
+		'Authorization':'Bearer '+ localStorage.getItem('token')
+	})
+	const imgUrl = ref(props.imgUrl)
+	const uploadSuccess = (res,file)=>{
+		if(res.code === 0){
+			imgUrl.value = res.data.fullPath
+			emit('upload-success',res.data.path)
+		}else{
+			ElMessage.error('上传失败：'+res.msg)
+		}
 	}
 </script>
 
 <style>
-	.al-upload{
-		width: 100px;
-		height: 100px;
-		border: 1px dashed #dcdfe6;
-		border-radius: 6px;
-		overflow: hidden;
-		cursor: pointer;
-		z-index: 9;
-		position: relative;
-	}
-	.al-upload-input{
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		display: none;
-		z-index: 9999;
-	}
 </style>

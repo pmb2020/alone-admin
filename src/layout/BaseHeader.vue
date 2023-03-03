@@ -1,7 +1,7 @@
 <template>
 	<el-header>
-		<div>
-			alone-admin后台管理系统
+		<div style="margin-left: 20px;">
+			TANSO后台管理系统
 		</div>
 		<div class="al-flex" style="align-items: center;">
 			<el-avatar style="margin-right: 15px;" src="https://www.gold404.cn/static/index/images/avatar.jpg" />
